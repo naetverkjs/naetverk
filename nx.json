@@ -56,6 +56,9 @@
     "react-e2e": {
       "tags": [],
       "implicitDependencies": ["react"]
+    },
+    "react-renderer": {
+      "tags": ["renderer"]
     }
   },
   "workspaceLayout": {
