@@ -355,10 +355,7 @@
               "packages/arrange-plugin/tsconfig.lib.json",
               "packages/arrange-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/arrange-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/arrange-plugin/**/*"]
           }
         },
         "test": {
@@ -376,6 +373,112 @@
             "packageJson": "packages/arrange-plugin/package.json",
             "main": "packages/arrange-plugin/src/index.ts",
             "assets": ["packages/arrange-plugin/*.md"]
+          }
+        }
+      }
+    },
+    "react": {
+      "root": "samples/react",
+      "sourceRoot": "samples/react/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/samples/react",
+            "index": "samples/react/src/index.html",
+            "main": "samples/react/src/main.tsx",
+            "polyfills": "samples/react/src/polyfills.ts",
+            "tsConfig": "samples/react/tsconfig.app.json",
+            "assets": [
+              "samples/react/src/favicon.ico",
+              "samples/react/src/assets"
+            ],
+            "styles": ["samples/react/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "samples/react/src/environments/environment.ts",
+                  "with": "samples/react/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "samples/react/tsconfig.app.json",
+              "samples/react/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!samples/react/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "samples/react/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-e2e": {
+      "root": "samples/react-e2e",
+      "sourceRoot": "samples/react-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "samples/react-e2e/cypress.json",
+            "tsConfig": "samples/react-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["samples/react-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!samples/react-e2e/**/*"]
           }
         }
       }
@@ -426,6 +529,20 @@
     },
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "defaultProject": "angular"

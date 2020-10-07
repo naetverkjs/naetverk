@@ -49,6 +49,13 @@
     },
     "arrange-plugin": {
       "tags": ["plugin"]
+    },
+    "react": {
+      "tags": ["sample"]
+    },
+    "react-e2e": {
+      "tags": [],
+      "implicitDependencies": ["react"]
     }
   },
   "workspaceLayout": {
