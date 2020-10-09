@@ -1,8 +1,8 @@
 # history-plugin
+
 > _This Plugin is based on the [retejs/history-plugin](https://github.com/retejs/history-plugin)_
 
 Plugin that adds the ability to revert actions
-
 
 ### Installation
 
