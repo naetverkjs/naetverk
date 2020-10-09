@@ -3,6 +3,11 @@ import { AreaOptions } from './interfaces/area-options.interface';
 import { Restrictor } from './restrictor';
 import { SnapGrid } from './snap';
 
+export const AreaPlugin = {
+  name: 'area',
+  install,
+};
+
 export function install(editor, params: AreaOptions) {
   const background = params.background || false;
   const snap = params.snap || false;

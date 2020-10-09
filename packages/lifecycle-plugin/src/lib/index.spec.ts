@@ -1,5 +1,5 @@
-import { NodeEditor } from '@naetverkjs/naetverk/src/index';
-import { LifecyclePlugin } from './plugin';
+import { NodeEditor } from '@naetverkjs/naetverk';
+import { LifecyclePlugin } from './index';
 
 describe('Init', () => {
   let editor: NodeEditor;

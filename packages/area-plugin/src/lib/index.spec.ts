@@ -1,5 +1,5 @@
-import { NodeEditor } from '@naetverkjs/naetverk/src/index';
 import { install } from './index';
+import { NodeEditor } from '@naetverkjs/naetverk';
 
 describe('Init', () => {
   describe('Background', () => {
