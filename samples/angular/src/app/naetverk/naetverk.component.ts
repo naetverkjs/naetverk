@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
 import { ConnectionPlugin } from '@naetverkjs/connections';
+import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
 import { ArrangePlugin } from '@naetverkjs/arrange';
 
@@ -11,8 +12,10 @@ import { AddComponent } from './components/add-component';
 
 @Component({
   selector: 'nvk-angular-sample',
-  template: `<div class="menu-bar">
+  template: ` <div class="menu-bar">
       <button id="arrange" (click)="arrange()">Arrange</button>
+      <button id="arrange" (click)="undo()">Undo</button>
+      <button id="arrange" (click)="redo()">redo</button>
     </div>
     <div class="wrapper">
       <div #nodeEditor class="node-editor"></div>
@@ -33,6 +36,7 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(ConnectionPlugin);
     editor.use(KeyboardPlugin);
     editor.use(AngularRenderPlugin);
+    editor.use(HistoryPlugin);
     editor.use(ArrangePlugin, {
       margin: { x: 50, y: 50 },
       depth: null,
@@ -96,5 +100,14 @@ export class NaetverkComponent implements AfterViewInit {
 
   arrange() {
     this.editor.trigger('arrange', {});
+  }
+
+  undo() {
+    this.editor.trigger('undo');
+    console.log(this.editor)
+  }
+
+  redo() {
+    this.editor.trigger('redo');
   }
 }
