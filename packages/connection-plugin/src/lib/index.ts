@@ -9,6 +9,11 @@ import {
 import { Flow, FlowParams } from './flow';
 import './events';
 
+export const ConnectionPlugin = {
+  name: 'connection',
+  install,
+};
+
 export function install(editor: NodeEditor) {
   editor.bind('connectionpath');
   editor.bind('connectiondrop');
