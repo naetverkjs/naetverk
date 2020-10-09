@@ -14,8 +14,8 @@ import { AddComponent } from './components/add-component';
   selector: 'nvk-angular-sample',
   template: ` <div class="menu-bar">
       <button id="arrange" (click)="arrange()">Arrange</button>
-      <button id="arrange" (click)="undo()">Undo</button>
-      <button id="arrange" (click)="redo()">redo</button>
+      <button id="undo" (click)="undo()">Undo</button>
+      <button id="redo" (click)="redo()">redo</button>
     </div>
     <div class="wrapper">
       <div #nodeEditor class="node-editor"></div>
@@ -104,7 +104,6 @@ export class NaetverkComponent implements AfterViewInit {
 
   undo() {
     this.editor.trigger('undo');
-    console.log(this.editor)
   }
 
   redo() {
