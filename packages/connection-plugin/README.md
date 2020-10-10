@@ -1,5 +1,7 @@
 # connection-plugin
 
+> _This plugin is based on the [retejs/connection-plugin](https://github.com/retejs/connection-plugin) and the [retejs/connection-mastery-plugi](https://github.com/retejs/connection-mastery-plugin)_
+
 Plugin to render the connections between nodes
 
 ### Installation
