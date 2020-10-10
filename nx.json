@@ -52,6 +52,16 @@
     },
     "history-plugin": {
       "tags": ["plugin"]
+    },
+    "react-renderer": {
+      "tags": []
+    },
+    "react": {
+      "tags": []
+    },
+    "react-e2e": {
+      "tags": [],
+      "implicitDependencies": ["react"]
     }
   },
   "workspaceLayout": {

@@ -24,7 +24,8 @@
       "@naetverkjs/lifecycle": ["packages/lifecycle-plugin/src/index.ts"],
       "@naetverkjs/keyboard": ["packages/keyboard-plugin/src/index.ts"],
       "@naetverkjs/arrange": ["packages/arrange-plugin/src/index.ts"],
-      "@naetverkjs/history": ["packages/history-plugin/src/index.ts"]
+      "@naetverkjs/history": ["packages/history-plugin/src/index.ts"],
+      "@naetverkjs/react-renderer": ["packages/react-renderer/src/index.js"]
     }
   },
   "exclude": ["node_modules", "tmp"]
