@@ -39,6 +39,7 @@
     "@angular/router": "^10.0.0",
     "@naetverkjs/naetverk": "^0.8.2-beta.1",
     "@nrwl/angular": "10.2.0",
+    "@nrwl/react": "^10.3.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"
