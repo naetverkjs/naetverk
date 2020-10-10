@@ -355,10 +355,7 @@
               "packages/arrange-plugin/tsconfig.lib.json",
               "packages/arrange-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/arrange-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/arrange-plugin/**/*"]
           }
         },
         "test": {
@@ -376,6 +373,41 @@
             "packageJson": "packages/arrange-plugin/package.json",
             "main": "packages/arrange-plugin/src/index.ts",
             "assets": ["packages/arrange-plugin/*.md"]
+          }
+        }
+      }
+    },
+    "history-plugin": {
+      "root": "packages/history-plugin",
+      "sourceRoot": "packages/history-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/history-plugin/tsconfig.lib.json",
+              "packages/history-plugin/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/history-plugin/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/history-plugin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/history-plugin",
+            "tsConfig": "packages/history-plugin/tsconfig.lib.json",
+            "packageJson": "packages/history-plugin/package.json",
+            "main": "packages/history-plugin/src/index.ts",
+            "assets": ["packages/history-plugin/*.md"]
           }
         }
       }

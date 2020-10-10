@@ -49,6 +49,9 @@
     },
     "arrange-plugin": {
       "tags": ["plugin"]
+    },
+    "history-plugin": {
+      "tags": ["plugin"]
     }
   },
   "workspaceLayout": {
