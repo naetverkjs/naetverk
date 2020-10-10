@@ -1,13 +1,15 @@
 import React from 'react';
 import { Node, Socket, Control } from '@naetverkjs/react-renderer';
 
+import './node.scss';
+
 export class MyNode extends Node {
   render() {
     const { node, bindSocket, bindControl } = this.props;
     const { outputs, controls, inputs, selected } = this.state;
 
     return (
-      <div className={`node ${selected}`}>
+      <div className={`node custom ${selected}`}>
         <div className="title">{node.name}</div>
         {/* Outputs */}
         {outputs.map((output) => (

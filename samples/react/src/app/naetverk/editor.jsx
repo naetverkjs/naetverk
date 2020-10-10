@@ -4,7 +4,6 @@ import { ReactRenderPlugin } from '@naetverkjs/react-renderer';
 import AddComponent from '../components/components/AddComponent';
 import NumComponent from '../components/components/NumComponent';
 import { AreaPlugin } from '@naetverkjs/area';
-import { MyNode } from '../components/components/MyNode';
 
 export default async function (container) {
   const components = [new NumComponent(), new AddComponent()];
@@ -14,9 +13,7 @@ export default async function (container) {
   editor.use(AreaPlugin, {
     background: 'designer-background',
   });
-  editor.use(ReactRenderPlugin, {
-    component: MyNode,
-  });
+  editor.use(ReactRenderPlugin);
 
   const engine = new Engine('demo@0.1.0');
 
@@ -25,7 +22,7 @@ export default async function (container) {
     engine.register(c);
   });
 
-  const n1 = await components[0].createNode({ num: 2 });
+  const n1 = await components[0].createNode({ num: 3 });
   const n2 = await components[0].createNode({ num: 0 });
   const add = await components[1].createNode();
 

@@ -9,10 +9,9 @@ class NumComponent extends Component {
 
   builder(node) {
     const out1 = new Output('num', 'Number', numSocket);
+    const ctrl = new NumControl(this.editor, 'num', node);
 
-    return node
-      .addControl(new NumControl(this.editor, 'num', true))
-      .addOutput(out1);
+    return node.addControl(ctrl).addOutput(out1);
   }
 
   worker(node, inputs, outputs) {
