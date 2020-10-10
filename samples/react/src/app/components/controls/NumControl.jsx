@@ -6,10 +6,10 @@ class NumControl extends Control {
     <input
       type="number"
       value={value}
-      ref={ref => {
-        ref && ref.addEventListener("pointerdown", e => e.stopPropagation());
+      ref={(ref) => {
+        ref && ref.addEventListener('pointerdown', (e) => e.stopPropagation());
       }}
-      onChange={e => onChange(+e.target.value)}
+      onChange={(e) => onChange(+e.target.value)}
     />
   );
 
@@ -25,10 +25,10 @@ class NumControl extends Control {
     this.props = {
       readonly,
       value: initial,
-      onChange: v => {
+      onChange: (v) => {
         this.setValue(v);
-        this.emitter.trigger("process");
-      }
+        this.emitter.trigger('process');
+      },
     };
   }
 
