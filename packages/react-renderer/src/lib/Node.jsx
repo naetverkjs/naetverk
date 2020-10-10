@@ -23,7 +23,10 @@ export class Node extends React.Component {
     const { outputs, controls, inputs, selected } = this.state;
 
     return (
-      <div className={`node ${selected} ${kebab(node.name)}`}>
+      <div
+        id={'node-' + node.id}
+        className={`node ${selected} ${kebab(node.name)}`}
+      >
         <div className="title">{node.name}</div>
         {/* Outputs */}
         {outputs.map((output) => (

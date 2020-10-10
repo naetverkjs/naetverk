@@ -9,7 +9,7 @@ export class MyNode extends Node {
     const { outputs, controls, inputs, selected } = this.state;
 
     return (
-      <div className={`node custom ${selected}`}>
+      <div id={'node-' + node.id} className={`node custom ${selected}`}>
         <div className="title">{node.name}</div>
         {/* Outputs */}
         {outputs.map((output) => (

@@ -22,8 +22,8 @@ export default async function (container) {
     engine.register(c);
   });
 
-  const n1 = await components[0].createNode({ num: 3 });
-  const n2 = await components[0].createNode({ num: 0 });
+  const n1 = await components[0].createNode({ num: 2 });
+  const n2 = await components[0].createNode({ num: 3 });
   const add = await components[1].createNode();
 
   n1.position = [80, 200];
