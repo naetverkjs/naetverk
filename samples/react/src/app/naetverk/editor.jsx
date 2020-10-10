@@ -1,10 +1,10 @@
 import { Engine, NodeEditor } from '@naetverkjs/naetverk';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { ReactRenderPlugin } from '@naetverkjs/react-renderer';
-import AddComponent from './components/AddComponent';
-import NumComponent from './components/NumComponent';
+import AddComponent from '../components/components/AddComponent';
+import NumComponent from '../components/components/NumComponent';
 import { AreaPlugin } from '@naetverkjs/area';
-import { MyNode } from './components/MyNode';
+import { MyNode } from '../components/components/MyNode';
 
 export default async function (container) {
   const components = [new NumComponent(), new AddComponent()];

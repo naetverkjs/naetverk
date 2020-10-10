@@ -1,5 +1,5 @@
-import NumControl from './NumControl';
-import { numSocket } from './NumSocket';
+import NumControl from '../controls/NumControl';
+import { numSocket } from '../../naetverk/NumSocket';
 import { Input, Component, Output } from '@naetverkjs/naetverk';
 import { MyNode } from './MyNode';
 

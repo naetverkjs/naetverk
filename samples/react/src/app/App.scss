@@ -1,3 +1,35 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  .node-editor {
+    height: calc(100vh - 14rem);
+  }
+}
+
+.socket.number {
+  background: #96b38a;
+}
+
+.menu-bar {
+  width: 100%;
+  button {
+    background-color: white;
+    padding: 0.5rem;
+    border: 1px solid gray;
+    margin: 0.5rem;
+    &:hover {
+      background-color: #cccccc;
+      cursor: pointer;
+    }
+  }
+}
+
+.keys {
+  padding: 1rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
 $sockets: (
   'integer': #2703a6,
   'decimal': #141259,
