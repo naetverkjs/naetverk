@@ -68,3 +68,10 @@ $grid-area: $grid-size * 10000;
       linear-gradient(to bottom, $grid-color 1px, transparent 1px);
   }
 }
+
+
+#pick {
+  position: absolute;
+  top: 0;
+  left: 200px;
+}

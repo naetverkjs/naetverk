@@ -1,4 +1,6 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import { InitializeCreateAndConnect } from './features/create-and-connect';
+import { InitializePickConnection } from './features/pick-connection';
 import { Picker } from './picker';
 import {
   renderConnection,
@@ -9,12 +11,17 @@ import {
 import { Flow, FlowParams } from './flow';
 import './events';
 
+type Params = {
+  createAndConnect?: boolean | { keyCode: string };
+  pickConnection?: boolean | { keyCode: string };
+};
+
 export const ConnectionPlugin = {
   name: 'connection',
   install,
 };
 
-export function install(editor: NodeEditor) {
+export function install(editor: NodeEditor, params: Params) {
   editor.bind('connectionpath');
   editor.bind('connectiondrop');
   editor.bind('connectionpick');
@@ -74,4 +81,18 @@ export function install(editor: NodeEditor) {
   editor.on('destroy', () => {
     window.removeEventListener('pointerup', pointerUp);
   });
+
+  const createAndConnect =
+    params.createAndConnect === false
+      ? false
+      : params.createAndConnect || { keyCode: 'ControlLeft' };
+  const pickConnection =
+    params.pickConnection === false
+      ? false
+      : params.pickConnection || { keyCode: 'KeyD' };
+
+  if (typeof createAndConnect === 'object')
+    InitializeCreateAndConnect(editor, createAndConnect.keyCode);
+  if (typeof pickConnection === 'object')
+    InitializePickConnection(editor, pickConnection.keyCode);
 }

@@ -16,6 +16,9 @@ import { AddComponent } from './components/add-component';
     </div>
     <div class="wrapper">
       <div #nodeEditor class="node-editor"></div>
+    </div>
+    <div class="keys">
+      <span><strong>D</strong> Click on connection and press D to delete it</span>
     </div>`,
   styleUrls: ['./naetverk.component.scss'],
 })
@@ -30,7 +33,9 @@ export class NaetverkComponent implements AfterViewInit {
     const components = [new NumComponent(), new AddComponent()];
 
     const editor = new NodeEditor('demo@0.2.0', container);
-    editor.use(ConnectionPlugin);
+    editor.use(ConnectionPlugin, {
+      pickConnection: { keyCode: 'KeyD' },
+    });
     editor.use(KeyboardPlugin);
     editor.use(AngularRenderPlugin);
     editor.use(ArrangePlugin, {
