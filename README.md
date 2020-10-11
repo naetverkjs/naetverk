@@ -28,6 +28,9 @@ that allows you to create node-based editor directly in the browser.
 |                              |                                                                                                              |                      |                                                                                                   |
 | **Angular**                  |                                                                                                              |                      |                                                                                                   |
 | @naetverkjs/angular-renderer | Angular Module to render basic nodes                                                                         |                      | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/angular-renderer/README.md)  |
+|                              |                                                                                                              |                      |                                                                                                   |
+| **React**                    |                                                                                                              |                      |                                                                                                   |
+| @naetverkjs/react-renderer   | React Module to render basic nodes                                                                           |                      | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/react-renderer/README.md)    |
 
 ## Documentation:
 
