@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as cliProgress from 'cli-progress';
 import { execSync } from 'child_process';
 
 function hasFiles(dir: string, ...names: string[]) {
@@ -78,21 +79,42 @@ export class init {
         }
       }
 
+      const progressBar = new cliProgress.SingleBar(
+        {},
+        cliProgress.Presets.shades_classic
+      );
+
+      progressBar.start(this.libraries.length * 2, 0, {
+        message: 'Starting',
+      });
+
+      let n = 1;
+
       writeInFile('./tools/base.package.json', './package.json');
 
-      console.log('\nUpdating: ');
       this.libraries.forEach((lib) => {
-        console.log('- ', lib);
+        progressBar.update(n++, {
+          message: 'Updating' + lib,
+        });
         updateLibraryPackage(lib, this.workspace);
       });
 
-      console.log('\nFormat: ');
-      execSync('nx format:write');
+      const formatMsg = execSync('nx format:write', { stdio: 'pipe' });
 
-      console.log('\nBuilding');
+      const buildMsg: Record<string, any>[] = [];
       this.libraries.forEach((lib) => {
-        console.log('- ', lib);
-        execSync('nx build ' + lib);
+        progressBar.update(n++, {
+          message: 'Building' + lib,
+        });
+
+        const buffer = execSync('nx build ' + lib, { stdio: 'pipe' });
+        buildMsg[lib] = buffer.toString();
+      });
+
+      progressBar.stop();
+
+      this.libraries.forEach((lib) => {
+        console.log(buildMsg[lib]);
       });
     }
   }
