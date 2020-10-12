@@ -57,6 +57,7 @@
     "@nrwl/angular": "10.2.0",
     "@nrwl/react": "^10.3.0",
     "document-register-element": "1.13.1",
+    "np": "^6.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",

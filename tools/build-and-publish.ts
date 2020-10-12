@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-
+import { execSync } from 'child_process';
 
 function hasFiles(dir: string, ...names: string[]) {
   for (const name of names) {
@@ -80,8 +80,19 @@ export class init {
 
       writeInFile('./tools/base.package.json', './package.json');
 
+      console.log('\nUpdating: ');
       this.libraries.forEach((lib) => {
+        console.log('- ', lib);
         updateLibraryPackage(lib, this.workspace);
+      });
+
+      console.log('\nFormat: ');
+      execSync('nx format:write');
+
+      console.log('\nBuilding');
+      this.libraries.forEach((lib) => {
+        console.log('- ', lib);
+        execSync('nx build ' + lib);
       });
     }
   }
