@@ -1,1 +1,29 @@
-{"name":"@naetverkjs/angular-renderer","peerDependencies":{"@angular/common":"^10.0.14","@angular/core":"^10.0.14","@angular/animations":"^10.0.14","@angular/elements":"^10.1.1","@naetverkjs/naetverk":"0.8.1"},"dependencies":{"tslib":"^2.0.0"},"version":"0.8.2","repository":{"type":"git","url":"git+https://github.com/naetverkjs/naetverk.git"},"keywords":["dataflow","visual programming","node editor","ts"],"author":"Konrad Koch","license":"MIT","bugs":{"url":"https://github.com/naetverkjs/naetverk/issues"}}
+{
+  "name": "@naetverkjs/angular-renderer",
+  "peerDependencies": {
+    "@angular/common": "^10.0.14",
+    "@angular/core": "^10.0.14",
+    "@angular/animations": "^10.0.14",
+    "@angular/elements": "^10.1.1",
+    "@naetverkjs/naetverk": "0.8.1"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "version": "0.8.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naetverkjs/naetverk.git"
+  },
+  "keywords": [
+    "dataflow",
+    "visual programming",
+    "node editor",
+    "ts"
+  ],
+  "author": "Konrad Koch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naetverkjs/naetverk/issues"
+  }
+}

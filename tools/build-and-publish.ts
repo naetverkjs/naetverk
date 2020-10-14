@@ -107,7 +107,9 @@ export class init {
           message: 'Building' + lib,
         });
 
-        const buffer = execSync('nx build ' + lib, { stdio: 'pipe' });
+        const buffer = execSync('yarn run builder bundle ' + lib, {
+          stdio: 'pipe',
+        });
         buildMsg[lib] = buffer.toString();
       });
 

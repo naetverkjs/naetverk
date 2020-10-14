@@ -7,5 +7,16 @@
   },
   "peerDependencies": {
     "@naetverkjs/naetverk": "0.8.1"
+  },
+  "keywords": [
+    "dataflow",
+    "visual programming",
+    "node editor",
+    "ts"
+  ],
+  "author": "Konrad Koch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naetverkjs/naetverk/issues"
   }
 }

@@ -40,7 +40,8 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "publish": "ts-node tools/build-and-publish.ts"
+    "publish": "ts-node tools/build-and-publish.ts",
+    "builder": "ts-node utils/build"
   },
   "private": true,
   "dependencies": {
@@ -83,16 +84,20 @@
     "@nrwl/react": "10.3.0",
     "@nrwl/web": "10.3.0",
     "@nrwl/workspace": "10.2.0",
+    "@rollup/plugin-typescript": "^6.0.0",
     "@testing-library/react": "10.4.1",
+    "@types/cli-progress": "^3.8.0",
     "@types/jest": "26.0.8",
-    "@types/node": "~8.9.4",
+    "@types/node": "13.13.4",
     "@types/react": "16.9.38",
     "@types/react-dom": "16.9.8",
     "@types/react-router-dom": "5.1.5",
+    "@types/uglify-js": "^3.11.0",
+    "@types/yargs": "^15.0.8",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
     "babel-jest": "26.2.2",
-    "cli-progress": "3.8.0",
+    "cli-progress": "^3.8.2",
     "codelyzer": "~5.0.1",
     "cypress": "^4.1.0",
     "dotenv": "6.2.0",
@@ -107,9 +112,13 @@
     "jest-preset-angular": "8.2.1",
     "ng-packagr": "^10.0.0",
     "prettier": "2.0.4",
+    "rollup": "^2.30.0",
     "ts-jest": "26.1.4",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~3.9.3"
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "~3.9.3",
+    "uglify-js": "^3.11.2",
+    "yargs": "^16.0.3"
   }
 }
