@@ -40,7 +40,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "prepublish": "ts-node tools/build-and-publish.ts",
+    "update:packages": "ts-node tools/build-and-publish.ts",
     "publish": "ts-node utils/publish",
     "builder": "ts-node utils/build",
     "build:all": "ts-node utils/build all"

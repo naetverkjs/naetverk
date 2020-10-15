@@ -46,7 +46,7 @@ export class init {
 
         if (fs.existsSync(`dist/@naetverkjs/${lib}`)) {
           const buffer = execSync(
-            `npm publish dist/@naetverkjs/${lib} --access public --dry-run`,
+            `npm publish dist/@naetverkjs/${lib} --access public`,
             {
               stdio: 'pipe',
             }

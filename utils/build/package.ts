@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { Bundle, BundleOptions, BundleEmitter } from './bundle';
 import { Dependency } from './dependency';
 
@@ -21,16 +22,35 @@ export class PackageBuilder {
 
   // tslint:disable-next-line:no-empty
   public async bundle(options: BundleOptions) {
+    const sourcePackage = JSON.parse(
+      fs.readFileSync(
+        path.join(path.normalize(options.dir), 'package.json'),
+        'utf8'
+      )
+    );
+
+    const transferFields = [
+      'repository',
+      'keywords',
+      'author',
+      'license',
+      'bugs',
+    ];
+
     await this.bundleES2015(options);
     const imports = await this.bundleES5(options);
 
     const pkg: any = {
-      name: options.importName,
+      name: sourcePackage.name,
       main: `bundles/${options.name}.umd.js`,
       fesm2015: `fesm2015/${options.name}.js`,
       typings: 'index.d.ts',
       version: options.version,
     };
+
+    for (const field of transferFields) {
+      pkg[field] = sourcePackage[field];
+    }
 
     imports?.forEach((name) => {
       const dependency = this.dependency(name);

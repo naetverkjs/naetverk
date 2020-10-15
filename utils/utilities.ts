@@ -22,3 +22,22 @@ export function getProcessType(dir) {
     return null;
   }
 }
+
+export function writeInFile(targetPath: string, sourcePath: string) {
+  const targetContent = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
+  const sourceContent = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+
+  const transferFields = [
+    'version',
+    'repository',
+    'keywords',
+    'author',
+    'license',
+    'bugs',
+  ];
+
+  for (const field of transferFields) {
+    targetContent[field] = sourceContent[field];
+  }
+  fs.writeFileSync(targetPath, JSON.stringify(targetContent));
+}
