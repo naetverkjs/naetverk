@@ -21,15 +21,13 @@ export class PackageBuilder {
 
   // tslint:disable-next-line:no-empty
   public async bundle(options: BundleOptions) {
-    const warnings: string[] = [];
-
     await this.bundleES2015(options);
     const imports = await this.bundleES5(options);
 
     const pkg: any = {
-      fesm2015: `fesm2015/${options.name}.js`,
-      main: `bundles/${options.name}.umd.js`,
       name: options.importName,
+      main: `bundles/${options.name}.umd.js`,
+      fesm2015: `fesm2015/${options.name}.js`,
       typings: 'index.d.ts',
       version: options.version,
     };

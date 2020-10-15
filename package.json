@@ -40,8 +40,10 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "publish": "ts-node tools/build-and-publish.ts",
-    "builder": "ts-node utils/build"
+    "prepublish": "ts-node tools/build-and-publish.ts",
+    "publish": "ts-node utils/publish",
+    "builder": "ts-node utils/build",
+    "build:all": "ts-node utils/build all"
   },
   "private": true,
   "dependencies": {
