@@ -84,7 +84,7 @@ export class init {
         cliProgress.Presets.shades_classic
       );
 
-      progressBar.start(this.libraries.length * 2, 0, {
+      progressBar.start(this.libraries.length, 0, {
         message: 'Starting',
       });
 
@@ -99,25 +99,8 @@ export class init {
         updateLibraryPackage(lib, this.workspace);
       });
 
-      const formatMsg = execSync('nx format:write', { stdio: 'pipe' });
-
-      const buildMsg: Record<string, any>[] = [];
-      this.libraries.forEach((lib) => {
-        progressBar.update(n++, {
-          message: 'Building' + lib,
-        });
-
-        const buffer = execSync('yarn run builder bundle ' + lib, {
-          stdio: 'pipe',
-        });
-        buildMsg[lib] = buffer.toString();
-      });
-
+      execSync('nx format:write', { stdio: 'pipe' });
       progressBar.stop();
-
-      this.libraries.forEach((lib) => {
-        console.log(buildMsg[lib]);
-      });
     }
   }
 }
