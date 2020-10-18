@@ -1,6 +1,6 @@
 import { AutoArrange } from './auto-arrange';
 import { ArrangeOptions } from './interfaces/arrange-options.interface';
-
+import "./events"
 export const ArrangePlugin = {
   name: 'auto-arrange',
   install,

@@ -1,45 +1,17 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import { AddConnectionAction, RemoveConnectionAction } from './actions/connection.action';
+import { AddNodeAction, DragNodeAction, RemoveNodeAction } from './actions/node.action';
+
+import './events';
 import History from './history';
 import Act from './history-action';
-import {
-  AddNodeAction,
-  DragNodeAction,
-  RemoveNodeAction,
-} from './actions/node.action';
-import {
-  AddConnectionAction,
-  RemoveConnectionAction,
-} from './actions/connection.action';
 
-/**
- * Add the actions to nodes
- * @param editor
- * @param history
- */
-function trackNodes(editor: NodeEditor, history) {
-  editor.on('nodecreated', (node) =>
-    history.add(new AddNodeAction(editor, node))
-  );
-  editor.on('noderemoved', (node) =>
-    history.add(new RemoveNodeAction(editor, node))
-  );
-  editor.on('nodetranslated', ({ node, prev }) => {
-    if (history.last instanceof DragNodeAction && history.last.node === node)
-      history.last.update(node);
-    else history.add(new DragNodeAction(editor, node, prev));
-  });
-}
+export const HistoryPlugin = {
+  name: 'history',
+  install,
+};
 
-function trackConnections(editor: NodeEditor, history) {
-  editor.on('connectioncreated', (c) =>
-    history.add(new AddConnectionAction(editor, c))
-  );
-  editor.on('connectionremoved', (c) =>
-    history.add(new RemoveConnectionAction(editor, c))
-  );
-}
-
-function install(editor, { keyboard = true }) {
+function install(editor: NodeEditor, { keyboard = true }) {
   editor.bind('undo');
   editor.bind('redo');
   editor.bind('addhistory');
@@ -69,9 +41,32 @@ function install(editor, { keyboard = true }) {
   trackConnections(editor, history);
 }
 
-export const Action = Act;
+/**
+ * Add the actions to nodes
+ * @param editor
+ * @param history
+ */
+function trackNodes(editor: NodeEditor, history) {
+  editor.on('nodecreated', (node) =>
+    history.add(new AddNodeAction(editor, node))
+  );
+  editor.on('noderemoved', (node) =>
+    history.add(new RemoveNodeAction(editor, node))
+  );
+  editor.on('nodetranslated', ({ node, prev }) => {
+    if (history.last instanceof DragNodeAction && history.last.node === node)
+      history.last.update(node);
+    else history.add(new DragNodeAction(editor, node, prev));
+  });
+}
 
-export const HistoryPlugin = {
-  name: 'history',
-  install,
-};
+function trackConnections(editor: NodeEditor, history) {
+  editor.on('connectioncreated', (c) =>
+    history.add(new AddConnectionAction(editor, c))
+  );
+  editor.on('connectionremoved', (c) =>
+    history.add(new RemoveConnectionAction(editor, c))
+  );
+}
+
+export const Action = Act;

@@ -42,9 +42,7 @@ export class Nx {
   }
 
   publishMany(...names: string[]) {
-    process.stdout.write(
-      chalk.yellow('Publish ') + this.package.version + ' \n'
-    );
+    process.stdout.write(chalk.yellow('Publish ') + ' \n');
     names.forEach((lib) => {
       this.publish(lib);
     });
@@ -64,14 +62,15 @@ export class Nx {
     const libPath = `dist/packages/${lib}`;
     try {
       if (fs.existsSync(libPath)) {
-        const libName = readJSON(
+        const libdata = readJSON(
           this.baseDir,
           path.join(libPath, 'package.json')
-        ).name;
-
+        );
+        const libName = libdata.name;
+        process.stdout.write(chalk.blue(libdata.version));
         const buffer = this.systemSync(`npm view ${libName} --json`);
 
-        if (JSON.parse(buffer).version === this.package.version) {
+        if (JSON.parse(buffer).version === libdata.version) {
           process.stdout.write(chalk.red(' x ') + 'Already Published' + ' \n');
         } else {
           // Actually do the command

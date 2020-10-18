@@ -6,7 +6,7 @@
     "url": "git+https://github.com/naetverkjs/naetverk.git"
   },
   "peerDependencies": {
-    "@naetverkjs/naetverk": "0.8.1"
+    "@naetverkjs/naetverk": "0.8.4"
   },
   "keywords": [
     "dataflow",
