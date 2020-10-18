@@ -6,7 +6,7 @@ import { Nx } from './nx';
 // tslint:disable: no-empty
 // tslint:disable-next-line:no-unused-expression
 yargs
-  .scriptName('nx-lib-bundle')
+  .scriptName('ntvk-bundle')
   .options({
     output: {
       alias: 'o',

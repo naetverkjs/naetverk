@@ -41,3 +41,20 @@ export function writeInFile(targetPath: string, sourcePath: string) {
   }
   fs.writeFileSync(targetPath, JSON.stringify(targetContent));
 }
+
+export function readJSON(baseDir: string, dir: string) {
+  const file = path.resolve(baseDir, dir);
+  const json = fs.readFileSync(file, 'utf-8');
+  return JSON.parse(json);
+}
+
+export function tryJSON(baseDir: string, dir: string) {
+  const file = path.resolve(baseDir, dir);
+
+  if (fs.existsSync(file)) {
+    const json = fs.readFileSync(file, 'utf-8');
+    return JSON.parse(json);
+  }
+
+  return null;
+}
