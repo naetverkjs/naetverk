@@ -26,7 +26,8 @@
               "samples/angular/src/assets"
             ],
             "styles": ["samples/angular/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["@naetverkjs/naetverk"]
           },
           "configurations": {
             "production": {
