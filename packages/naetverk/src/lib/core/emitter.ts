@@ -44,6 +44,12 @@ export class Emitter<EventTypes> {
     this.events[name] = [];
   }
 
+  unbind(name: string) {
+    if (!this.events[name]) throw new Error(`The event ${name} is not bound`);
+
+    this.events[name] = undefined;
+  }
+
   exist(name: string) {
     return Array.isArray(this.events[name]);
   }
