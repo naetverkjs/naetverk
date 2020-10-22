@@ -1739,10 +1739,25 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
-"@naetverkjs/naetverk@^0.8.2-beta.1":
-  version "0.8.2-beta.1"
-  resolved "https://registry.yarnpkg.com/@naetverkjs/naetverk/-/naetverk-0.8.2-beta.1.tgz#3b1ad1879dafe852a81174261496cfa1c3397044"
-  integrity sha512-IUzRk+UDNAZrrYJIURox3Uoz2DKALVzxFnef8tUdYErXIyOtIovoOOfkZrjxxYRG2SWq1aUHTbhLsW6iEAiglw==
+"@naetverkjs/area@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@naetverkjs/area/-/area-0.8.4.tgz#04647b953a437a5795808bc57ca160c236ddc57c"
+  integrity sha512-5huqXVLn1zqfKQWW0EXw0mEJHCIysruCdbkGX4/vsmgjXjl+yXnjeNmyWgrHnmlcd+PXYB9mXB0TGvXjWn/ibA==
+
+"@naetverkjs/connections@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@naetverkjs/connections/-/connections-0.8.4.tgz#f17b59037a494e28316cc84c53cba28279ae044b"
+  integrity sha512-tHz+7qWhthn9xMlkcdOrNUYas0ryNR+2ZJLFNhm3FvDrtBfxfFFaRQ+VpxPzAxFP/h+0nAlwLqFfp0X+zFtZLg==
+
+"@naetverkjs/naetverk@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@naetverkjs/naetverk/-/naetverk-0.8.4.tgz#187dc1b3dd64e9c014021cf8367a8bdaea532088"
+  integrity sha512-W15675si2KLd29G9ftW61H1qg29k93yDNntoHqVU2f8hctcM0OFd+7RR9mKEbWo3Nyigna2jIH6raT/g5fjP4A==
+
+"@naetverkjs/react-renderer@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@naetverkjs/react-renderer/-/react-renderer-0.8.2.tgz#9c7ab994758ad4e25b71107e9341918d7d73ce8e"
+  integrity sha512-RrwQkb4w3VE7x5OMvxVBGBuC1qQ3poTJr9IS2m6Ncyz9xkf+c4XqGR8OfHaTVyw5fZDYPGm0KMl7wpuO/CEgkA==
 
 "@ngtools/webpack@10.0.8":
   version "10.0.8"
