@@ -30,10 +30,20 @@ before_script:
 
 
 script:
-  - yarn run affected:build -- --base=origin/master --parallel
+  - yarn run build angular-renderer
+  - yarn run build area-plugin
+  - yarn run build arrange-plugin
+  - yarn run build connection-plugin
+  - yarn run build history-plugin
+  - yarn run build keyboard-plugin
+  - yarn run build lifecycle-plugin
+  - yarn run build naetverk
+  - yarn run build react-renderer
+
   - yarn run affected:test -- --code-coverage --skip-nx-cache
   - yarn run affected:lint -- --base=origin/master --parallel
-  - yarn run e2e --headless
+
+  - yarn run run angular-e2e:e2e --headless
   - yarn run format
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi' # sonar only on non-PRs
 
