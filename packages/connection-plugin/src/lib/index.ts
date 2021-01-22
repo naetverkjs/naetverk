@@ -11,10 +11,10 @@ import {
 import { Flow, FlowParams } from './flow';
 import './events';
 
-interface Params {
+type Params = {
   createAndConnect?: boolean | { keyCode: string };
   pickConnection?: boolean | { keyCode: string };
-}
+};
 
 export const ConnectionPlugin = {
   name: 'connection',

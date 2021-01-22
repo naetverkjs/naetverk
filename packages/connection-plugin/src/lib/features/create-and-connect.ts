@@ -13,7 +13,7 @@ export function InitializeCreateAndConnect(
     mouseEvent = e;
   });
   editor.on('connectiondrop', (io) => {
-    if (!mouseEvent) throw Error('Error not found');
+    if (!mouseEvent) throw 'Error not found';
     if (!holder.holding) return;
     targetIO = io;
     editor.trigger('contextmenu', {
