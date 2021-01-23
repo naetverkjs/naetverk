@@ -1739,11 +1739,6 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
-"@naetverkjs/naetverk@^0.8.2-beta.1":
-  version "0.8.2-beta.1"
-  resolved "https://registry.yarnpkg.com/@naetverkjs/naetverk/-/naetverk-0.8.2-beta.1.tgz#3b1ad1879dafe852a81174261496cfa1c3397044"
-  integrity sha512-IUzRk+UDNAZrrYJIURox3Uoz2DKALVzxFnef8tUdYErXIyOtIovoOOfkZrjxxYRG2SWq1aUHTbhLsW6iEAiglw==
-
 "@ngtools/webpack@10.0.8":
   version "10.0.8"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-10.0.8.tgz#c818415a150ff6d578b25311b97859220b9d5a10"
