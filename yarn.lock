@@ -1969,7 +1969,7 @@
     webpack-merge "4.2.1"
     webpack-node-externals "1.7.2"
 
-"@nrwl/react@^10.3.0":
+"@nrwl/react@10.3.0":
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/@nrwl/react/-/react-10.3.0.tgz#4cd76e3ee91150e2fd17292a13ae74a89f96f7d9"
   integrity sha512-/f6/DTYMMPnhAtwNpH15x83bl3P0MuuPHcJMC8T2EP7NrxnrL3QAz7QGPD2e06kPxu0jT4cB/aJvQHkaDrM6Yw==

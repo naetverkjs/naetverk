@@ -2,7 +2,7 @@
 
 ---
 
-[![Build Status](https://travis-ci.org/naetverkjs/naetverk.svg?branch=master)](https://travis-ci.org/naetverkjs/naetverk)
+[![Build Status](https://travis-ci.com/naetverkjs/naetverk.svg?branch=master)](https://travis-ci.com/naetverkjs/naetverk)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=naetverkjs_naetverk&metric=coverage)](https://sonarcloud.io/dashboard?id=naetverkjs_naetverk)
 
 ---
@@ -11,10 +11,13 @@
 
 ## Introduction
 
-**Naetverk** is a modular framework for visual programming. **Naetverk** is heavily based on the fantastic [rete.js](https://github.com/retejs/rete) framework,
+**Naetverk** is a modular framework for visual programming. **Naetverk** is forked from the fantastic [rete.js](https://github.com/retejs/rete) framework,
 that allows you to create node-based editor directly in the browser.
 
-**Why a different branch?** - I have some ideas that I follow which are in conflict with the original implementation.
+**Why a different branch?** - I have some ideas that I follow which are in conflict with the original implementation. We decided to move the individual plugins in to one mono repository to have a tighter connection between them.
+They also follow the same version number on release. So it should be easier to manage your dependencies.
+
+### Plugins
 
 | Name                         | Description                                                                                                  | Extends              | Readme / Docs                                                                                     |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------- |
@@ -25,7 +28,11 @@ that allows you to create node-based editor directly in the browser.
 | @naetverkjs/keyboard         | Registers keyboard input and maps them to events                                                             | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/keyboard-plugin/README.md)   |
 | @naetverkjs/arrange          | Rearranges the node based on their size on the board                                                         | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/arrange-plugin/README.md)    |
 | @naetverkjs/history          | Plugin that adds the ability to revert actions                                                               | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/history-plugin/README.md)    |
-|                              |                                                                                                              |                      |                                                                                                   |
+
+### Framework Renderers
+
+| Name                         | Description                                                                                                  | Extends              | Readme / Docs                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------- |
 | **Angular**                  |                                                                                                              |                      |                                                                                                   |
 | @naetverkjs/angular-renderer | Angular Module to render basic nodes                                                                         |                      | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/angular-renderer/README.md)  |
 |                              |                                                                                                              |                      |                                                                                                   |

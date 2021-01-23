@@ -33,7 +33,7 @@ script:
   - yarn run affected:build -- --base=origin/master --parallel
   - yarn run affected:test -- --all --code-coverage --skip-nx-cache
   - yarn run affected:lint -- --base=origin/master --parallel
-  - yarn run e2e --headless
+  - yarn e2e angular-e2e --headless
   - yarn run format
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi' # sonar only on non-PRs
 
