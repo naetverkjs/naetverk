@@ -1,7 +1,7 @@
-import { renderMock } from '../../test/utils/render-mock';
-import { Component, Input, Node, NodeEditor, Output } from '../index';
-import { Comp1, Comp2 } from '../../test/components';
 import addNumbersData from '../../test/add-numbers';
+import { Comp1, Comp2 } from '../../test/components';
+import { renderMock } from '../../test/utils/render-mock';
+import { Component, Node, NodeEditor } from '../index';
 
 describe('Editor', () => {
   let container: HTMLElement;
@@ -78,28 +78,21 @@ describe('Editor', () => {
 
       // assert.throws(() => editor.connect(n1.outputs.get('none'), n2.inputs.get('name')), Error, 'no output');
 
-      editor.connect(
-        node1.outputs.get('num') as Output,
-        node2.inputs.get('num1') as Input
-      );
+      editor.connect(node1.outputs.get('num'), node2.inputs.get('num1'));
 
-      expect((node1.outputs.get('num') as Output).connections.length).toEqual(
-        1
-      );
+      expect(node1.outputs.get('num').connections.length).toEqual(1);
 
       expect(() => editor.removeConnection(connection)).toThrow(
         "Cannot access 'connection' before initialization"
       );
 
-      const connection = (node1.outputs.get('num') as Output).connections[0];
+      const connection = node1.outputs.get('num').connections[0];
 
       expect(() => editor.removeConnection(connection)).not.toThrow(
         "Cannot access 'connection' before initialization"
       );
 
-      expect((node1.outputs.get('num') as Output).connections.length).toEqual(
-        0
-      );
+      expect(node1.outputs.get('num').connections.length).toEqual(0);
     });
 
     it('nodes', async () => {
@@ -164,18 +157,15 @@ describe('Editor', () => {
 
       it('connection', () => {
         editor.on('connectioncreate', () => false);
-        editor.connect(
-          node.outputs.get('num') as Output,
-          node2.inputs.get('num1') as Input
-        );
-        expect((node.outputs.get('num') as Output).hasConnection()).toBeFalsy();
+        editor.connect(node.outputs.get('num'), node2.inputs.get('num1'));
+        expect(node.outputs.get('num').hasConnection()).toBeFalsy();
       });
 
       it('connection', () => {
-        const output = node.outputs.get('num') as Output;
+        const output = node.outputs.get('num');
 
         editor.on('connectionremove', () => false);
-        editor.connect(output, node2.inputs.get('num1') as Input);
+        editor.connect(output, node2.inputs.get('num1'));
         expect(output.hasConnection()).toBeTruthy();
 
         editor.removeConnection(output.connections[0]);
