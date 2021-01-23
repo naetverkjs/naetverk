@@ -31,7 +31,7 @@ before_script:
 
 script:
   - yarn run affected:build -- --base=origin/master --parallel
-  - yarn run affected:test -- --all --code-coverage --skip-nx-cache
+  - yarn run affected:test --code-coverage --skip-nx-cache
   - yarn run affected:lint -- --base=origin/master --parallel
   - yarn e2e angular-e2e --headless
   - yarn run format
