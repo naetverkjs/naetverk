@@ -17,7 +17,7 @@ export default async function (container) {
 
   const engine = new Engine('demo@0.1.0');
 
-  components.map((c) => {
+  components.forEach((c) => {
     editor.register(c);
     engine.register(c);
   });
