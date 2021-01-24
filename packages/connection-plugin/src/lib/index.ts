@@ -5,7 +5,12 @@ import { InitializePickConnection } from './features/pick-connection';
 import { Flow, FlowParams } from './flow';
 import { ConnectionOptions } from './interfaces/connection-options.interface';
 import { Picker } from './picker';
-import { getMapItemRecursively, renderConnection, renderPathData, updateConnection } from './utils';
+import {
+  getMapItemRecursively,
+  renderConnection,
+  renderPathData,
+  updateConnection,
+} from './utils';
 
 export const ConnectionPlugin = {
   name: 'connection',
