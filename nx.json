@@ -22,27 +22,34 @@
     }
   },
   "projects": {
+    "naetverk": {
+      "tags": ["library"]
+    },
     "angular": {
-      "tags": []
+      "tags": ["sample"]
     },
     "angular-e2e": {
-      "tags": [],
+      "tags": ["sample"],
       "implicitDependencies": ["angular"]
     },
-    "angular-renderer": {
-      "tags": []
+    "react": {
+      "tags": ["sample"]
     },
-    "naetverk": {
-      "tags": []
+    "react-e2e": {
+      "tags": ["sample"],
+      "implicitDependencies": ["react"]
+    },
+    "angular-renderer": {
+      "tags": ["plugin"]
     },
     "connection-plugin": {
-      "tags": []
+      "tags": ["plugin"]
     },
     "area-plugin": {
       "tags": ["plugin"]
     },
     "lifecycle-plugin": {
-      "tags": []
+      "tags": ["plugin"]
     },
     "keyboard-plugin": {
       "tags": ["plugin"]
@@ -54,14 +61,10 @@
       "tags": ["plugin"]
     },
     "react-renderer": {
-      "tags": []
+      "tags": ["plugin"]
     },
-    "react": {
-      "tags": []
-    },
-    "react-e2e": {
-      "tags": [],
-      "implicitDependencies": ["react"]
+    "selection-plugin": {
+      "tags": ["plugin"]
     }
   },
   "workspaceLayout": {

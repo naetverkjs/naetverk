@@ -1,6 +1,41 @@
 {
   "version": 1,
   "projects": {
+    "naetverk": {
+      "root": "packages/naetverk",
+      "sourceRoot": "packages/naetverk/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/naetverk/tsconfig.lib.json",
+              "packages/naetverk/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/naetverk/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/naetverk/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/naetverk",
+            "tsConfig": "packages/naetverk/tsconfig.lib.json",
+            "packageJson": "packages/naetverk/package.json",
+            "main": "packages/naetverk/src/index.ts",
+            "assets": ["packages/naetverk/*.md"]
+          }
+        }
+      }
+    },
     "angular": {
       "projectType": "application",
       "schematics": {
@@ -122,6 +157,112 @@
         }
       }
     },
+    "react": {
+      "root": "samples/react",
+      "sourceRoot": "samples/react/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/samples/react",
+            "index": "samples/react/src/index.html",
+            "main": "samples/react/src/main.js",
+            "polyfills": "samples/react/src/polyfills.js",
+            "tsConfig": "samples/react/tsconfig.app.json",
+            "assets": [
+              "samples/react/src/favicon.ico",
+              "samples/react/src/assets"
+            ],
+            "styles": ["samples/react/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "samples/react/src/environments/environment.js",
+                  "with": "samples/react/src/environments/environment.prod.js"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "samples/react/tsconfig.app.json",
+              "samples/react/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!samples/react/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "samples/react/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-e2e": {
+      "root": "samples/react-e2e",
+      "sourceRoot": "samples/react-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "samples/react-e2e/cypress.json",
+            "tsConfig": "samples/react-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["samples/react-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!samples/react-e2e/**/*"]
+          }
+        }
+      }
+    },
     "angular-renderer": {
       "projectType": "library",
       "root": "packages/angular-renderer",
@@ -161,41 +302,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        }
-      }
-    },
-    "naetverk": {
-      "root": "packages/naetverk",
-      "sourceRoot": "packages/naetverk/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/naetverk/tsconfig.lib.json",
-              "packages/naetverk/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/naetverk/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/naetverk/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/naetverk",
-            "tsConfig": "packages/naetverk/tsconfig.lib.json",
-            "packageJson": "packages/naetverk/package.json",
-            "main": "packages/naetverk/src/index.ts",
-            "assets": ["packages/naetverk/*.md"]
-          }
         }
       }
     },
@@ -457,108 +563,37 @@
         }
       }
     },
-    "react": {
-      "root": "samples/react",
-      "sourceRoot": "samples/react/src",
-      "projectType": "application",
+    "selection-plugin": {
+      "root": "packages/selection-plugin",
+      "sourceRoot": "packages/selection-plugin/src",
+      "projectType": "library",
       "schematics": {},
       "architect": {
-        "build": {
-          "builder": "@nrwl/web:build",
-          "options": {
-            "outputPath": "dist/samples/react",
-            "index": "samples/react/src/index.html",
-            "main": "samples/react/src/main.js",
-            "polyfills": "samples/react/src/polyfills.js",
-            "tsConfig": "samples/react/tsconfig.app.json",
-            "assets": [
-              "samples/react/src/favicon.ico",
-              "samples/react/src/assets"
-            ],
-            "styles": ["samples/react/src/styles.scss"],
-            "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "samples/react/src/environments/environment.js",
-                  "with": "samples/react/src/environments/environment.prod.js"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "react:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "react:build:production"
-            }
-          }
-        },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "linter": "eslint",
             "tsConfig": [
-              "samples/react/tsconfig.app.json",
-              "samples/react/tsconfig.spec.json"
+              "packages/selection-plugin/tsconfig.lib.json",
+              "packages/selection-plugin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!samples/react/**/*"]
+            "exclude": ["**/node_modules/**", "!packages/selection-plugin/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "samples/react/jest.config.js",
+            "jestConfig": "packages/selection-plugin/jest.config.js",
             "passWithNoTests": true
           }
-        }
-      }
-    },
-    "react-e2e": {
-      "root": "samples/react-e2e",
-      "sourceRoot": "samples/react-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "samples/react-e2e/cypress.json",
-            "tsConfig": "samples/react-e2e/tsconfig.e2e.json",
-            "devServerTarget": "react:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "react:serve:production"
-            }
-          }
         },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
+        "build": {
+          "builder": "@nrwl/node:package",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["samples/react-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!samples/react-e2e/**/*"]
+            "outputPath": "dist/packages/selection-plugin",
+            "tsConfig": "packages/selection-plugin/tsconfig.lib.json",
+            "packageJson": "packages/selection-plugin/package.json",
+            "main": "packages/selection-plugin/src/index.ts",
+            "assets": ["packages/selection-plugin/*.md"]
           }
         }
       }
