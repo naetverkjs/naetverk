@@ -1,4 +1,11 @@
 {
   "name": "@naetverkjs/selection",
-  "version": "0.0.1"
+  "version": "0.8.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naetverkjs/naetverk.git"
+  },
+  "peerDependencies": {
+    "@naetverkjs/naetverk": "0.8.2"
+  }
 }
