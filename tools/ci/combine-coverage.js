@@ -28,8 +28,6 @@ const mergeAllReports = (coverageMap, reports) => {
 
   reports.forEach((reportFile) => {
     const coverageReport = JSON.parse(fs.readFileSync(reportFile, 'utf8'));
-
-    //    const coverageReport = fs.readJSONSync(reportFile);
     coverageMap.merge(normalizeJestCoverage(coverageReport));
   });
 };
@@ -55,7 +53,7 @@ async function main() {
     (reports, err) => {
       if (Array.isArray(reports)) {
         mergeAllReports(coverageMap, reports);
-        generateReport(coverageMap, ['lcov']);
+        generateReport(coverageMap, ['text', 'lcov']);
       }
     }
   );
