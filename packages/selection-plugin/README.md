@@ -19,8 +19,15 @@ editor.use(SelectionPlugin);
 ```ts
 editor.use(SelectionPlugin, {
   enabled: true,
+  offset: {
+    x: 0,
+    y: 0,
+  },
 });
 ```
 
 - **enabled**:
   Enables or Disables the Plugin
+- **offset**:
+  The drawing of the rectangle is dependent on the drawing area.
+  If this area is moved, the introduction of an offset can be necessary.

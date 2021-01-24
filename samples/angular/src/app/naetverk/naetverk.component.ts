@@ -35,7 +35,7 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(HistoryPlugin);
     editor.use(SelectionPlugin, {
       enabled: true,
-      heightOffset: {
+      offset: {
         x: 0,
         y: 75,
       },

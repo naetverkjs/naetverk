@@ -21,7 +21,7 @@ function install(
   editor: NodeEditor,
   selectionOptions: SelectionOptions = {
     enabled: true,
-    heightOffset: {
+    offset: {
       x: 0,
       y: 75,
     },
@@ -106,7 +106,6 @@ function install(
   /**
    * Set Appearance customization
    */
-  // #region
   {
     const className = selectionOptions.selectionArea?.className;
     if (className) {
@@ -157,8 +156,8 @@ function install(
     cleanSelectionArea(selectionArea);
 
     const [x, y] = [
-      e.clientX - selectionOptions.heightOffset.x,
-      e.clientY - selectionOptions.heightOffset.y,
+      e.clientX - selectionOptions.offset.x,
+      e.clientY - selectionOptions.offset.y,
     ];
 
     selection[0] = {
@@ -241,16 +240,17 @@ function install(
     // The frame selection range needs to be drawn when any node is not selected
     drawSelectionArea(selectionArea, position, size);
   };
-  // #endregion
 
-  // #region Initialize styles and events
+  /**
+   * Initialize styles and events
+   * @type {string}
+   */
   editor.view.container.style.position = 'relative';
   editor.view.container.appendChild(selectionArea);
   editor.view.container.appendChild(selectionMode);
 
   editor.view.container.addEventListener('mousedown', handleMouseDown);
   editor.view.container.addEventListener('mouseup', handleMouseUp);
-  //editor.view.container.addEventListener('mouseout', handleMouseUp);
   editor.view.container.addEventListener('mousemove', handleMouseMove);
 
   editor.on('destroy', () => {
@@ -259,7 +259,6 @@ function install(
 
     editor.view.container.removeEventListener('mousedown', handleMouseDown);
     editor.view.container.removeEventListener('mouseup', handleMouseUp);
-    // editor.view.container.removeEventListener('mouseout', handleMouseUp);
     editor.view.container.removeEventListener('mousemove', handleMouseMove);
   });
 
@@ -271,7 +270,7 @@ function install(
     if (e.ctrlKey) {
       accumulate = true;
       selectionMode.innerText =
-        (selectionOptions.mode ?? [])[1] ?? 'Multiple selection mode\n';
+        (selectionOptions.mode ?? [])[1] ?? 'Multiple selection mode';
     }
   });
 
@@ -279,15 +278,13 @@ function install(
     if (accumulate) {
       accumulate = false;
       selectionMode.innerText =
-        (selectionOptions.mode ?? [])[0] ?? 'Single selection mode\n';
+        (selectionOptions.mode ?? [])[0] ?? 'Single selection mode';
     }
   });
 
   editor.on('translate', () => {
     return !accumulate;
   });
-
-  // #endregion
 }
 
 function drawSelectionArea(

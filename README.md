@@ -21,25 +21,26 @@ They also follow the same version number on release. So it should be easier to m
 
 ### Plugins
 
-| Name                         | Description                                                                                                  | Extends              | Readme / Docs                                                                                     |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------- |
-| @naetverkjs/naetverk         | Base library that allows the creation of node-based editors for visually programming or sequential scripting | -                    | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/naetverk/README.md)          |
-| @naetverkjs/connections      | Plugin to render the connections between nodes                                                               | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/area-plugin/README.md)       |
-| @naetverkjs/area             | Plugin to draw the network on a configurable background with limited zoom and grid snapping                  | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/connection-plugin/README.md) |
-| @naetverkjs/lifecycle        | Registers additional events that can be used while working with a component                                  | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/lifecycle-plugin/README.md)  |
-| @naetverkjs/keyboard         | Registers keyboard input and maps them to events                                                             | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/keyboard-plugin/README.md)   |
-| @naetverkjs/arrange          | Rearranges the node based on their size on the board                                                         | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/arrange-plugin/README.md)    |
-| @naetverkjs/history          | Plugin that adds the ability to revert actions                                                               | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/history-plugin/README.md)    |
+| Name                    | Description                                                                                                  | Extends              | Readme / Docs                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------- |
+| @naetverkjs/naetverk    | Base library that allows the creation of node-based editors for visually programming or sequential scripting | -                    | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/naetverk/README.md)          |
+| @naetverkjs/connections | Plugin to render the connections between nodes                                                               | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/area-plugin/README.md)       |
+| @naetverkjs/area        | Plugin to draw the network on a configurable background with limited zoom and grid snapping                  | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/connection-plugin/README.md) |
+| @naetverkjs/lifecycle   | Registers additional events that can be used while working with a component                                  | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/lifecycle-plugin/README.md)  |
+| @naetverkjs/keyboard    | Registers keyboard input and maps them to events                                                             | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/keyboard-plugin/README.md)   |
+| @naetverkjs/arrange     | Rearranges the node based on their size on the board                                                         | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/arrange-plugin/README.md)    |
+| @naetverkjs/history     | Plugin that adds the ability to revert actions                                                               | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/history-plugin/README.md)    |
+| @naetverkjs/selection   | Plugin that adds the ability to multiselect nodes with a selection rectangle                                 | @naetverkjs/naetverk | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/selection-plugin/README.md)  |
 
 ### Framework Renderers
 
-| Name                         | Description                                                                                                  | Extends              | Readme / Docs                                                                                     |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------- |
-| **Angular**                  |                                                                                                              |                      |                                                                                                   |
-| @naetverkjs/angular-renderer | Angular Module to render basic nodes                                                                         |                      | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/angular-renderer/README.md)  |
-|                              |                                                                                                              |                      |                                                                                                   |
-| **React**                    |                                                                                                              |                      |                                                                                                   |
-| @naetverkjs/react-renderer   | React Module to render basic nodes                                                                           |                      | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/react-renderer/README.md)    |
+| Name                         | Description                          | Extends | Readme / Docs                                                                                    |
+| ---------------------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------------------------------ |
+| **Angular**                  |                                      |         |                                                                                                  |
+| @naetverkjs/angular-renderer | Angular Module to render basic nodes |         | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/angular-renderer/README.md) |
+|                              |                                      |         |                                                                                                  |
+| **React**                    |                                      |         |                                                                                                  |
+| @naetverkjs/react-renderer   | React Module to render basic nodes   |         | [Readme](https://github.com/naetverkjs/naetverk/blob/master/packages/react-renderer/README.md)   |
 
 ## Documentation:
 

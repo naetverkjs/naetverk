@@ -1,6 +1,6 @@
 export interface SelectionOptions {
   enabled?: boolean;
-  heightOffset: {
+  offset: {
     x: number;
     y: number;
   };
