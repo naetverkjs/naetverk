@@ -64,7 +64,9 @@ function install(
    */
   {
     const className = selectionOptions.selectorClass;
-    if (!className) {
+    if (className) {
+      selectionArea.classList.add(...className.split(' '));
+    } else {
       selectionArea.style.backgroundColor = '#E3F2FD';
       selectionArea.style.border = 'solid 1px #42A5F5';
       selectionArea.style.borderRadius = '4px';

@@ -19,4 +19,18 @@ describe('Init', () => {
       expect(editor.events.multiselection.length).toEqual(1);
     });
   });
+
+  describe('Plugin configuration', () => {
+    it('should have the selectorClass when provided', () => {
+      const selector = 'chese';
+      editor.use(SelectionPlugin, {
+        offset: {
+          x: 0,
+          y: 0,
+        },
+        selectorClass: selector,
+      });
+      expect(editor.view.container.children[1].classList).toContain(selector);
+    });
+  });
 });
