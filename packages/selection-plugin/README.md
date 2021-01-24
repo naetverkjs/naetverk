@@ -1,8 +1,8 @@
 # selection-plugin
 
-> _This plugin is based on the [WellerQu/rete-selection-plugin](https://github.com/WellerQu/rete-selection-plugin)_
+> _This plugin was inspired by the [WellerQu/rete-selection-plugin](https://github.com/WellerQu/rete-selection-plugin)_
 
-Plugin to render a selection rectangle to allow the multiselection of nodes
+Plugin to render a selection rectangle to allow the multiselection of nodes. Hold `Ctrl` to enable the multi-selection or to draw a rectangle
 
 ### Installation
 
