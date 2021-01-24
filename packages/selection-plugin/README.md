@@ -23,6 +23,7 @@ editor.use(SelectionPlugin, {
     x: 0,
     y: 0,
   },
+  selectorClass: null,
 });
 ```
 
@@ -31,3 +32,5 @@ editor.use(SelectionPlugin, {
 - **offset**:
   The drawing of the rectangle is dependent on the drawing area.
   If this area is moved, the introduction of an offset can be necessary.
+- **selectorClass**:
+  Allows the extension of the default class of the selection area which is `selection-area`

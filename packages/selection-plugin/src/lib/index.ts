@@ -59,33 +59,15 @@ function install(
   selectionArea.style.pointerEvents = 'none';
   cleanSelectionArea(selectionArea);
 
-  const selectionMode = document.createElement('div');
-  selectionMode.classList.add('selection-mode');
-  selectionMode.style.position = 'absolute';
-  selectionMode.style.pointerEvents = 'none';
-  selectionMode.innerText =
-    (selectionOptions.mode ?? [])[0] ?? 'Single selection mode';
-
   /**
    * Set Appearance customization
    */
   {
-    const className = selectionOptions.selectionArea?.className;
-    if (className) {
-      selectionMode.classList.add(...className.split(' '));
-    } else {
+    const className = selectionOptions.selectorClass;
+    if (!className) {
       selectionArea.style.backgroundColor = '#E3F2FD';
       selectionArea.style.border = 'solid 1px #42A5F5';
       selectionArea.style.borderRadius = '4px';
-    }
-  }
-  {
-    const className = selectionOptions.selectionMode?.className;
-    if (className) {
-      selectionMode.classList.add(...className.split(' '));
-    } else {
-      selectionMode.style.top = '16px';
-      selectionMode.style.left = '16px';
     }
   }
 
@@ -169,7 +151,11 @@ function install(
     });
   }
 
-  const handleMouseMove = (e: MouseEvent) => {
+  /**
+   * Handle Mouse movements
+   * @param {MouseEvent} e
+   */
+  function handleMouseMove(e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -203,7 +189,7 @@ function install(
 
     // The frame selection range needs to be drawn when any node is not selected
     drawSelectionArea(selectionArea, position, size);
-  };
+  }
 
   /**
    * Initialize styles and events
@@ -211,7 +197,6 @@ function install(
    */
   editor.view.container.style.position = 'relative';
   editor.view.container.appendChild(selectionArea);
-  editor.view.container.appendChild(selectionMode);
 
   editor.view.container.addEventListener('mousedown', handleMouseDown);
   editor.view.container.addEventListener('mouseup', handleMouseUp);
@@ -219,7 +204,6 @@ function install(
 
   editor.on('destroy', () => {
     editor.view.container.removeChild(selectionArea);
-    editor.view.container.removeChild(selectionMode);
 
     editor.view.container.removeEventListener('mousedown', handleMouseDown);
     editor.view.container.removeEventListener('mouseup', handleMouseUp);
@@ -233,16 +217,12 @@ function install(
   editor.on('keydown', (e) => {
     if (e.ctrlKey) {
       accumulate = true;
-      selectionMode.innerText =
-        (selectionOptions.mode ?? [])[1] ?? 'Multiple selection mode';
     }
   });
 
   editor.on('keyup', () => {
     if (accumulate) {
       accumulate = false;
-      selectionMode.innerText =
-        (selectionOptions.mode ?? [])[0] ?? 'Single selection mode';
     }
   });
 
