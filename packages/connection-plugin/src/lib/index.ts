@@ -1,27 +1,18 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import './events';
 import { InitializeCreateAndConnect } from './features/create-and-connect';
 import { InitializePickConnection } from './features/pick-connection';
-import { Picker } from './picker';
-import {
-  renderConnection,
-  renderPathData,
-  updateConnection,
-  getMapItemRecursively,
-} from './utils';
 import { Flow, FlowParams } from './flow';
-import './events';
-
-interface Params {
-  createAndConnect?: boolean | { keyCode: string };
-  pickConnection?: boolean | { keyCode: string };
-}
+import { ConnectionOptions } from './interfaces/connection-options.interface';
+import { Picker } from './picker';
+import { getMapItemRecursively, renderConnection, renderPathData, updateConnection } from './utils';
 
 export const ConnectionPlugin = {
   name: 'connection',
   install,
 };
 
-export function install(editor: NodeEditor, params: Params) {
+export function install(editor: NodeEditor, params: ConnectionOptions) {
   editor.bind('connectionpath');
   editor.bind('connectiondrop');
   editor.bind('connectionpick');
