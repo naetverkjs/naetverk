@@ -65,6 +65,9 @@
     },
     "selection-plugin": {
       "tags": ["plugin"]
+    },
+    "recursion-plugin": {
+      "tags": ["plugin"]
     }
   },
   "workspaceLayout": {

@@ -7,6 +7,7 @@ import { KeyboardPlugin } from '@naetverkjs/keyboard';
 import { ArrangePlugin } from '@naetverkjs/arrange';
 
 import { NodeEditor, Engine } from '@naetverkjs/naetverk';
+import { RecursionPlugin } from '@naetverkjs/recursion';
 import { SelectionPlugin } from '@naetverkjs/selection';
 import { NumComponent } from './components/number-component';
 import { AddComponent } from './components/add-component';
@@ -33,6 +34,7 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(KeyboardPlugin);
     editor.use(AngularRenderPlugin);
     editor.use(HistoryPlugin);
+    editor.use(RecursionPlugin);
     editor.use(SelectionPlugin, {
       enabled: true,
       offset: {

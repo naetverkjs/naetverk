@@ -597,6 +597,41 @@
           }
         }
       }
+    },
+    "recursion-plugin": {
+      "root": "packages/recursion-plugin",
+      "sourceRoot": "packages/recursion-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/recursion-plugin/tsconfig.lib.json",
+              "packages/recursion-plugin/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/recursion-plugin/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/recursion-plugin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/recursion-plugin",
+            "tsConfig": "packages/recursion-plugin/tsconfig.lib.json",
+            "packageJson": "packages/recursion-plugin/package.json",
+            "main": "packages/recursion-plugin/src/index.ts",
+            "assets": ["packages/recursion-plugin/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {
