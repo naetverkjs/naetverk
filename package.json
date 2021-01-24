@@ -59,7 +59,7 @@
     "@babel/preset-react": "7.9.4",
     "@babel/preset-typescript": "7.9.0",
     "@nrwl/angular": "10.2.0",
-    "@nrwl/cypress": "10.2.0",
+    "@nrwl/cypress": "11.1.5",
     "@nrwl/eslint-plugin-nx": "10.2.0",
     "@nrwl/jest": "10.2.0",
     "@nrwl/node": "^10.2.0",
