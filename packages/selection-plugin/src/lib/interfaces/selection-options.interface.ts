@@ -1,10 +1,14 @@
 export interface SelectionOptions {
+  enabled?: boolean;
+  heightOffset: {
+    x: number;
+    y: number;
+  };
   selectionArea?: {
     className?: string;
   };
   selectionMode?: {
     className?: string;
   };
-  enabled?: boolean;
   mode?: [string, string];
 }

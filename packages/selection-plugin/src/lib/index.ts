@@ -1,7 +1,10 @@
-import { NodeEditor } from '@naetverkjs/naetverk';
+import { Node, NodeEditor } from '@naetverkjs/naetverk';
+
 import { Position } from './interfaces/position.interface';
 import { SelectionOptions } from './interfaces/selection-options.interface';
 import { Size } from './interfaces/size.interface';
+
+const MOUSE_LEFT_BUTTON = 0;
 
 declare module '@naetverkjs/naetverk/src/lib/events' {
   interface EventsTypes {
@@ -9,62 +12,43 @@ declare module '@naetverkjs/naetverk/src/lib/events' {
   }
 }
 
-const MOUSE_LEFT_BUTTON = 0;
+export const SelectionPlugin = {
+  name: 'selection-plugin',
+  install,
+};
 
-function drawSelectionArea(
-  area: HTMLDivElement,
-  position: Position,
-  size: Size
+function install(
+  editor: NodeEditor,
+  selectionOptions: SelectionOptions = {
+    enabled: true,
+    heightOffset: {
+      x: 0,
+      y: 75,
+    },
+  }
 ) {
-  area.style.left = `${position.x}px`;
-  area.style.top = `${position.y}px`;
-  area.style.width = `${size.width}px`;
-  area.style.height = `${size.height}px`;
-  area.style.opacity = '0.2';
-}
-
-function cleanSelectionArea(area: HTMLDivElement) {
-  area.style.left = '0px';
-  area.style.top = '0px';
-  area.style.width = '0px';
-  area.style.height = '0px';
-  area.style.opacity = '0';
-}
-
-function applyTransform(
-  translateX: number,
-  translateY: number,
-  scale: number,
-  position: Position
-): Position {
-  return {
-    x: (position.x - translateX) / scale,
-    y: (position.y - translateY) / scale,
-  };
-}
-
-function install(editor: NodeEditor, params: SelectionOptions) {
   editor.bind('multiselection');
 
-  const cfg = params ?? {};
-
-  // #region Plugin status
   let accumulate = false;
-  let pressing = false;
+  let mouseSelecting = false;
+
   const selection: [Position, Position] = [
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ];
-  // #endregion
 
-  // Canvas object
+  /**
+   * The editor draw area selection
+   * @type {HTMLDivElement}
+   */
   const canvas = editor.view.container.firstElementChild as HTMLDivElement;
 
-  console.log(canvas);
-  // #region Get the nodes in the frame selection range
-  const getNodesFromSelectionArea = () => {
-    console.log('getNodesFromSelectionArea');
-    if (!cfg.enabled) {
+  /**
+   * Get the nodes in the selection rectangle
+   * @returns {Node[] }
+   */
+  function getNodesFromSelectionArea(): Node[] {
+    if (!selectionOptions.enabled) {
       return [];
     }
 
@@ -73,6 +57,7 @@ function install(editor: NodeEditor, params: SelectionOptions) {
       y: translateY,
       k: scale,
     } = editor.view.area.transform;
+
     const areaStart = applyTransform(translateX, translateY, scale, {
       ...selection[0],
     });
@@ -98,10 +83,12 @@ function install(editor: NodeEditor, params: SelectionOptions) {
         x >= areaStart.x && x <= areaEnd.x && y >= areaStart.y && y <= areaEnd.y
       );
     });
-  };
-  // #endregion
+  }
 
-  // #region Create selection
+  /**
+   * Create selection
+   * @type {HTMLDivElement}
+   */
   const selectionArea = document.createElement('div');
   selectionArea.classList.add('selection-area');
   selectionArea.style.position = 'absolute';
@@ -113,12 +100,15 @@ function install(editor: NodeEditor, params: SelectionOptions) {
   selectionMode.classList.add('selection-mode');
   selectionMode.style.position = 'absolute';
   selectionMode.style.pointerEvents = 'none';
-  selectionMode.innerText = (cfg.mode ?? [])[0] ?? 'Single selection mode';
-  // #endregion
+  selectionMode.innerText =
+    (selectionOptions.mode ?? [])[0] ?? 'Single selection mode';
 
-  // #region Appearance customization
+  /**
+   * Set Appearance customization
+   */
+  // #region
   {
-    const className = cfg.selectionArea?.className;
+    const className = selectionOptions.selectionArea?.className;
     if (className) {
       selectionMode.classList.add(...className.split(' '));
     } else {
@@ -128,7 +118,7 @@ function install(editor: NodeEditor, params: SelectionOptions) {
     }
   }
   {
-    const className = cfg.selectionMode?.className;
+    const className = selectionOptions.selectionMode?.className;
     if (className) {
       selectionMode.classList.add(...className.split(' '));
     } else {
@@ -136,17 +126,18 @@ function install(editor: NodeEditor, params: SelectionOptions) {
       selectionMode.style.left = '16px';
     }
   }
-  // #endregion
 
-  // #region Select event
-  const handleMouseDown = (e: MouseEvent) => {
+  /**
+   * Handle Mouse click event
+   * @param {MouseEvent} e
+   */
+  function handleMouseDown(e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!cfg.enabled) {
+    if (!selectionOptions.enabled) {
       return;
     }
-
     if (e.button !== MOUSE_LEFT_BUTTON) {
       return;
     }
@@ -154,7 +145,7 @@ function install(editor: NodeEditor, params: SelectionOptions) {
       return;
     }
 
-    pressing = true;
+    mouseSelecting = true;
 
     // Block mouse events of other elements
     canvas.style.pointerEvents = 'none';
@@ -164,17 +155,34 @@ function install(editor: NodeEditor, params: SelectionOptions) {
 
     // Initialize related state
     cleanSelectionArea(selectionArea);
-    selection[0] = { x: e.offsetX, y: e.offsetY };
-    selection[1] = { x: e.offsetX, y: e.offsetY };
-  };
 
-  const handleMouseUp = (e: MouseEvent) => {
+    const [x, y] = [
+      e.clientX - selectionOptions.heightOffset.x,
+      e.clientY - selectionOptions.heightOffset.y,
+    ];
+
+    selection[0] = {
+      x: x,
+      y: y,
+    };
+    selection[1] = {
+      x: x,
+      y: y,
+    };
+  }
+
+  /**
+   * Handle Mouse Up Event
+   * @param {MouseEvent} e
+   */
+  function handleMouseUp(e: MouseEvent) {
+    console.log('handleMouseUp');
     e.preventDefault();
     e.stopPropagation();
 
     const selectedNodes = getNodesFromSelectionArea();
 
-    pressing = false;
+    mouseSelecting = false;
 
     // Restore mouse events of other elements
     canvas.style.pointerEvents = 'auto';
@@ -186,7 +194,7 @@ function install(editor: NodeEditor, params: SelectionOptions) {
     selection[0] = { x: 0, y: 0 };
     selection[1] = { x: 0, y: 0 };
 
-    if (!cfg.enabled) {
+    if (!selectionOptions.enabled) {
       return;
     }
     if (!e.ctrlKey) {
@@ -196,25 +204,23 @@ function install(editor: NodeEditor, params: SelectionOptions) {
     selectedNodes.forEach((node) => {
       editor.selectNode(node, accumulate);
     });
-  };
+  }
 
   const handleMouseMove = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log(pressing);
-
-    if (!cfg.enabled) {
+    if (!selectionOptions.enabled) {
       return;
     }
     if (!e.ctrlKey) {
       return;
     }
-    if (!pressing) {
+    if (!mouseSelecting) {
       return;
     }
     if (editor.selected.list.length > 0) {
-      return;
+      editor.selected.clear();
     }
 
     selection[1] = { x: e.offsetX, y: e.offsetY };
@@ -258,20 +264,22 @@ function install(editor: NodeEditor, params: SelectionOptions) {
   });
 
   editor.on('multiselection', (enabled) => {
-    cfg.enabled = enabled;
+    selectionOptions.enabled = enabled;
   });
 
   editor.on('keydown', (e) => {
     if (e.ctrlKey) {
       accumulate = true;
-      selectionMode.innerText = (cfg.mode ?? [])[1] ?? 'Multiple selection mode\n';
+      selectionMode.innerText =
+        (selectionOptions.mode ?? [])[1] ?? 'Multiple selection mode\n';
     }
   });
 
   editor.on('keyup', () => {
     if (accumulate) {
       accumulate = false;
-      selectionMode.innerText = (cfg.mode ?? [])[0] ?? 'Single selection mode\n';
+      selectionMode.innerText =
+        (selectionOptions.mode ?? [])[0] ?? 'Single selection mode\n';
     }
   });
 
@@ -281,7 +289,35 @@ function install(editor: NodeEditor, params: SelectionOptions) {
 
   // #endregion
 }
-export const SelectionPlugin = {
-  name: 'selection-plugin',
-  install,
-};
+
+function drawSelectionArea(
+  area: HTMLDivElement,
+  position: Position,
+  size: Size
+) {
+  area.style.left = `${position.x}px`;
+  area.style.top = `${position.y}px`;
+  area.style.width = `${size.width}px`;
+  area.style.height = `${size.height}px`;
+  area.style.opacity = '0.2';
+}
+
+function cleanSelectionArea(area: HTMLDivElement) {
+  area.style.left = '0px';
+  area.style.top = '0px';
+  area.style.width = '0px';
+  area.style.height = '0px';
+  area.style.opacity = '0';
+}
+
+function applyTransform(
+  translateX: number,
+  translateY: number,
+  scale: number,
+  position: Position
+): Position {
+  return {
+    x: (position.x - translateX) / scale,
+    y: (position.y - translateY) / scale,
+  };
+}

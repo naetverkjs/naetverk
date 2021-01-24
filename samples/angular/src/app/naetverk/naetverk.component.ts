@@ -35,11 +35,10 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(HistoryPlugin);
     editor.use(SelectionPlugin, {
       enabled: true,
-
-      mode: [
-        'Single selection mode (press ctrl to enter [multiple selection mode])',
-        'MultiSelect mode',
-      ],
+      heightOffset: {
+        x: 0,
+        y: 75,
+      },
     });
     editor.use(ArrangePlugin, {
       margin: { x: 50, y: 50 },
