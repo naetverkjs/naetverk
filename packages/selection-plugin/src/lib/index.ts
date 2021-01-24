@@ -1,9 +1,13 @@
-import { Node, NodeEditor } from '@naetverkjs/naetverk';
+import { NodeEditor } from '@naetverkjs/naetverk';
 
 import { Position } from './interfaces/position.interface';
 import { SelectionOptions } from './interfaces/selection-options.interface';
 import { Size } from './interfaces/size.interface';
-import { applyTransform, cleanSelectionArea, drawSelectionArea } from './utils';
+import {
+  cleanSelectionArea,
+  drawSelectionArea,
+  getNodesFromSelectionArea,
+} from './utils';
 
 const MOUSE_LEFT_BUTTON = 0;
 
@@ -43,48 +47,6 @@ function install(
    * @type {HTMLDivElement}
    */
   const canvas = editor.view.container.firstElementChild as HTMLDivElement;
-
-  /**
-   * Get the nodes in the selection rectangle
-   * @returns {Node[] }
-   */
-  function getNodesFromSelectionArea(): Node[] {
-    if (!selectionOptions.enabled) {
-      return [];
-    }
-
-    const {
-      x: translateX,
-      y: translateY,
-      k: scale,
-    } = editor.view.area.transform;
-
-    const areaStart = applyTransform(translateX, translateY, scale, {
-      ...selection[0],
-    });
-    const areaEnd = applyTransform(translateX, translateY, scale, {
-      ...selection[1],
-    });
-
-    // Adjust the order of points
-    if (areaEnd.x < areaStart.x) {
-      const num = areaStart.x;
-      areaStart.x = areaEnd.x;
-      areaEnd.x = num;
-    }
-    if (areaEnd.y < areaStart.y) {
-      const num = areaStart.y;
-      areaStart.y = areaEnd.y;
-      areaEnd.y = num;
-    }
-
-    return editor.nodes.filter((item) => {
-      const [x, y] = item.position;
-      return (
-        x >= areaStart.x && x <= areaEnd.x && y >= areaStart.y && y <= areaEnd.y
-      );
-    });
-  }
 
   /**
    * Create selection
@@ -176,11 +138,12 @@ function install(
    * @param {MouseEvent} e
    */
   function handleMouseUp(e: MouseEvent) {
-    console.log('handleMouseUp');
     e.preventDefault();
     e.stopPropagation();
 
-    const selectedNodes = getNodesFromSelectionArea();
+    const selectedNodes = !selectionOptions.enabled
+      ? []
+      : getNodesFromSelectionArea(editor, selection);
 
     mouseSelecting = false;
 
