@@ -23,7 +23,7 @@ function install(
     enabled: true,
     offset: {
       x: 0,
-      y: 75,
+      y: 0,
     },
   }
 ) {
