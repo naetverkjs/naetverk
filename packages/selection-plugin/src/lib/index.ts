@@ -3,6 +3,7 @@ import { Node, NodeEditor } from '@naetverkjs/naetverk';
 import { Position } from './interfaces/position.interface';
 import { SelectionOptions } from './interfaces/selection-options.interface';
 import { Size } from './interfaces/size.interface';
+import { applyTransform, cleanSelectionArea, drawSelectionArea } from './utils';
 
 const MOUSE_LEFT_BUTTON = 0;
 
@@ -285,36 +286,4 @@ function install(
   editor.on('translate', () => {
     return !accumulate;
   });
-}
-
-function drawSelectionArea(
-  area: HTMLDivElement,
-  position: Position,
-  size: Size
-) {
-  area.style.left = `${position.x}px`;
-  area.style.top = `${position.y}px`;
-  area.style.width = `${size.width}px`;
-  area.style.height = `${size.height}px`;
-  area.style.opacity = '0.2';
-}
-
-function cleanSelectionArea(area: HTMLDivElement) {
-  area.style.left = '0px';
-  area.style.top = '0px';
-  area.style.width = '0px';
-  area.style.height = '0px';
-  area.style.opacity = '0';
-}
-
-function applyTransform(
-  translateX: number,
-  translateY: number,
-  scale: number,
-  position: Position
-): Position {
-  return {
-    x: (position.x - translateX) / scale,
-    y: (position.y - translateY) / scale,
-  };
 }
