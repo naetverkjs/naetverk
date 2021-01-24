@@ -3,6 +3,9 @@
 ---
 
 [![Build Status](https://travis-ci.com/naetverkjs/naetverk.svg?branch=master)](https://travis-ci.com/naetverkjs/naetverk)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=naetverkjs_naetverk&metric=coverage)](https://sonarcloud.io/dashboard?id=naetverkjs_naetverk)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=naetverkjs_naetverk&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=naetverkjs_naetverk)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=naetverkjs_naetverk&metric=alert_status)](https://sonarcloud.io/dashboard?id=naetverkjs_naetverk)
 
 ---
 
