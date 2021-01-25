@@ -42,7 +42,7 @@
     "coverage": "nx affected:test --all --code-coverage --skip-nx-cache",
     "postcoverage": "node tools/ci/combine-coverage.js",
     "help": "nx help",
-    "update:packages": "ts-node tools/build-and-publish.ts",
+    "update:packages": "ts-node tools/update-packages.ts",
     "publish": "ts-node utils/publish",
     "builder": "ts-node utils/build",
     "build:all": "ts-node utils/build all"
