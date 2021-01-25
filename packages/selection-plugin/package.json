@@ -1,11 +1,22 @@
 {
   "name": "@naetverkjs/selection",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
   },
   "peerDependencies": {
     "@naetverkjs/naetverk": "0.8.2"
+  },
+  "keywords": [
+    "dataflow",
+    "visual programming",
+    "node editor",
+    "ts"
+  ],
+  "author": "Konrad Koch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naetverkjs/naetverk/issues"
   }
 }

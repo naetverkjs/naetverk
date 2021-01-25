@@ -1,6 +1,13 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import { AddConnectionAction, RemoveConnectionAction } from './actions/connection.action';
-import { AddNodeAction, DragNodeAction, RemoveNodeAction } from './actions/node.action';
+import {
+  AddConnectionAction,
+  RemoveConnectionAction,
+} from './actions/connection.action';
+import {
+  AddNodeAction,
+  DragNodeAction,
+  RemoveNodeAction,
+} from './actions/node.action';
 
 import './events';
 import History from './history';
