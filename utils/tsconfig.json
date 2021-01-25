@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "build",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "inlineSources": false,
+    "importHelpers": true,
+    "lib": ["es6"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitHelpers": false,
+    "outDir": "dist",
+    "target": "es5",
+    "strict": true,
+    "stripInternal": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true
+  },
+  "include": ["build"]
+}
