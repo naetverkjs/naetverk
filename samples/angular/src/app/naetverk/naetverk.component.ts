@@ -7,22 +7,13 @@ import { KeyboardPlugin } from '@naetverkjs/keyboard';
 import { ArrangePlugin } from '@naetverkjs/arrange';
 
 import { NodeEditor, Engine } from '@naetverkjs/naetverk';
+import { SelectionPlugin } from '@naetverkjs/selection';
 import { NumComponent } from './components/number-component';
 import { AddComponent } from './components/add-component';
 
 @Component({
   selector: 'nvk-angular-sample',
-  template: ` <div class="menu-bar">
-      <button id="arrange" (click)="arrange()">Arrange</button>
-      <button id="undo" (click)="undo()">Undo</button>
-      <button id="redo" (click)="redo()">redo</button>
-    </div>
-    <div class="wrapper">
-      <div #nodeEditor class="node-editor"></div>
-    </div>
-    <div class="keys">
-      <span><strong>D</strong> Click on connection and press D to delete it</span>
-    </div>`,
+  templateUrl: './naetverk.component.html',
   styleUrls: ['./naetverk.component.scss'],
 })
 export class NaetverkComponent implements AfterViewInit {
@@ -42,6 +33,13 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(KeyboardPlugin);
     editor.use(AngularRenderPlugin);
     editor.use(HistoryPlugin);
+    editor.use(SelectionPlugin, {
+      enabled: true,
+      offset: {
+        x: 0,
+        y: 75,
+      },
+    });
     editor.use(ArrangePlugin, {
       margin: { x: 50, y: 50 },
       depth: null,
@@ -72,14 +70,17 @@ export class NaetverkComponent implements AfterViewInit {
     const n1 = await components[0].createNode({ num: 2 });
     const n2 = await components[0].createNode({ num: 3 });
     const add = await components[1].createNode();
+    const secondAdd = await components[1].createNode();
 
     n1.position = [80, 200];
     n2.position = [80, 400];
     add.position = [500, 240];
+    secondAdd.position = [700, 240];
 
     editor.addNode(n1);
     editor.addNode(n2);
     editor.addNode(add);
+    editor.addNode(secondAdd);
 
     editor.connect(n1.outputs.get('num'), add.inputs.get('num1'));
     editor.connect(n2.outputs.get('num'), add.inputs.get('num2'));

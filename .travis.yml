@@ -20,7 +20,6 @@ install:
   # good idea to verify the binary so its status is saved in the cache as well
   - yarn cypress verify
 
-
 # check that Cypress can run
 before_script:
   # where is Cypress binary cached?
@@ -28,16 +27,13 @@ before_script:
   # show me all versions of Cypress binary cached
   - yarn cypress cache list
 
-
 script:
   - yarn run affected:build -- --base=origin/master --parallel
-  - yarn run affected:test --code-coverage --skip-nx-cache
+  - yarn run coverage
   - yarn run affected:lint -- --base=origin/master --parallel
   - yarn e2e angular-e2e --headless
   - yarn run format
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi' # sonar only on non-PRs
-
-
 
 deploy:
   - provider: releases

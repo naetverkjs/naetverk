@@ -16,6 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@naetverkjs/naetverk": ["packages/naetverk/src/index.ts"],
+      "@naetverkjs/naetverk/*": ["packages/naetverk/*"],
       "@naetverkjs/angular-renderer": [
         "packages/angular-renderer/src/index.ts"
       ],
@@ -25,7 +27,8 @@
       "@naetverkjs/keyboard": ["packages/keyboard-plugin/src/index.ts"],
       "@naetverkjs/arrange": ["packages/arrange-plugin/src/index.ts"],
       "@naetverkjs/history": ["packages/history-plugin/src/index.ts"],
-      "@naetverkjs/react-renderer": ["packages/react-renderer/src/index.js"]
+      "@naetverkjs/react-renderer": ["packages/react-renderer/src/index.js"],
+      "@naetverkjs/selection": ["packages/selection-plugin/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
