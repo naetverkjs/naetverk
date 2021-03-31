@@ -28,7 +28,7 @@ module.exports = (
 ) => ({
   input,
   output: {
-    file: `build/${Case.kebab(name)}.${suffix}.js`,
+    file: `dist/package/${name}/${Case.kebab(name)}.${suffix}.js`,
     name,
     format,
     sourcemap: true,

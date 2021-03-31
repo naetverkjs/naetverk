@@ -7,7 +7,7 @@ export default {
     if (error.message.includes('(will be ignored)')) {
       return;
     } else {
-      console.error('onwarn: ', error.message);
+      console.error(error.message);
     }
   },
 };
