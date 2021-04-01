@@ -120,35 +120,36 @@ function install(
    * @param {MouseEvent} e
    */
   function handleMouseUp(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (checkForSelectionEvent(e)) {
+      e.preventDefault();
+      e.stopPropagation();
+      const selectedNodes = !selectionOptions.enabled
+        ? []
+        : getNodesFromSelectionArea(editor, selection);
 
-    const selectedNodes = !selectionOptions.enabled
-      ? []
-      : getNodesFromSelectionArea(editor, selection);
+      mouseSelecting = false;
 
-    mouseSelecting = false;
+      // Restore mouse events of other elements
+      canvas.style.pointerEvents = 'auto';
+      Array.from(canvas.querySelectorAll('path')).forEach((item) => {
+        (item as SVGElement).style.pointerEvents = 'auto';
+      });
 
-    // Restore mouse events of other elements
-    canvas.style.pointerEvents = 'auto';
-    Array.from(canvas.querySelectorAll('path')).forEach((item) => {
-      (item as SVGElement).style.pointerEvents = 'auto';
-    });
+      cleanSelectionArea(selectionArea);
+      selection[0] = { x: 0, y: 0 };
+      selection[1] = { x: 0, y: 0 };
 
-    cleanSelectionArea(selectionArea);
-    selection[0] = { x: 0, y: 0 };
-    selection[1] = { x: 0, y: 0 };
+      if (!selectionOptions.enabled) {
+        return;
+      }
+      if (!e.ctrlKey) {
+        return;
+      }
 
-    if (!selectionOptions.enabled) {
-      return;
+      selectedNodes.forEach((node) => {
+        editor.selectNode(node, accumulate);
+      });
     }
-    if (!e.ctrlKey) {
-      return;
-    }
-
-    selectedNodes.forEach((node) => {
-      editor.selectNode(node, accumulate);
-    });
   }
 
   /**
