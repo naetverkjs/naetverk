@@ -117,10 +117,10 @@ export class NaetverkComponent implements AfterViewInit {
   }
 
   async performance() {
-    let nx
-    let addprev
+    let nx;
+    let addprev;
     this.editor.clear();
-    // First Base
+
     const n1 = await this.components[0].createNode({ num: 2 });
     const n2 = await this.components[0].createNode({ num: 3 });
     const add = await this.components[1].createNode();
@@ -136,22 +136,21 @@ export class NaetverkComponent implements AfterViewInit {
     this.editor.connect(n1.outputs.get('num'), add.inputs.get('num1'));
     this.editor.connect(n2.outputs.get('num'), add.inputs.get('num2'));
 
-    addprev = add
+    addprev = add;
 
     for (let i = 1; i < 40; i++) {
       nx = await this.components[0].createNode({ num: 2 });
       const addx = await this.components[1].createNode();
-      nx.position = [100 * i, 400 + (200 * i)];
-      addx.position = [210 * i, 400 + (200 * i)];
+      // positions do not matter due to the arrange command
+      nx.position = [100, 400];
+      addx.position = [210, 400];
       this.editor.addNode(nx);
       this.editor.addNode(addx);
       this.editor.connect(nx.outputs.get('num'), addx.inputs.get('num2'));
       this.editor.connect(addprev.outputs.get('num'), addx.inputs.get('num1'));
-      addprev = addx
-
+      addprev = addx;
     }
 
-    this.arrange()
-
+    this.arrange();
   }
 }
