@@ -5,9 +5,9 @@ import { ArrangePlugin } from '@naetverkjs/arrange';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
+import { SelectionPlugin } from '@naetverkjs/selection';
 
 import { Engine, NodeEditor } from '@naetverkjs/naetverk';
-import { SelectionPlugin } from '@naetverkjs/selection';
 import { AddComponent } from './components/add-component';
 import { NumComponent } from './components/number-component';
 
@@ -138,15 +138,15 @@ export class NaetverkComponent implements AfterViewInit {
 
     addprev = add
 
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 40; i++) {
       nx = await this.components[0].createNode({ num: 2 });
       const addx = await this.components[1].createNode();
       nx.position = [100 * i, 400 + (200 * i)];
       addx.position = [210 * i, 400 + (200 * i)];
       this.editor.addNode(nx);
       this.editor.addNode(addx);
-      this.editor.connect(nx.outputs.get('num'), addx.inputs.get('num1'));
-      this.editor.connect(addprev.outputs.get('num'), addx.inputs.get('num2'));
+      this.editor.connect(nx.outputs.get('num'), addx.inputs.get('num2'));
+      this.editor.connect(addprev.outputs.get('num'), addx.inputs.get('num1'));
       addprev = addx
 
     }
