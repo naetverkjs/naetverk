@@ -11,6 +11,10 @@
 
 #### JavaScript framework for visual programming
 
+## Warning
+
+Do not use this framework before version 1 is released. It is currently still in development and not all updates will be compatible.
+
 ## Introduction
 
 **Naetverk** is a modular framework for visual programming. **Naetverk** is forked from the fantastic [rete.js](https://github.com/retejs/rete) framework,

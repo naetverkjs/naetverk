@@ -73,48 +73,46 @@ function install(
     }
   }
 
+  function checkForSelectionEvent(e: MouseEvent) {
+    return (
+      selectionOptions.enabled && e.button === MOUSE_LEFT_BUTTON && e.ctrlKey
+    );
+  }
+
   /**
    * Handle Mouse click event
    * @param {MouseEvent} e
    */
   function handleMouseDown(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (checkForSelectionEvent(e)) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    if (!selectionOptions.enabled) {
-      return;
+      mouseSelecting = true;
+
+      // Block mouse events of other elements
+      canvas.style.pointerEvents = 'none';
+      Array.from(canvas.querySelectorAll('path')).forEach((item) => {
+        (item as SVGElement).style.pointerEvents = 'none';
+      });
+
+      // Initialize related state
+      cleanSelectionArea(selectionArea);
+
+      const [x, y] = [
+        e.clientX - selectionOptions.offset.x,
+        e.clientY - selectionOptions.offset.y,
+      ];
+
+      selection[0] = {
+        x: x,
+        y: y,
+      };
+      selection[1] = {
+        x: x,
+        y: y,
+      };
     }
-    if (e.button !== MOUSE_LEFT_BUTTON) {
-      return;
-    }
-    if (!e.ctrlKey) {
-      return;
-    }
-
-    mouseSelecting = true;
-
-    // Block mouse events of other elements
-    canvas.style.pointerEvents = 'none';
-    Array.from(canvas.querySelectorAll('path')).forEach((item) => {
-      (item as SVGElement).style.pointerEvents = 'none';
-    });
-
-    // Initialize related state
-    cleanSelectionArea(selectionArea);
-
-    const [x, y] = [
-      e.clientX - selectionOptions.offset.x,
-      e.clientY - selectionOptions.offset.y,
-    ];
-
-    selection[0] = {
-      x: x,
-      y: y,
-    };
-    selection[1] = {
-      x: x,
-      y: y,
-    };
   }
 
   /**
@@ -158,39 +156,32 @@ function install(
    * @param {MouseEvent} e
    */
   function handleMouseMove(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (checkForSelectionEvent(e)) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    if (!selectionOptions.enabled) {
-      return;
-    }
-    if (!e.ctrlKey) {
-      return;
-    }
-    if (!mouseSelecting) {
-      return;
-    }
-    if (editor.selected.list.length > 0) {
-      editor.selected.clear();
-    }
+      if (editor.selected.list.length > 0) {
+        editor.selected.clear();
+      }
 
-    selection[1] = { x: e.offsetX, y: e.offsetY };
+      selection[1] = { x: e.offsetX, y: e.offsetY };
 
-    const size: Size = {
-      width: Math.abs(selection[1].x - selection[0].x),
-      height: Math.abs(selection[1].y - selection[0].y),
-    };
-    const position = { ...selection[0] };
+      const size: Size = {
+        width: Math.abs(selection[1].x - selection[0].x),
+        height: Math.abs(selection[1].y - selection[0].y),
+      };
+      const position = { ...selection[0] };
 
-    if (selection[1].x < selection[0].x) {
-      position.x = selection[1].x;
+      if (selection[1].x < selection[0].x) {
+        position.x = selection[1].x;
+      }
+      if (selection[1].y < selection[0].y) {
+        position.y = selection[1].y;
+      }
+
+      // The frame selection range needs to be drawn when any node is not selected
+      drawSelectionArea(selectionArea, position, size);
     }
-    if (selection[1].y < selection[0].y) {
-      position.y = selection[1].y;
-    }
-
-    // The frame selection range needs to be drawn when any node is not selected
-    drawSelectionArea(selectionArea, position, size);
   }
 
   /**
