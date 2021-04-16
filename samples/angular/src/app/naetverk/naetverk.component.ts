@@ -1,15 +1,15 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
+import { ArrangePlugin } from '@naetverkjs/arrange';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
-import { ArrangePlugin } from '@naetverkjs/arrange';
-
-import { NodeEditor, Engine } from '@naetverkjs/naetverk';
 import { SelectionPlugin } from '@naetverkjs/selection';
-import { NumComponent } from './components/number-component';
+
+import { Engine, NodeEditor } from '@naetverkjs/naetverk';
 import { AddComponent } from './components/add-component';
+import { NumComponent } from './components/number-component';
 
 @Component({
   selector: 'nvk-angular-sample',
@@ -21,10 +21,10 @@ export class NaetverkComponent implements AfterViewInit {
 
   editor = null;
 
+  components = [new NumComponent(), new AddComponent()];
+
   async ngAfterViewInit() {
     const container = this.el.nativeElement;
-
-    const components = [new NumComponent(), new AddComponent()];
 
     const editor = new NodeEditor('demo@0.2.0', container);
     editor.use(ConnectionPlugin, {
@@ -55,7 +55,7 @@ export class NaetverkComponent implements AfterViewInit {
 
     const engine = new Engine('demo@0.2.0');
 
-    components.map((c) => {
+    this.components.map((c) => {
       editor.register(c);
       engine.register(c);
     });
@@ -67,10 +67,10 @@ export class NaetverkComponent implements AfterViewInit {
       return source !== 'dblclick';
     });
 
-    const n1 = await components[0].createNode({ num: 2 });
-    const n2 = await components[0].createNode({ num: 3 });
-    const add = await components[1].createNode();
-    const secondAdd = await components[1].createNode();
+    const n1 = await this.components[0].createNode({ num: 2 });
+    const n2 = await this.components[0].createNode({ num: 3 });
+    const add = await this.components[1].createNode();
+    const secondAdd = await this.components[1].createNode();
 
     n1.position = [80, 200];
     n2.position = [80, 400];
@@ -114,5 +114,43 @@ export class NaetverkComponent implements AfterViewInit {
 
   redo() {
     this.editor.trigger('redo');
+  }
+
+  async performance() {
+    let nx;
+    let addprev;
+    this.editor.clear();
+
+    const n1 = await this.components[0].createNode({ num: 2 });
+    const n2 = await this.components[0].createNode({ num: 3 });
+    const add = await this.components[1].createNode();
+
+    n1.position = [80, 200];
+    n2.position = [80, 400];
+    add.position = [500, 240];
+
+    this.editor.addNode(n1);
+    this.editor.addNode(n2);
+    this.editor.addNode(add);
+
+    this.editor.connect(n1.outputs.get('num'), add.inputs.get('num1'));
+    this.editor.connect(n2.outputs.get('num'), add.inputs.get('num2'));
+
+    addprev = add;
+
+    for (let i = 1; i < 40; i++) {
+      nx = await this.components[0].createNode({ num: 2 });
+      const addx = await this.components[1].createNode();
+      // positions do not matter due to the arrange command
+      nx.position = [100, 400];
+      addx.position = [210, 400];
+      this.editor.addNode(nx);
+      this.editor.addNode(addx);
+      this.editor.connect(nx.outputs.get('num'), addx.inputs.get('num2'));
+      this.editor.connect(addprev.outputs.get('num'), addx.inputs.get('num1'));
+      addprev = addx;
+    }
+
+    this.arrange();
   }
 }

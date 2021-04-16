@@ -28,7 +28,7 @@ before_script:
   - yarn cypress cache list
 
 script:
-  - yarn run affected:build -- --base=origin/master --parallel
+  - yarn run affected:build -- --base=origin/master --parallel --with-deps
   - yarn run coverage
   - yarn run affected:lint -- --base=origin/master --parallel
   - yarn e2e angular-e2e --headless
