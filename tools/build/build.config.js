@@ -5,13 +5,19 @@ const { uglify } = require('rollup-plugin-uglify');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 
+/**
+ * Generates the banner
+ * @param pkg
+ * @returns {string}
+ */
 const banner = (pkg) => {
   const { name, version, author, license } = pkg;
-  const text = `/*!\n* ${name} v${version} \n* (c) ${new Date().getFullYear()} ${author} \n* Released under the ${license} license.\n*/`;
-
-  return text;
+  return `/*!\n* ${name} v${version} \n* (c) ${new Date().getFullYear()} ${author} \n* Released under the ${license} license.\n*/`;
 };
 
+/**
+ * The rollup default module configuration
+ **/
 module.exports = (
   {
     input,

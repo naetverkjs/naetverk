@@ -10,12 +10,6 @@ require('@babel/register')({
   ignore: [/node_modules/],
 });
 
-let opts = [
-  { suffix: 'min', format: 'umd', minify: true, polyfill: true },
-  { suffix: 'esm', format: 'es' },
-  { suffix: 'common', format: 'cjs' },
-];
-
 export class init {
   public nx: any;
   public baseDir: string;
@@ -42,7 +36,7 @@ export class init {
       });
 
       // Overwrite:
-      // this.libraries = ['naetverk'];
+      this.libraries = ['naetverk'];
       this.builder();
     }
   }
@@ -52,53 +46,56 @@ export class init {
     for (let i = 0; i < this.libraries.length; i++) {
       let lib = this.libraries[i];
       this.spinner.start(`Building Library - ${chalk.blue(lib)}`);
-      await this.buildLibrary(lib, this.baseDir);
+      await this.buildLibrary(lib);
       this.spinner.succeed();
     }
   }
 
-  async buildLibrary(library: string, baseDir: string) {
+  async buildLibrary(library: string) {
     let configPath = `${process.cwd()}/packages/${library}/build.config.js`;
     let packagePath = `${process.cwd()}/packages/${library}/package.json`;
 
     let config = require(configPath).default;
     let pkg = require(packagePath);
+
     // overwrite
-    // opts = []
-    for (let opt of opts) {
+    config.exportFormats = [];
+    for (let opt of config.exportFormats) {
       this.spinner.text = `Building Library - ${chalk.blue(
         library
       )} : ${chalk.yellow(opt.format)}`;
 
-      let targetConfig = buildConfig(config, pkg, opt);
+      let targetConfig = buildConfig(config.rollup, pkg, opt);
       let bundle = await rollup(targetConfig);
 
       await bundle.generate(targetConfig.output);
       await bundle.write(targetConfig.output);
     }
 
-    try {
-      // Create types
+    if (config.exportTypes) {
+      try {
+        // Create types
+        this.spinner.text = `Building Library - ${chalk.blue(
+          library
+        )} : ${chalk.yellow('types')}`;
 
-      this.spinner.text = `Building Library - ${chalk.blue(
-        library
-      )} : ${chalk.yellow('types')}`;
-
-      const buffer = execSync(
-        `tsc ${process.cwd()}/${
-          config.input
-        } --target es5 --declaration --outDir ${process.cwd()}/dist/package/${
-          config.name
-        } --downlevelIteration --emitDeclarationOnly`,
-        {
-          stdio: 'pipe',
-        }
-      );
-      console.log(buffer.toString());
-    } catch (e) {
-      this.spinner.text = `Building Library - ${chalk.blue(
-        library
-      )} : ${chalk.red('types failed')}`;    }
+        execSync(
+          `tsc ${process.cwd()}/${
+            config.rollup.input
+          } --target es5 --declaration --outDir ${process.cwd()}/dist/package/${
+            config.rollup.name
+          } --downlevelIteration --emitDeclarationOnly --skipLibCheck`,
+          {
+            stdio: 'pipe',
+          }
+        );
+      } catch (e) {
+        console.error(e.toString());
+        this.spinner.text = `Building Library - ${chalk.blue(
+          library
+        )} : ${chalk.red('types failed')}`;
+      }
+    }
   }
 }
 
