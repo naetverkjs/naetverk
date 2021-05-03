@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import * as fs from 'fs';
 import { rollup } from 'rollup';
 import { getProcessType, readJSON } from '../utils/utils';
 const buildConfig = require('./build.config');
@@ -36,19 +37,33 @@ export class init {
       });
 
       // Overwrite:
-      this.libraries = ['naetverk'];
+      // This is the list of configured and ready to build libraries.
+      this.libraries = ['naetverk', 'area-plugin'];
       this.builder();
     }
   }
 
   async builder() {
-    console.log('Building Libraries');
+    console.log('Building Libraries \n\n');
+
     for (let i = 0; i < this.libraries.length; i++) {
       let lib = this.libraries[i];
       this.spinner.start(`Building Library - ${chalk.blue(lib)}`);
       await this.buildLibrary(lib);
       this.spinner.succeed();
     }
+  }
+
+  async exportFormat(opt: any, library: string, config: any, pkg: any) {
+    this.spinner.text = `Building Library - ${chalk.blue(
+      library
+    )} : ${chalk.yellow(opt.format)}`;
+
+    let targetConfig = buildConfig(config.rollup, pkg, opt);
+    let bundle = await rollup(targetConfig);
+
+    await bundle.generate(targetConfig.output);
+    await bundle.write(targetConfig.output);
   }
 
   async buildLibrary(library: string) {
@@ -58,44 +73,51 @@ export class init {
     let config = require(configPath).default;
     let pkg = require(packagePath);
 
-    // overwrite
-    config.exportFormats = [];
+    // Export all the defined formats
     for (let opt of config.exportFormats) {
+      await this.exportFormat(opt, library, config, pkg);
+    }
+
+    // Export the types
+    if (config.exportTypes) {
+      await this.exportTypes(library, config);
+    }
+
+    // Copy package.json
+    this.copyPackageFile(library, config);
+  }
+
+  private async exportTypes(library: string, config: any) {
+    try {
+      // Create types
       this.spinner.text = `Building Library - ${chalk.blue(
         library
-      )} : ${chalk.yellow(opt.format)}`;
+      )} : ${chalk.yellow('types')}`;
 
-      let targetConfig = buildConfig(config.rollup, pkg, opt);
-      let bundle = await rollup(targetConfig);
-
-      await bundle.generate(targetConfig.output);
-      await bundle.write(targetConfig.output);
+      execSync(
+        `tsc ${process.cwd()}/${
+          config.rollup.input
+        } --target es5 --declaration --outDir ${process.cwd()}/dist/package/${
+          config.rollup.name
+        } --downlevelIteration --emitDeclarationOnly --skipLibCheck`,
+        {
+          stdio: 'pipe',
+        }
+      );
+    } catch (e) {
+      console.error(e.toString());
+      this.spinner.text = `Building Library - ${chalk.blue(
+        library
+      )} : ${chalk.red('types failed')}`;
     }
+  }
 
-    if (config.exportTypes) {
-      try {
-        // Create types
-        this.spinner.text = `Building Library - ${chalk.blue(
-          library
-        )} : ${chalk.yellow('types')}`;
-
-        execSync(
-          `tsc ${process.cwd()}/${
-            config.rollup.input
-          } --target es5 --declaration --outDir ${process.cwd()}/dist/package/${
-            config.rollup.name
-          } --downlevelIteration --emitDeclarationOnly --skipLibCheck`,
-          {
-            stdio: 'pipe',
-          }
-        );
-      } catch (e) {
-        console.error(e.toString());
-        this.spinner.text = `Building Library - ${chalk.blue(
-          library
-        )} : ${chalk.red('types failed')}`;
-      }
-    }
+  copyPackageFile(library: string, config: any) {
+    let src = `${process.cwd()}/packages/${library}/package.json`;
+    let dest = `${process.cwd()}/dist/package/${
+      config.rollup.name
+    }/package.json`;
+    fs.copyFileSync(src, dest);
   }
 }
 
