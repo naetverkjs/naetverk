@@ -10,6 +10,7 @@ import {
   AddConnectionAction,
   RemoveConnectionAction,
 } from './actions/connection.action';
+import './events';
 
 /**
  * Add the actions to nodes
