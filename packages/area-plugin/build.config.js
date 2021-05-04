@@ -5,9 +5,7 @@ export default {
     babelPresets: [require('@babel/preset-typescript')],
     extensions: ['.js', '.ts'],
     onwarn: (error) => {
-      if (error.message.includes('(will be ignored)')) {
-        return;
-      } else {
+      if (!error.message.includes('(will be ignored)')) {
         console.error(error.message);
       }
     },
