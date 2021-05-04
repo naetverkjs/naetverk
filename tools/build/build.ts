@@ -2,13 +2,15 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import { rollup } from 'rollup';
 import { getProcessType, readJSON } from '../utils/utils';
+
 const buildConfig = require('./build.config');
 import ora = require('ora');
+
 const chalk = require('chalk');
 
 require('@babel/register')({
   presets: [require('@babel/preset-env').default],
-  ignore: [/node_modules/],
+  ignore: [/node_modules/]
 });
 
 export class init {
@@ -38,21 +40,31 @@ export class init {
 
       // Overwrite:
       // This is the list of configured and ready to build libraries.
-      this.libraries = ['naetverk', 'area-plugin'];
+      this.libraries = [
+        'naetverk',
+        'angular-renderer',
+        'area-plugin',
+        'arrange-plugin',
+        'connection-plugin',
+        'history-plugin',
+        'keyboard-plugin',
+        'lifecycle-plugin',
+        'selection-plugin'
+      ];
       this.builder();
     }
   }
 
   async builder() {
     console.log('Building Libraries \n\n');
-
     for (let i = 0; i < this.libraries.length; i++) {
       let lib = this.libraries[i];
       this.spinner.start(`Building Library - ${chalk.blue(lib)}`);
-      await this.buildLibrary(lib);
+      await this.buildLibraryNx(lib);
       this.spinner.succeed();
     }
   }
+
 
   async exportFormat(opt: any, library: string, config: any, pkg: any) {
     this.spinner.text = `Building Library - ${chalk.blue(
@@ -64,6 +76,20 @@ export class init {
 
     await bundle.generate(targetConfig.output);
     await bundle.write(targetConfig.output);
+  }
+
+  /**
+   * Current NX default builder that uses webpack.
+   * @param {string} library
+   * @returns {Promise<void>}
+   */
+  async buildLibraryNx(library: string) {
+    execSync(
+      `nx run-many --target=build --projects=${library}`,
+      {
+        stdio: 'pipe'
+      }
+    );
   }
 
   async buildLibrary(library: string) {
@@ -101,7 +127,7 @@ export class init {
           config.rollup.name
         } --downlevelIteration --emitDeclarationOnly --skipLibCheck`,
         {
-          stdio: 'pipe',
+          stdio: 'pipe'
         }
       );
     } catch (e) {
