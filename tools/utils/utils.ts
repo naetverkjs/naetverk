@@ -28,3 +28,14 @@ export function readJSON(baseDir: string, dir: string): string {
   const json = fs.readFileSync(file, 'utf-8');
   return JSON.parse(json);
 }
+
+// Helper note for build order
+export const libraryOrder = [
+  { order: 0, name: 'naetverkjs/naetverk', type: 'default', dependencies: [] },
+  {
+    order: 1,
+    name: 'naetverkjs/angular-renderer',
+    dependencies: ['naetverkjs/naetverk'],
+    type: 'ng-packagr',
+  },
+];
