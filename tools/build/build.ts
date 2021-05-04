@@ -10,7 +10,7 @@ const chalk = require('chalk');
 
 require('@babel/register')({
   presets: [require('@babel/preset-env').default],
-  ignore: [/node_modules/]
+  ignore: [/node_modules/],
 });
 
 export class init {
@@ -49,7 +49,7 @@ export class init {
         'history-plugin',
         'keyboard-plugin',
         'lifecycle-plugin',
-        'selection-plugin'
+        'selection-plugin',
       ];
       this.builder();
     }
@@ -64,7 +64,6 @@ export class init {
       this.spinner.succeed();
     }
   }
-
 
   async exportFormat(opt: any, library: string, config: any, pkg: any) {
     this.spinner.text = `Building Library - ${chalk.blue(
@@ -84,12 +83,9 @@ export class init {
    * @returns {Promise<void>}
    */
   async buildLibraryNx(library: string) {
-    execSync(
-      `nx run-many --target=build --projects=${library}`,
-      {
-        stdio: 'pipe'
-      }
-    );
+    execSync(`nx run-many --target=build --projects=${library}`, {
+      stdio: 'pipe',
+    });
   }
 
   async buildLibrary(library: string) {
@@ -127,7 +123,7 @@ export class init {
           config.rollup.name
         } --downlevelIteration --emitDeclarationOnly --skipLibCheck`,
         {
-          stdio: 'pipe'
+          stdio: 'pipe',
         }
       );
     } catch (e) {
