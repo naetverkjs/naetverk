@@ -80,7 +80,7 @@
     "@nrwl/angular": "10.2.0",
     "@nrwl/cypress": "10.2.0",
     "@nrwl/eslint-plugin-nx": "10.2.0",
-    "@nrwl/jest": "10.2.0",
+    "@nrwl/jest": "12.3.5",
     "@nrwl/node": "^10.2.0",
     "@nrwl/react": "10.3.0",
     "@nrwl/web": "10.3.0",
