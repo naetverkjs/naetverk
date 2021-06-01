@@ -78,7 +78,7 @@
     "@babel/preset-typescript": "7.9.0",
     "@babel/register": "^7.12.10",
     "@nrwl/angular": "10.2.0",
-    "@nrwl/cypress": "10.2.0",
+    "@nrwl/cypress": "12.3.5",
     "@nrwl/eslint-plugin-nx": "10.2.0",
     "@nrwl/jest": "10.2.0",
     "@nrwl/node": "^10.2.0",
