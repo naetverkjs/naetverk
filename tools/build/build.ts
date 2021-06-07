@@ -83,7 +83,7 @@ export class init {
    * @returns {Promise<void>}
    */
   async buildLibraryNx(library: string) {
-    execSync(`nx run-many --target=build --projects=${library}`, {
+    execSync(`nx run-many --target=build --projects=${library} --prod`, {
       stdio: 'pipe',
     });
   }
