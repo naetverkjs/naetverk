@@ -597,6 +597,41 @@
           }
         }
       }
+    },
+    "comment-plugin": {
+      "root": "packages/comment-plugin",
+      "sourceRoot": "packages/comment-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/comment-plugin/tsconfig.lib.json",
+              "packages/comment-plugin/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/comment-plugin/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/comment-plugin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/comment-plugin",
+            "tsConfig": "packages/comment-plugin/tsconfig.lib.json",
+            "packageJson": "packages/comment-plugin/package.json",
+            "main": "packages/comment-plugin/src/index.ts",
+            "assets": ["packages/comment-plugin/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {
