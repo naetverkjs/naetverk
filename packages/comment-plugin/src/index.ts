@@ -1,1 +1,1 @@
-export * from './lib/comment-plugin';
+export * from './lib/index';

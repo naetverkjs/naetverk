@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
 import { ArrangePlugin } from '@naetverkjs/arrange';
+import { Index } from '@naetverkjs/comments';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
@@ -51,6 +52,10 @@ export class NaetverkComponent implements AfterViewInit {
       snap: { dynamic: true, size: 16 },
       scaleExtent: { min: 0.1, max: 1 },
       translateExtent: { width: 5000, height: 4000 },
+    });
+
+    editor.use(Index, {
+      margin: 20, // indent for new frame comments by default 30 (px)
     });
 
     const engine = new Engine('demo@0.2.0');
@@ -106,6 +111,7 @@ export class NaetverkComponent implements AfterViewInit {
 
   arrange() {
     this.editor.trigger('arrange', {});
+    this.editor.trigger('syncframes', {});
   }
 
   undo() {
@@ -152,5 +158,9 @@ export class NaetverkComponent implements AfterViewInit {
     }
 
     this.arrange();
+  }
+
+  toJson() {
+    console.log(this.editor.toJSON());
   }
 }
