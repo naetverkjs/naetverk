@@ -1,6 +1,57 @@
 # comment-plugin
 
-This library was generated with [Nx](https://nx.dev).
+This plugin allows the creation of inline and frame comments.
+
+### Installation
+
+**Import**
+
+```typescript
+import { CommentPlugin } from '@naetverkjs/comments';
+editor.use(CommentPlugin);
+```
+
+**Configuration**
+
+```typescript
+editor.use(CommentPlugin, {
+  margin: number, // The Margin of the comments. Default: 30
+  snapSize: number | undefined, // If defined, the comment will snap to the grid
+  // Key Bindings:
+  frameCommentKeys: {
+    code: 'KeyF',
+    shiftKey: true,
+    ctrlKey: false,
+    altKey: false,
+  }, // Default: Shift+F
+  inlineCommentKeys: {
+    code: 'KeyC',
+    shiftKey: true,
+    ctrlKey: false,
+    altKey: false,
+  }, // Default: Shift+C
+  deleteCommentKeys: {
+    code: 'Delete',
+    shiftKey: false,
+    ctrlKey: false,
+    altKey: false,
+  }, // Delete
+});
+```
+
+**Use**
+
+```typescript
+// Creates a frame around the selected nodes with the text as title
+editor.trigger('addcomment', { type: 'frame', text, nodes });
+
+// Creates a comment at a given position
+editor.trigger('addcomment', { type: 'inline', text, position });
+
+// Removes a comment or all by type
+editor.trigger('removecomment', { comment });
+editor.trigger('removecomment', { type });
+```
 
 ## Working with other plugins
 
@@ -18,13 +69,8 @@ editor.trigger('syncframes');
 
 ### Area Plugin
 
-The Area Plugin adds a background layer. If you have the `z-index` of your comments to low - they will not be
-selectable anymore.
+The Area Plugin adds a background layer. If you have the `z-index` of your comments to low - they will not be selectable
+anymore.
 
-Snapp If you have the snap option enabled:
-
-```
-  snap: { dynamic: true, size: 16 },
-```
-
-The position of the nodes are not updated like the surrounding frames
+Snap: If you have the snap option enabled, the position of the comments are not bind to this value. You have to use
+the `snapSize` option of the comment plugin with the same value.
