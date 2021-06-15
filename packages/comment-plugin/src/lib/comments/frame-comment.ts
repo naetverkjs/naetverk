@@ -1,6 +1,8 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import Comment from './comment';
+import { CommentJSON } from '../interfaces/comment-json.interface';
+import { CommentType } from '../interfaces/comment-type.enum';
 import { containsRect } from '../utils';
+import Comment from './comment';
 
 export default class FrameComment extends Comment {
   /**
@@ -15,8 +17,8 @@ export default class FrameComment extends Comment {
    */
   height: number;
 
-  constructor(text: string, editor: NodeEditor, snapSize: number | undefined) {
-    super(text, editor, snapSize);
+  constructor(title: string, editor: NodeEditor, snapSize: number | undefined) {
+    super(title, editor, snapSize);
     this.width = 0;
     this.height = 0;
     this.links = [];
@@ -53,10 +55,10 @@ export default class FrameComment extends Comment {
     this.el.style.height = this.height + 'px';
   }
 
-  toJSON() {
+  toJSON(): CommentJSON {
     return {
       ...super.toJSON(),
-      type: 'frame',
+      type: CommentType.FRAME,
       width: this.width,
       height: this.height,
     };

@@ -78,28 +78,30 @@ $grid-area: $grid-size * 10000;
 /**
 Comments Plugin:
  */
-
 .inline-comment,
 .frame-comment {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: black;
   padding: 12px;
-  font-size: 110%;
+  font-size: 80%;
   position: absolute;
   cursor: move;
   border-radius: 3px;
   &:focus {
     outline: none;
-    border-color: #ffd92c;
+    border-color: #f1df97;
   }
 }
 .inline-comment {
   z-index: 4;
-  background: #aec4ff;
-  border: 3px solid #aec4ff;
+  background: #e7edff;
+  border: 2px dashed #aec4ff;
+  &.connected {
+    border: 2px solid #7489c5;
+  }
 }
 .frame-comment {
   z-index: -1;
   background: rgba(15, 80, 255, 0.2);
-  border: 6px solid transparent;
+  border: 2px solid transparent;
 }

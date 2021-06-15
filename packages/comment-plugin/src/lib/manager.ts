@@ -1,6 +1,7 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
 import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
+import { CommentType } from './interfaces/comment-type.enum';
 
 export default class CommentManager {
   private editor: NodeEditor;
@@ -72,7 +73,7 @@ export default class CommentManager {
   fromJSON(list) {
     this.deleteComments();
     list.map((item) => {
-      if (item.type === 'frame') {
+      if (item.type === CommentType.FRAME) {
         this.addFrameComment(
           item.text,
           item.position,

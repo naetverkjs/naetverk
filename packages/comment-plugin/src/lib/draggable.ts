@@ -1,11 +1,13 @@
 import { listenWindow } from './utils';
 
 export default class Draggable {
+  private readonly onStart: () => void;
+  private readonly onTranslate: (dx, dy) => void;
+  private readonly onDrag: () => void;
+
   private mouseStart: null | any;
   private el: any;
-  private onStart: () => void;
-  private onTranslate: (dx, dy) => void;
-  private onDrag: () => void;
+
   constructor(
     el,
     onStart = () => {},
@@ -40,9 +42,8 @@ export default class Draggable {
     return [props.pageX, props.pageY];
   }
 
-  down(e) {
+  down(e: PointerEvent) {
     e.stopPropagation();
-
     if (e.which === 1) {
       this.mouseStart = this.getCoords(e);
       this.onStart();

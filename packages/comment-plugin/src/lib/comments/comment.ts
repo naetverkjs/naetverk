@@ -1,8 +1,9 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
 import Draggable from '../draggable';
+import { CommentJSON } from '../interfaces/comment-json.interface';
 
 export default class Comment {
-  private text: string;
+  private readonly text: string;
 
   private dragPosition: number[];
 
@@ -26,9 +27,9 @@ export default class Comment {
 
   private draggable: Draggable;
 
-  constructor(text: string, editor: NodeEditor, snapSize: number) {
+  constructor(title: string, editor: NodeEditor, snapSize: number) {
     this.editor = editor;
-    this.text = text;
+    this.text = title;
 
     this.scale = 1;
     this.x = 0;
@@ -76,7 +77,6 @@ export default class Comment {
   }
 
   onFocus() {
-    console.log('focus');
     this.scale = Math.max(1, 1 / this.k());
     this.update();
     this.editor.trigger('commentselected', this);
@@ -117,7 +117,7 @@ export default class Comment {
     this.el.style.transform = `translate(${this.x}px, ${this.y}px) scale(${this.scale})`;
   }
 
-  toJSON() {
+  toJSON(): CommentJSON {
     return {
       text: this.text,
       position: [this.x, this.y],
@@ -125,6 +125,9 @@ export default class Comment {
     };
   }
 
+  /**
+   * Destroy the draggable
+   */
   destroy() {
     this.draggable.destroy();
   }

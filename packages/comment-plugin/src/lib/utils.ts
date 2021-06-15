@@ -1,6 +1,19 @@
-const min = (arr) => (arr.length === 0 ? 0 : Math.min(...arr));
-const max = (arr) => (arr.length === 0 ? 0 : Math.max(...arr));
+import { NodeEditor, Node } from '@naetverkjs/naetverk';
+import { BoundingBox } from './interfaces/bounding-box.interface';
 
+/**
+ * Helper method to extract the lowest number from an array
+ * @param arr
+ * @returns {number}
+ */
+const min = (arr) => (arr.length === 0 ? 0 : Math.min(...arr));
+
+/**
+ * Helper method to extract the highest number from an array
+ * @param arr
+ * @returns {number}
+ */
+const max = (arr) => (arr.length === 0 ? 0 : Math.max(...arr));
 
 export function intersectRect(r1, r2) {
   return !(
@@ -20,7 +33,18 @@ export function containsRect(r1, r2) {
   );
 }
 
-export function nodesBBox(editor, nodes, margin) {
+/**
+ * Calculates a bounding box
+ * @param {NodeEditor} editor
+ * @param {Node[]} nodes
+ * @param {number} margin
+ * @returns {BoundingBox}
+ */
+export function nodesBBox(
+  editor: NodeEditor,
+  nodes: Node[],
+  margin: number
+): BoundingBox {
   const left = min(nodes.map((node) => node.position[0])) - margin;
   const top = min(nodes.map((node) => node.position[1])) - margin;
   const right =

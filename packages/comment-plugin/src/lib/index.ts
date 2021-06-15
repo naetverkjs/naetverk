@@ -72,8 +72,16 @@ function install(
     if (keyCombosMap[0]) {
       const ids = editor.selected.list.map((node) => node.id);
       const nodes = ids.map((id) => editor.nodes.find((n) => n.id === id));
-
-      editor.trigger('addcomment', { type: CommentType.FRAME, nodes });
+      if (nodes.length === 0) {
+        const position = Object.values(editor.view.area.mouse);
+        editor.trigger('addcomment', {
+          type: CommentType.FRAME,
+          nodes,
+          position,
+        });
+      } else {
+        editor.trigger('addcomment', { type: CommentType.FRAME, nodes });
+      }
     } else if (keyCombosMap[1]) {
       const position = Object.values(editor.view.area.mouse);
 
@@ -86,9 +94,7 @@ function install(
   editor.on('addcomment', ({ type, text, nodes, position }) => {
     if (type === CommentType.INLINE) {
       manager.addInlineComment(text, position);
-
     } else if (type === CommentType.FRAME) {
-
       const { left, top, width, height } = nodesBBox(editor, nodes, margin);
       const ids = nodes.map((n) => n.id);
 
@@ -119,7 +125,6 @@ function install(
   });
 
   editor.on('syncframes', () => {
-    console.log('syncFrames');
     manager.comments
       .filter((comment) => comment instanceof FrameComment)
       .map((comment) => {

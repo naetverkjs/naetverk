@@ -1,10 +1,12 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import { CommentJSON } from '../interfaces/comment-json.interface';
+import { CommentType } from '../interfaces/comment-type.enum';
 import Comment from './comment';
 import { intersectRect } from '../utils';
 
 export default class InlineComment extends Comment {
-  constructor(text: string, editor: NodeEditor, snapSize: number | undefined) {
-    super(text, editor, snapSize);
+  constructor(title: string, editor: NodeEditor, snapSize: number | undefined) {
+    super(title, editor, snapSize);
 
     this.el.className = 'inline-comment';
     this.el.addEventListener('mouseup', this.onDrag.bind(this));
@@ -12,6 +14,13 @@ export default class InlineComment extends Comment {
 
   onDrag() {
     const intersection = this.getIntersectNode();
+
+    if (intersection) {
+      this.el.classList.add('connected');
+    } else {
+      this.el.classList.remove('connected');
+    }
+
     this.linkTo(intersection ? [intersection.node.id] : []);
   }
 
@@ -33,10 +42,10 @@ export default class InlineComment extends Comment {
     this.update();
   }
 
-  toJSON() {
+  toJSON(): CommentJSON {
     return {
       ...super.toJSON(),
-      type: 'inline',
+      type: CommentType.INLINE,
     };
   }
 }
