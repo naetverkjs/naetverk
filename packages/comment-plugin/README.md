@@ -2,6 +2,9 @@
 
 This plugin allows the creation of inline and frame comments.
 
+- Inline comment can be attached to a target node.
+- Frame comments allow grouping of nodes.
+
 ### Installation
 
 **Import**
