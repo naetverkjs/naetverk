@@ -2,6 +2,7 @@
   <button id="arrange" (click)="arrange()">Arrange</button>
   <button id="undo" (click)="undo()">Undo</button>
   <button id="redo" (click)="redo()">redo</button>
+  <button id="json" (click)="toJson()">Log Json</button>
   <button id="performance" (click)="performance()">Performance Test</button>
 </div>
 <div class="wrapper">
@@ -10,5 +11,13 @@
 <div class="keys">
   <span><strong>D</strong>: Click on connection and press D to delete it</span>
   <br />
-  <span><strong>Ctrl</strong>: Hold to enable multi selection</span>
+  <span><strong>Ctrl</strong>: Hold to enable multi selection</span> <br />
+  <span>
+    <strong>Shift</strong> + <strong>C</strong>: Create Inline Comment
+  </span>
+  <br />
+  <span>
+    <strong>Shift</strong> + <strong>F</strong>: Create Framed Comment
+  </span>
+  <br />
 </div>
