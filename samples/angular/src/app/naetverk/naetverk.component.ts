@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
 import { ArrangePlugin } from '@naetverkjs/arrange';
-import { Index } from '@naetverkjs/comments';
+import { CommentPlugin } from '@naetverkjs/comments';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
@@ -54,8 +54,9 @@ export class NaetverkComponent implements AfterViewInit {
       translateExtent: { width: 5000, height: 4000 },
     });
 
-    editor.use(Index, {
-      margin: 20, // indent for new frame comments by default 30 (px)
+    editor.use(CommentPlugin, {
+      margin: 50,
+      snapSize: 16
     });
 
     const engine = new Engine('demo@0.2.0');

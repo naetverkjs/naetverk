@@ -3,8 +3,8 @@ import Comment from './comment';
 import { intersectRect } from '../utils';
 
 export default class InlineComment extends Comment {
-  constructor(text: string, editor: NodeEditor) {
-    super(text, editor);
+  constructor(text: string, editor: NodeEditor, snapSize: number | undefined) {
+    super(text, editor, snapSize);
 
     this.el.className = 'inline-comment';
     this.el.addEventListener('mouseup', this.onDrag.bind(this));
@@ -36,7 +36,7 @@ export default class InlineComment extends Comment {
   toJSON() {
     return {
       ...super.toJSON(),
-      type: 'inline'
-    }
+      type: 'inline',
+    };
   }
 }

@@ -4,10 +4,12 @@ import InlineComment from './comments/inline-comment';
 
 export default class CommentManager {
   private editor: NodeEditor;
+  private snapSize: number | undefined;
   comments: any[];
 
-  constructor(editor: NodeEditor) {
+  constructor(editor: NodeEditor, snapSize: number | undefined) {
     this.editor = editor;
+    this.snapSize = snapSize;
     this.comments = [];
 
     editor.on('zoomed', () => {
@@ -16,7 +18,7 @@ export default class CommentManager {
   }
 
   addInlineComment(text: string, [x, y], links = []) {
-    let comment = new InlineComment(text, this.editor);
+    let comment = new InlineComment(text, this.editor, this.snapSize);
 
     comment.k = () => this.editor.view.area.transform.k;
     comment.x = x;
@@ -26,7 +28,7 @@ export default class CommentManager {
   }
 
   addFrameComment(text, [x, y], links = [], width = 0, height = 0) {
-    let comment = new FrameComment(text, this.editor);
+    let comment = new FrameComment(text, this.editor, this.snapSize);
 
     comment.x = x;
     comment.y = y;

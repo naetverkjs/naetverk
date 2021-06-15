@@ -15,8 +15,8 @@ export default class FrameComment extends Comment {
    */
   height: number;
 
-  constructor(text: string, editor: NodeEditor) {
-    super(text, editor);
+  constructor(text: string, editor: NodeEditor, snapSize: number | undefined) {
+    super(text, editor, snapSize);
     this.width = 0;
     this.height = 0;
     this.links = [];

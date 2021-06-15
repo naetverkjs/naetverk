@@ -25,4 +25,9 @@ export interface CommentsOptions {
    * Sets the key map for deletion of comments
    */
   deleteCommentKeys?: KeyMap;
+
+  /**
+   * If defined, the comments will snap to the grid
+   */
+  snapSize?: number | undefined;
 }

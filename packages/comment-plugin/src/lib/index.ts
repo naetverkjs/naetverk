@@ -7,7 +7,7 @@ import CommentManager from './manager';
 import { listenWindow, nodesBBox } from './utils';
 import './events';
 
-export const Index = {
+export const CommentPlugin = {
   name: 'comments',
   install,
 };
@@ -35,6 +35,7 @@ function install(
       ctrlKey: false,
       altKey: false,
     },
+    snapSize = undefined,
   }: CommentsOptions
 ) {
   editor.bind('commentselected');
@@ -45,7 +46,7 @@ function install(
   editor.bind('removecomment');
   editor.bind('editcomment');
 
-  const manager = new CommentManager(editor);
+  const manager = new CommentManager(editor, snapSize);
 
   if (!disableBuiltInEdit) {
     editor.on('editcomment', (comment) => {
@@ -72,8 +73,6 @@ function install(
       const ids = editor.selected.list.map((node) => node.id);
       const nodes = ids.map((id) => editor.nodes.find((n) => n.id === id));
 
-      console.log(nodes);
-
       editor.trigger('addcomment', { type: CommentType.FRAME, nodes });
     } else if (keyCombosMap[1]) {
       const position = Object.values(editor.view.area.mouse);
@@ -85,10 +84,11 @@ function install(
   });
 
   editor.on('addcomment', ({ type, text, nodes, position }) => {
-    console.log({ type, text, nodes, position });
     if (type === CommentType.INLINE) {
       manager.addInlineComment(text, position);
+
     } else if (type === CommentType.FRAME) {
+
       const { left, top, width, height } = nodesBBox(editor, nodes, margin);
       const ids = nodes.map((n) => n.id);
 

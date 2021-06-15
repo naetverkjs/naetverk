@@ -14,6 +14,8 @@ export default class Comment {
 
   y: number;
 
+  private readonly snapSize: number | undefined;
+
   /**
    * Reference to the node editor in which the component will be placed
    * @type {NodeEditor}
@@ -24,7 +26,7 @@ export default class Comment {
 
   private draggable: Draggable;
 
-  constructor(text: string, editor: NodeEditor) {
+  constructor(text: string, editor: NodeEditor, snapSize: number) {
     this.editor = editor;
     this.text = text;
 
@@ -36,6 +38,8 @@ export default class Comment {
 
     this.initView();
     this.update();
+
+    this.snapSize = snapSize;
   }
 
   initView() {
@@ -95,12 +99,16 @@ export default class Comment {
     this.dragPosition = [this.x, this.y];
   }
 
-  onTranslate(dx, dy) {
+  onTranslate(dx: number, dy: number) {
     const [x, y] = this.dragPosition;
 
-    this.x = x + this.scale * dx;
-    this.y = y + this.scale * dy;
-
+    if (this.snapSize) {
+      this.x = x + this.scale * this.snap(dx);
+      this.y = y + this.scale * this.snap(dy);
+    } else {
+      this.x = x + this.scale * dx;
+      this.y = y + this.scale * dy;
+    }
     this.update();
   }
 
@@ -119,5 +127,14 @@ export default class Comment {
 
   destroy() {
     this.draggable.destroy();
+  }
+
+  /**
+   * Rounds the value to the snap size
+   * @param {number} value
+   * @returns {number}
+   */
+  snap(value: number): number {
+    return Math.round(value / this.snapSize) * this.snapSize;
   }
 }
