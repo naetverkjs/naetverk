@@ -5,6 +5,9 @@ export default class Draggable {
   private readonly onTranslate: (dx, dy) => void;
   private readonly onDrag: () => void;
 
+  public handler: HTMLElement;
+  public resize = false;
+
   private mouseStart: null | any;
   private el: any;
 

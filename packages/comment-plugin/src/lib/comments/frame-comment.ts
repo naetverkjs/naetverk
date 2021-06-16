@@ -4,24 +4,33 @@ import { IComment } from '../interfaces/comment.interface';
 import { containsRect } from '../utils';
 import Comment from './comment';
 
-function doResize(
-  e: MouseEvent,
-  options: { startWidth: number; startY: any; startX: any; startHeight: number }
-) {
-  const comment = document.getElementById('comment-1');
-  comment.style.width = options.startWidth + e.clientX - options.startX + 'px';
-  comment.style.height =
-    options.startHeight + e.clientY - options.startY + 'px';
+function generateHandler(f?, arg?) {
+  const handler = function (evt) {
+    f(evt, arg, handler);
+  };
+  return handler;
 }
 
-function endResize(e: MouseEvent) {
-  console.log('endResize');
-  document.documentElement.removeEventListener(
-    'mousemove',
-    (e) => doResize(e, null),
-    false
-  );
-  document.documentElement.removeEventListener('mouseup', endResize, false);
+let doResizeHandler;
+
+function doResize(
+  evt?: MouseEvent,
+  arg?: {
+    startWidth: number;
+    startY: any;
+    startX: any;
+    startHeight: number;
+  }
+) {
+  const comment = document.getElementById('comment-1');
+  comment.style.width = arg.startWidth + evt.clientX - arg.startX + 'px';
+  comment.style.height = arg.startHeight + evt.clientY - arg.startY + 'px';
+}
+
+function endResize(evt?: MouseEvent, arg?, handler?) {
+  document.documentElement.removeEventListener('mouseup', handler);
+  document.documentElement.removeEventListener('mousemove', doResizeHandler);
+  // Todo: Update parameters
 }
 
 export default class FrameComment extends Comment {
@@ -63,24 +72,8 @@ export default class FrameComment extends Comment {
 
   onSelect() {
     this.selected = !this.selected;
-
     this.update();
   }
-  /*
-  enableResizer(e) {
-    let resizer = document.createElement('span');
-    resizer.className = 'resizer';
-
-    resizer.addEventListener(
-      'mousedown',
-      function startResize(e) {
-        e.preventDefault();
-        console.log('asd');
-      },
-      false
-    );
-    this.el.appendChild(resizer);
-  }*/
 
   linkedNodesView() {
     return this.links
@@ -90,9 +83,6 @@ export default class FrameComment extends Comment {
 
   linkTo(ids) {
     super.linkTo(ids);
-    console.log(this.links);
-
-    //    const { left, top, width, height } = nodesBBox(this.editor, this.links, 30);
   }
 
   onStart() {
@@ -117,22 +107,15 @@ export default class FrameComment extends Comment {
     this.el.style.width = this.width + 'px';
     this.el.style.height = this.height + 'px';
     if (this.handler) {
-      this.drawHandle();
+      this.el.appendChild(this.handler);
     }
-  }
-
-  /**
-   * Draws the handle for resize
-   */
-  drawHandle() {
-    this.el.appendChild(this.handler);
   }
 
   initResize(e) {
     const comment = document.getElementById('comment-1');
+
     const startX = e.clientX;
     const startY = e.clientY;
-
     const startWidth = parseInt(
       document.defaultView.getComputedStyle(comment).width,
       10
@@ -142,17 +125,17 @@ export default class FrameComment extends Comment {
       10
     );
 
-    document.documentElement.addEventListener(
-      'mousemove',
-      function (e) {
-        doResize(e, { startX, startY, startWidth, startHeight });
-      },
-      false
-    );
+    doResizeHandler = generateHandler(doResize, {
+      startX,
+      startY,
+      startWidth,
+      startHeight,
+    });
+
+    document.documentElement.addEventListener('mousemove', doResizeHandler);
     document.documentElement.addEventListener(
       'mouseup',
-      (e) => endResize(e),
-      false
+      generateHandler(endResize, e)
     );
   }
 
