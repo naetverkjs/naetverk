@@ -1,37 +1,9 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import { Mouse } from '@naetverkjs/naetverk/src/lib/view';
 import { CommentType } from '../interfaces/comment-type.enum';
 import { IComment } from '../interfaces/comment.interface';
-import { containsRect } from '../utils';
+import { calcNewPositions, containsRect, getNodesFromSelectionArea } from '../utils';
 import Comment from './comment';
-
-function generateHandler(f?, arg?) {
-  const handler = function (evt) {
-    f(evt, arg, handler);
-  };
-  return handler;
-}
-
-let doResizeHandler;
-
-function doResize(
-  evt?: MouseEvent,
-  arg?: {
-    startWidth: number;
-    startY: any;
-    startX: any;
-    startHeight: number;
-  }
-) {
-  const comment = document.getElementById('comment-1');
-  comment.style.width = arg.startWidth + evt.clientX - arg.startX + 'px';
-  comment.style.height = arg.startHeight + evt.clientY - arg.startY + 'px';
-}
-
-function endResize(evt?: MouseEvent, arg?, handler?) {
-  document.documentElement.removeEventListener('mouseup', handler);
-  document.documentElement.removeEventListener('mousemove', doResizeHandler);
-  // Todo: Update parameters
-}
 
 export default class FrameComment extends Comment {
   private resized: Boolean;
@@ -48,9 +20,53 @@ export default class FrameComment extends Comment {
    */
   height: number;
 
+  /**
+   * The handler
+   * @type {HTMLDivElement}
+   */
   handler: HTMLDivElement;
 
-  selected = false;
+  handlerDown(e: MouseEvent) {
+    // Create event handlers
+    window.addEventListener('mousemove', handlerMove);
+    window.addEventListener('mouseup', handlerUp.bind(this));
+
+    const comment = this.el;
+
+    this.draggable.resizeOn();
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+    let startWidth = parseInt(
+      document.defaultView.getComputedStyle(comment).width,
+      10
+    );
+    let startHeight = parseInt(
+      document.defaultView.getComputedStyle(comment).height,
+      10
+    );
+
+    function handlerMove(e) {
+      comment.style.width = startWidth + e.clientX - prevX + 'px';
+      comment.style.height = startHeight + e.clientY - prevY + 'px';
+    }
+
+    /**
+     * Removes the previously created event listeners
+     * @param {MouseEvent} e
+     */
+    function handlerUp(e: MouseEvent) {
+      window.removeEventListener('mousemove', handlerMove);
+      window.removeEventListener('mouseup', handlerUp);
+      // Problem zone
+      this.width = comment.style.width;
+      this.height = comment.style.height;
+      this.draggable.resizeOff();
+      this.checkForContainingNodes(comment);
+      // Todo: trigger to see if links should be updated
+      // Todo: Use the methods for the selection rect
+    }
+  }
 
   constructor(
     id: number,
@@ -66,13 +82,7 @@ export default class FrameComment extends Comment {
 
     this.handler = document.createElement('div');
     this.handler.className = 'handle';
-    this.handler.addEventListener('mousedown', this.initResize, false);
-    this.el.addEventListener('click', this.onSelect.bind(this));
-  }
-
-  onSelect() {
-    this.selected = !this.selected;
-    this.update();
+    this.handler.addEventListener('mousedown', this.handlerDown.bind(this));
   }
 
   linkedNodesView() {
@@ -111,32 +121,73 @@ export default class FrameComment extends Comment {
     }
   }
 
-  initResize(e) {
-    const comment = document.getElementById('comment-1');
+  getAbsPosition(el) {
+    var el2 = el;
+    var curtop = 0;
+    var curleft = 0;
+    if (document.getElementById || document.all) {
+      do {
+        curleft += el.offsetLeft - el.scrollLeft;
+        curtop += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+        el2 = el2.parentNode;
+        while (el2 != el) {
+          curleft -= el2.scrollLeft;
+          curtop -= el2.scrollTop;
+          el2 = el2.parentNode;
+        }
+      } while (el.offsetParent);
+    }
+    return [curtop, curleft];
+  }
 
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startWidth = parseInt(
-      document.defaultView.getComputedStyle(comment).width,
-      10
-    );
-    const startHeight = parseInt(
-      document.defaultView.getComputedStyle(comment).height,
-      10
-    );
+  getDocumentOffsetPosition(el) {
+    var position = {
+      top: el.offsetTop,
+      left: el.offsetLeft,
+    };
+    if (el.offsetParent) {
+      var parentPosition = this.getDocumentOffsetPosition(el.offsetParent);
+      position.top += parentPosition.top;
+      position.left += parentPosition.left;
+    }
+    return position;
+  }
 
-    doResizeHandler = generateHandler(doResize, {
-      startX,
-      startY,
-      startWidth,
-      startHeight,
-    });
-
-    document.documentElement.addEventListener('mousemove', doResizeHandler);
-    document.documentElement.addEventListener(
-      'mouseup',
-      generateHandler(endResize, e)
+  checkForContainingNodes(el) {
+    const rec = document.getElementById(el.id).getBoundingClientRect();
+    const offset = this.getDocumentOffsetPosition(
+      document.getElementById(el.id)
     );
+    const startPos = {
+      x: rec.x - offset.left,
+      y: rec.y - offset.top,
+    };
+    const endPos = {
+      x: rec.width,
+      y: rec.height,
+    };
+    const nodes = getNodesFromSelectionArea(this.editor, [startPos, endPos]);
+
+   const p = calcNewPositions(this.editor, [startPos, endPos])
+
+    console.log(nodes);
+
+    this.drawRect(startPos, endPos, 'red');
+    this.drawRect(p[0], p[1], 'blue');
+  }
+
+  drawRect(position, size, color) {
+    const area = document.createElement('div');
+    area.style.border = `3px solid ${color}`;
+    area.style.left = `${position.x}px`;
+    area.style.top = `${position.y}px`;
+    area.style.width = `${size.x}px`;
+    area.style.height = `${size.y}px`;
+    area.style.opacity = '0.2';
+    area.style.zIndex = '-2';
+    area.style.position = 'absolute';
+    document.querySelector('.node-editor').appendChild(area);
   }
 
   toJSON(): IComment {

@@ -5,7 +5,6 @@ export default class Draggable {
   private readonly onTranslate: (dx, dy) => void;
   private readonly onDrag: () => void;
 
-  public handler: HTMLElement;
   public resize = false;
 
   private mouseStart: null | any;
@@ -27,7 +26,7 @@ export default class Draggable {
     this.destroy = this.initEvents(el);
   }
 
-  initEvents(el) {
+  initEvents(el: HTMLDivElement) {
     el.addEventListener('pointerdown', this.down.bind(this));
 
     const destroyMove = listenWindow('pointermove', this.move.bind(this));
@@ -54,7 +53,7 @@ export default class Draggable {
   }
 
   move(e) {
-    if (!this.mouseStart) return;
+    if (!this.mouseStart || this.resize) return;
     e.preventDefault();
     e.stopPropagation();
 
@@ -71,6 +70,13 @@ export default class Draggable {
     }
 
     this.mouseStart = null;
+  }
+
+  resizeOn() {
+    this.resize = true;
+  }
+  resizeOff() {
+    this.resize = false;
   }
 
   // mutable method

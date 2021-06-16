@@ -1,5 +1,6 @@
 import { NodeEditor, Node } from '@naetverkjs/naetverk';
 import { BoundingBox } from './interfaces/bounding-box.interface';
+import { Position } from './interfaces/position.interface';
 
 /**
  * Helper method to extract the lowest number from an array
@@ -83,4 +84,91 @@ export function listenWindow(event, handler) {
   return () => {
     window.removeEventListener(event, handler);
   };
+}
+
+/**
+ * Apply transformation to the values that come from offset and scale
+ * @param {number} translateX
+ * @param {number} translateY
+ * @param {number} scale
+ * @param {Position} position
+ * @returns {Position}
+ */
+export function applyTransform(
+  translateX: number,
+  translateY: number,
+  scale: number,
+  position: Position
+): Position {
+  return {
+    x: (position.x - translateX) / scale,
+    y: (position.y - translateY) / scale,
+  };
+}
+
+/**
+ * Get the nodes in the selection rectangle based on the Positions
+ * @param {NodeEditor} editor
+ * @param {[Position, Position]} selection
+ * @returns {Node[]}
+ */
+export function getNodesFromSelectionArea(
+  editor: NodeEditor,
+  selection: [Position, Position]
+): Node[] {
+  const { x: translateX, y: translateY, k: scale } = editor.view.area.transform;
+
+  const areaStart = applyTransform(translateX, translateY, scale, {
+    ...selection[0],
+  });
+  const areaEnd = applyTransform(translateX, translateY, scale, {
+    ...selection[1],
+  });
+
+  // Adjust the order of points
+  if (areaEnd.x < areaStart.x) {
+    const num = areaStart.x;
+    areaStart.x = areaEnd.x;
+    areaEnd.x = num;
+  }
+  if (areaEnd.y < areaStart.y) {
+    const num = areaStart.y;
+    areaStart.y = areaEnd.y;
+    areaEnd.y = num;
+  }
+
+  return editor.nodes.filter((item) => {
+    const [x, y] = item.position;
+    return (
+      x >= areaStart.x && x <= areaEnd.x && y >= areaStart.y && y <= areaEnd.y
+    );
+  });
+}
+
+export function calcNewPositions(
+  editor: NodeEditor,
+  selection: [Position, Position]
+): [Position, Position] {
+  const { x: translateX, y: translateY, k: scale } = editor.view.area.transform;
+
+  const areaStart = applyTransform(translateX, translateY, scale, {
+    ...selection[0],
+  });
+  const areaEnd = applyTransform(translateX, translateY, scale, {
+    ...selection[1],
+  });
+
+  // Adjust the order of points
+  if (areaEnd.x < areaStart.x) {
+    const num = areaStart.x;
+    areaStart.x = areaEnd.x;
+    areaEnd.x = num;
+  }
+  if (areaEnd.y < areaStart.y) {
+    const num = areaStart.y;
+    areaStart.y = areaEnd.y;
+    areaEnd.y = num;
+  }
+
+  return [areaStart, areaEnd];
 }
