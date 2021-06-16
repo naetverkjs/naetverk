@@ -1,5 +1,5 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import { CommentJSON } from '../interfaces/comment-json.interface';
+import { IComment } from '../interfaces/comment-json.interface';
 import { CommentType } from '../interfaces/comment-type.enum';
 import { containsRect } from '../utils';
 import Comment from './comment';
@@ -85,7 +85,7 @@ export default class FrameComment extends Comment {
     this.el.style.height = this.height + 'px';
   }
 
-  toJSON(): CommentJSON {
+  toJSON(): IComment {
     return {
       ...super.toJSON(),
       type: CommentType.FRAME,

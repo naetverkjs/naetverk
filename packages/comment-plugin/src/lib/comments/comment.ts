@@ -1,6 +1,6 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
 import Draggable from '../draggable';
-import { CommentJSON } from '../interfaces/comment-json.interface';
+import { IComment } from '../interfaces/comment-json.interface';
 
 export default class Comment {
   private readonly text: string;
@@ -125,7 +125,7 @@ export default class Comment {
     this.el.style.transform = `translate(${this.x}px, ${this.y}px) scale(${this.scale})`;
   }
 
-  toJSON(): CommentJSON {
+  toJSON(): IComment {
     return {
       id: this.id,
       text: this.text,

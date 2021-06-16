@@ -1,5 +1,5 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import { CommentJSON } from '../interfaces/comment-json.interface';
+import { IComment } from '../interfaces/comment-json.interface';
 import { CommentType } from '../interfaces/comment-type.enum';
 import Comment from './comment';
 import { intersectRect } from '../utils';
@@ -47,7 +47,7 @@ export default class InlineComment extends Comment {
     this.update();
   }
 
-  toJSON(): CommentJSON {
+  toJSON(): IComment {
     return {
       ...super.toJSON(),
       type: CommentType.INLINE,
