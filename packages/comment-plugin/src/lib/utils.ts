@@ -13,7 +13,9 @@ const min = (arr) => (arr.length === 0 ? 0 : Math.min(...arr));
  * @param arr
  * @returns {number}
  */
-const max = (arr) => (arr.length === 0 ? 0 : Math.max(...arr));
+export function max(arr) {
+  return arr.length === 0 ? 0 : Math.max(...arr);
+}
 
 export function intersectRect(r1, r2) {
   return !(

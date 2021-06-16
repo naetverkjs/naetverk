@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
 import { ArrangePlugin } from '@naetverkjs/arrange';
-import { CommentPlugin } from '@naetverkjs/comments';
+import { CommentPlugin, CommentType } from '@naetverkjs/comments';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
@@ -56,7 +56,7 @@ export class NaetverkComponent implements AfterViewInit {
 
     editor.use(CommentPlugin, {
       margin: 50,
-      snapSize: 16
+      snapSize: 16,
     });
 
     const engine = new Engine('demo@0.2.0');
@@ -81,7 +81,7 @@ export class NaetverkComponent implements AfterViewInit {
     n1.position = [80, 200];
     n2.position = [80, 400];
     add.position = [500, 240];
-    secondAdd.position = [700, 240];
+    secondAdd.position = [900, 240];
 
     editor.addNode(n1);
     editor.addNode(n2);
@@ -90,6 +90,28 @@ export class NaetverkComponent implements AfterViewInit {
 
     editor.connect(n1.outputs.get('num'), add.inputs.get('num1'));
     editor.connect(n2.outputs.get('num'), add.inputs.get('num2'));
+
+    // Comments
+    editor.trigger('addcomment', {
+      type: CommentType.FRAME,
+      text: 'Frame',
+      nodes: [add],
+    });
+
+    // Comments
+    /*editor.trigger('addcomment', {
+      type: CommentType.FRAME,
+      text: 'Second Frame',
+      nodes: [secondAdd],
+    });*/
+
+    // Comments
+    editor.trigger('addcomment', {
+      type: CommentType.INLINE,
+      text: 'Inline',
+      position: [1000, 230],
+      nodes: [secondAdd],
+    });
 
     editor.on(
       [

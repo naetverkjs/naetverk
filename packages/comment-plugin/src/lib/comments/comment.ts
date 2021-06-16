@@ -9,7 +9,9 @@ export default class Comment {
 
   private scale: number;
 
-  links: any[];
+  id: number;
+
+  links: number[];
 
   x: number;
 
@@ -25,11 +27,17 @@ export default class Comment {
 
   el: HTMLDivElement;
 
-  private draggable: Draggable;
+  draggable: Draggable;
 
-  constructor(title: string, editor: NodeEditor, snapSize: number) {
+  constructor(
+    id: number = 1,
+    title: string,
+    editor: NodeEditor,
+    snapSize: number
+  ) {
     this.editor = editor;
     this.text = title;
+    this.id = id;
 
     this.scale = 1;
     this.x = 0;
@@ -119,6 +127,7 @@ export default class Comment {
 
   toJSON(): CommentJSON {
     return {
+      id: this.id,
       text: this.text,
       position: [this.x, this.y],
       links: this.links,

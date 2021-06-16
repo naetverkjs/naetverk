@@ -17,18 +17,48 @@ export default class FrameComment extends Comment {
    */
   height: number;
 
-  constructor(title: string, editor: NodeEditor, snapSize: number | undefined) {
-    super(title, editor, snapSize);
+  private resized: Boolean;
+
+  constructor(
+    id: number,
+    title: string,
+    editor: NodeEditor,
+    snapSize: number | undefined
+  ) {
+    super(id, title, editor, snapSize);
     this.width = 0;
     this.height = 0;
     this.links = [];
     this.el.className = 'frame-comment';
   }
 
+  /*
+  enableResizer(e) {
+    let resizer = document.createElement('span');
+    resizer.className = 'resizer';
+
+    resizer.addEventListener(
+      'mousedown',
+      function startResize(e) {
+        e.preventDefault();
+        console.log('asd');
+      },
+      false
+    );
+    this.el.appendChild(resizer);
+  }*/
+
   linkedNodesView() {
     return this.links
       .map((id) => this.editor.nodes.find((n) => n.id === id))
       .map((node) => this.editor.view.nodes.get(node));
+  }
+
+  linkTo(ids) {
+    super.linkTo(ids);
+    console.log(this.links);
+
+    //    const { left, top, width, height } = nodesBBox(this.editor, this.links, 30);
   }
 
   onStart() {
@@ -37,7 +67,7 @@ export default class FrameComment extends Comment {
   }
 
   onTranslate(dx, dy) {
-    super.onTranslate(dx, dy);
+    if (!this.resized) super.onTranslate(dx, dy);
     this.linkedNodesView().map((nodeView) => nodeView.onDrag(dx, dy));
   }
 

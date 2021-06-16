@@ -2,10 +2,13 @@ import { NodeEditor } from '@naetverkjs/naetverk';
 import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
 import { CommentType } from './interfaces/comment-type.enum';
+import { IComment } from './interfaces/comment.interface';
+import { max } from './utils';
 
 export default class CommentManager {
   private editor: NodeEditor;
   private snapSize: number | undefined;
+
   comments: any[];
 
   constructor(editor: NodeEditor, snapSize: number | undefined) {
@@ -18,26 +21,42 @@ export default class CommentManager {
     });
   }
 
-  addInlineComment(text: string, [x, y], links = []) {
-    let comment = new InlineComment(text, this.editor, this.snapSize);
-
-    comment.k = () => this.editor.view.area.transform.k;
-    comment.x = x;
-    comment.y = y;
-    comment.linkTo(links);
-    this.addComment(comment);
+  /**
+   * Adds a inline comment to the board
+   * @param {IComment} comment
+   */
+  addInlineComment(comment: IComment) {
+    let inlineComment = new InlineComment(
+      comment.id,
+      comment.text,
+      this.editor,
+      this.snapSize
+    );
+    inlineComment.k = () => this.editor.view.area.transform.k;
+    inlineComment.x = comment.position[0];
+    inlineComment.y = comment.position[1];
+    inlineComment.linkTo(comment.links);
+    this.addComment(inlineComment);
   }
 
-  addFrameComment(text, [x, y], links = [], width = 0, height = 0) {
-    let comment = new FrameComment(text, this.editor, this.snapSize);
+  /**
+   * Adds a framed comment
+   */
+  addFrameComment(comment: IComment) {
+    let frameComment = new FrameComment(
+      comment.id,
+      comment.text,
+      this.editor,
+      this.snapSize
+    );
 
-    comment.x = x;
-    comment.y = y;
-    comment.width = width;
-    comment.height = height;
-    comment.linkTo(links);
+    frameComment.x = comment.position[0];
+    frameComment.y = comment.position[1];
+    frameComment.width = comment.width;
+    frameComment.height = comment.height;
+    frameComment.linkTo(comment.links);
 
-    this.addComment(comment);
+    this.addComment(frameComment);
   }
 
   addComment(comment) {
@@ -74,20 +93,35 @@ export default class CommentManager {
     this.deleteComments();
     list.map((item) => {
       if (item.type === CommentType.FRAME) {
-        this.addFrameComment(
-          item.text,
-          item.position,
-          item.links,
-          item.width,
-          item.height
-        );
+        this.addFrameComment({
+          id: item.id,
+          text: item.text,
+          position: item.position,
+          links: item.links,
+          width: item.width,
+          height: item.height,
+        });
       } else {
-        this.addInlineComment(item.text, item.position, item.links);
+        this.addInlineComment({
+          id: item.id,
+          text: item.text,
+          position: item.position,
+          links: item.links,
+        });
       }
     });
   }
 
   destroy() {
     this.comments.forEach((comment) => comment.destroy());
+  }
+
+  /**
+   * Generates a Id for the comments
+   * @returns {number}
+   */
+  generateCommentId(): number {
+    const ids = this.comments.map((c) => c.id);
+    return max(ids) + 1;
   }
 }

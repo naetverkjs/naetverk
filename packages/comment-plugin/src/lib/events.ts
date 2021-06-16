@@ -13,6 +13,7 @@ declare module '@naetverkjs/naetverk/src/lib/events' {
     addcomment: any;
     removecomment: any;
     editcomment: any;
+    commentresized: any;
   }
 }
 
