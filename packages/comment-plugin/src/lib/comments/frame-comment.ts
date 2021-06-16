@@ -4,7 +4,29 @@ import { IComment } from '../interfaces/comment.interface';
 import { containsRect } from '../utils';
 import Comment from './comment';
 
+function doResize(
+  e: MouseEvent,
+  options: { startWidth: number; startY: any; startX: any; startHeight: number }
+) {
+  const comment = document.getElementById('comment-1');
+  comment.style.width = options.startWidth + e.clientX - options.startX + 'px';
+  comment.style.height =
+    options.startHeight + e.clientY - options.startY + 'px';
+}
+
+function endResize(e: MouseEvent) {
+  console.log('endResize');
+  document.documentElement.removeEventListener(
+    'mousemove',
+    (e) => doResize(e, null),
+    false
+  );
+  document.documentElement.removeEventListener('mouseup', endResize, false);
+}
+
 export default class FrameComment extends Comment {
+  private resized: Boolean;
+
   /**
    * The with of the frame
    * @type {number}
@@ -17,7 +39,9 @@ export default class FrameComment extends Comment {
    */
   height: number;
 
-  private resized: Boolean;
+  handler: HTMLDivElement;
+
+  selected = false;
 
   constructor(
     id: number,
@@ -30,8 +54,18 @@ export default class FrameComment extends Comment {
     this.height = 0;
     this.links = [];
     this.el.className = 'frame-comment';
+
+    this.handler = document.createElement('div');
+    this.handler.className = 'handle';
+    this.handler.addEventListener('mousedown', this.initResize, false);
+    this.el.addEventListener('click', this.onSelect.bind(this));
   }
 
+  onSelect() {
+    this.selected = !this.selected;
+
+    this.update();
+  }
   /*
   enableResizer(e) {
     let resizer = document.createElement('span');
@@ -80,9 +114,46 @@ export default class FrameComment extends Comment {
 
   update() {
     super.update();
-
     this.el.style.width = this.width + 'px';
     this.el.style.height = this.height + 'px';
+    if (this.handler) {
+      this.drawHandle();
+    }
+  }
+
+  /**
+   * Draws the handle for resize
+   */
+  drawHandle() {
+    this.el.appendChild(this.handler);
+  }
+
+  initResize(e) {
+    const comment = document.getElementById('comment-1');
+    const startX = e.clientX;
+    const startY = e.clientY;
+
+    const startWidth = parseInt(
+      document.defaultView.getComputedStyle(comment).width,
+      10
+    );
+    const startHeight = parseInt(
+      document.defaultView.getComputedStyle(comment).height,
+      10
+    );
+
+    document.documentElement.addEventListener(
+      'mousemove',
+      function (e) {
+        doResize(e, { startX, startY, startWidth, startHeight });
+      },
+      false
+    );
+    document.documentElement.addEventListener(
+      'mouseup',
+      (e) => endResize(e),
+      false
+    );
   }
 
   toJSON(): IComment {

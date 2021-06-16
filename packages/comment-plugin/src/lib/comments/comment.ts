@@ -29,6 +29,7 @@ export default class Comment {
 
   draggable: Draggable;
 
+
   constructor(
     id: number = 1,
     title: string,
@@ -54,7 +55,9 @@ export default class Comment {
   initView() {
     this.el = document.createElement('div');
     this.el.setAttribute('id', `comment-${this.id}`);
+
     this.el.tabIndex = 1;
+
     this.el.addEventListener('contextmenu', this.onContextMenu.bind(this));
     this.el.addEventListener('focus', this.onFocus.bind(this));
     this.el.addEventListener('blur', this.onBlur.bind(this));

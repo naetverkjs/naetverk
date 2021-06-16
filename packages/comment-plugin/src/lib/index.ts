@@ -3,7 +3,7 @@ import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
 import { CommentType } from './interfaces/comment-type.enum';
 import { CommentsOptions } from './interfaces/comments-options.interface';
-import CommentManager from './manager';
+import CommentManager from './comment-manager';
 import { listenWindow, nodesBBox } from './utils';
 import './events';
 

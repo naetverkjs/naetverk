@@ -6,8 +6,8 @@ import { IComment } from './interfaces/comment.interface';
 import { max } from './utils';
 
 export default class CommentManager {
-  private editor: NodeEditor;
-  private snapSize: number | undefined;
+  private readonly editor: NodeEditor;
+  private readonly snapSize: number | undefined;
 
   comments: any[];
 
