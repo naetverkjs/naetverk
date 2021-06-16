@@ -1,6 +1,6 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
 import Draggable from '../draggable';
-import { IComment } from '../interfaces/comment-json.interface';
+import { IComment } from '../interfaces/comment.interface';
 
 export default class Comment {
   private readonly text: string;
@@ -53,6 +53,7 @@ export default class Comment {
 
   initView() {
     this.el = document.createElement('div');
+    this.el.setAttribute('id', `comment-${this.id}`);
     this.el.tabIndex = 1;
     this.el.addEventListener('contextmenu', this.onContextMenu.bind(this));
     this.el.addEventListener('focus', this.onFocus.bind(this));

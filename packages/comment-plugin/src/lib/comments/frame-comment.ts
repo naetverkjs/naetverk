@@ -1,6 +1,6 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import { IComment } from '../interfaces/comment-json.interface';
 import { CommentType } from '../interfaces/comment-type.enum';
+import { IComment } from '../interfaces/comment.interface';
 import { containsRect } from '../utils';
 import Comment from './comment';
 
