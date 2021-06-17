@@ -9,8 +9,6 @@ import {
 import Comment from './comment';
 
 export default class FrameComment extends Comment {
-  private resized: Boolean;
-
   /**
    * The with of the frame
    * @type {number}
@@ -29,8 +27,11 @@ export default class FrameComment extends Comment {
    */
   handler: HTMLDivElement;
 
+  /**
+   * Handles the functionality when the comment resize handler is clicked
+   * @param {MouseEvent} e
+   */
   handlerDown(e: MouseEvent) {
-    // Create event handlers
     window.addEventListener('mousemove', handlerMove);
     window.addEventListener('mouseup', handlerUp.bind(this));
 
@@ -49,6 +50,10 @@ export default class FrameComment extends Comment {
       10
     );
 
+    /**
+     * Updates when the comment handler moves
+     * @param e
+     */
     function handlerMove(e) {
       comment.style.width = startWidth + e.clientX - prevX + 'px';
       comment.style.height = startHeight + e.clientY - prevY + 'px';
@@ -57,6 +62,8 @@ export default class FrameComment extends Comment {
     /**
      * Removes the previously created event listeners
      * @param {MouseEvent} e
+     * @WARNING: Potentially invalid reference access to a class field via 'this.' of a nested function
+     * @WARNING: This Event is not properly removed
      */
     function handlerUp(e: MouseEvent) {
       window.removeEventListener('mousemove', handlerMove);
@@ -102,7 +109,7 @@ export default class FrameComment extends Comment {
   }
 
   onTranslate(dx, dy) {
-    if (!this.resized) super.onTranslate(dx, dy);
+    super.onTranslate(dx, dy);
     this.linkedNodesView().map((nodeView) => nodeView.onDrag(dx, dy));
   }
 
@@ -171,6 +178,10 @@ export default class FrameComment extends Comment {
     this.linkTo(nodes.map((n) => n.id));
   }
 
+  /**
+   * Converts the comment to json
+   * @returns {IComment}
+   */
   toJSON(): IComment {
     return {
       ...super.toJSON(),
