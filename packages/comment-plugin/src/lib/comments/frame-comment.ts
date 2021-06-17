@@ -122,33 +122,18 @@ export default class FrameComment extends Comment {
     }
   }
 
-  getAbsPosition(el) {
-    var el2 = el;
-    var curtop = 0;
-    var curleft = 0;
-    if (document.getElementById || document.all) {
-      do {
-        curleft += el.offsetLeft - el.scrollLeft;
-        curtop += el.offsetTop - el.scrollTop;
-        el = el.offsetParent;
-        el2 = el2.parentNode;
-        while (el2 != el) {
-          curleft -= el2.scrollLeft;
-          curtop -= el2.scrollTop;
-          el2 = el2.parentNode;
-        }
-      } while (el.offsetParent);
-    }
-    return [curtop, curleft];
-  }
-
+  /**
+   * Calculate the offset position based on the parent element
+   * @param el
+   * @returns {{top: number, left: number}}
+   */
   getDocumentOffsetPosition(el) {
-    var position = {
+    const position = {
       top: el.offsetTop,
       left: el.offsetLeft,
     };
     if (el.offsetParent) {
-      var parentPosition = this.getDocumentOffsetPosition(el.offsetParent);
+      const parentPosition = this.getDocumentOffsetPosition(el.offsetParent);
       position.top += parentPosition.top;
       position.left += parentPosition.left;
     }
@@ -177,32 +162,13 @@ export default class FrameComment extends Comment {
     };
 
     const calcRect = calcSelectionArea(this.editor, [startPos, endPos]);
-    let nodes = getNodesFromSelectionArea(
+    const nodes = getNodesFromSelectionArea(
       this.editor,
       calcRect[0],
       calcRect[1]
     );
 
     this.linkTo(nodes.map((n) => n.id));
-  }
-
-  drawRect(position, size, color, name: string) {
-    let area = document.getElementById(name);
-
-    if (!area) {
-      area = document.createElement('div');
-      area.id = name;
-      document.querySelector('.node-editor').appendChild(area);
-    }
-
-    area.style.border = `3px solid ${color}`;
-    area.style.left = `${position.x}px`;
-    area.style.top = `${position.y}px`;
-    area.style.width = `${size.x}px`;
-    area.style.height = `${size.y}px`;
-    area.style.opacity = '0.2';
-    area.style.zIndex = '-2';
-    area.style.position = 'absolute';
   }
 
   toJSON(): IComment {
