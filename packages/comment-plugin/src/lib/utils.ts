@@ -1,4 +1,4 @@
-import { NodeEditor, Node } from '@naetverkjs/naetverk';
+import { Node, NodeEditor } from '@naetverkjs/naetverk';
 import { BoundingBox } from './interfaces/bounding-box.interface';
 import { Position } from './interfaces/position.interface';
 
@@ -87,7 +87,7 @@ export function listenWindow(event, handler) {
 }
 
 /**
- * Apply transformation to the values that come from offset and scale
+ * Apply transformation and scale to values
  * @param {number} translateX
  * @param {number} translateY
  * @param {number} scale
@@ -107,36 +107,17 @@ export function applyTransform(
 }
 
 /**
- * Get the nodes in the selection rectangle based on the Positions
+ * Get the nodes between two positions
  * @param {NodeEditor} editor
- * @param {[Position, Position]} selection
+ * @param {Position} areaStart
+ * @param {Position} areaEnd
  * @returns {Node[]}
  */
 export function getNodesFromSelectionArea(
   editor: NodeEditor,
-  selection: [Position, Position]
+  areaStart: Position,
+  areaEnd: Position
 ): Node[] {
-  const { x: translateX, y: translateY, k: scale } = editor.view.area.transform;
-
-  const areaStart = applyTransform(translateX, translateY, scale, {
-    ...selection[0],
-  });
-  const areaEnd = applyTransform(translateX, translateY, scale, {
-    ...selection[1],
-  });
-
-  // Adjust the order of points
-  if (areaEnd.x < areaStart.x) {
-    const num = areaStart.x;
-    areaStart.x = areaEnd.x;
-    areaEnd.x = num;
-  }
-  if (areaEnd.y < areaStart.y) {
-    const num = areaStart.y;
-    areaStart.y = areaEnd.y;
-    areaEnd.y = num;
-  }
-
   return editor.nodes.filter((item) => {
     const [x, y] = item.position;
     return (
@@ -145,7 +126,13 @@ export function getNodesFromSelectionArea(
   });
 }
 
-export function calcNewPositions(
+/**
+ * Calculates a area and corrects the values based on scale and transformation
+ * @param {NodeEditor} editor
+ * @param {[Position, Position]} selection
+ * @returns {[Position, Position]}
+ */
+export function calcSelectionArea(
   editor: NodeEditor,
   selection: [Position, Position]
 ): [Position, Position] {

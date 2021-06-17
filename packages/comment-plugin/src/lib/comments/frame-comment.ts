@@ -1,8 +1,11 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
-import { Mouse } from '@naetverkjs/naetverk/src/lib/view';
 import { CommentType } from '../interfaces/comment-type.enum';
 import { IComment } from '../interfaces/comment.interface';
-import { calcNewPositions, containsRect, getNodesFromSelectionArea } from '../utils';
+import {
+  calcSelectionArea,
+  containsRect,
+  getNodesFromSelectionArea,
+} from '../utils';
 import Comment from './comment';
 
 export default class FrameComment extends Comment {
@@ -63,8 +66,6 @@ export default class FrameComment extends Comment {
       this.height = comment.style.height;
       this.draggable.resizeOff();
       this.checkForContainingNodes(comment);
-      // Todo: trigger to see if links should be updated
-      // Todo: Use the methods for the selection rect
     }
   }
 
@@ -154,31 +155,46 @@ export default class FrameComment extends Comment {
     return position;
   }
 
+  /**
+   * Check the comment for containing nodes and link them accordingly
+   * @param el
+   */
   checkForContainingNodes(el) {
     const rec = document.getElementById(el.id).getBoundingClientRect();
+
     const offset = this.getDocumentOffsetPosition(
       document.getElementById(el.id)
     );
+
     const startPos = {
       x: rec.x - offset.left,
       y: rec.y - offset.top,
     };
+
     const endPos = {
-      x: rec.width,
-      y: rec.height,
+      x: rec.x + rec.width,
+      y: rec.y + rec.height,
     };
-    const nodes = getNodesFromSelectionArea(this.editor, [startPos, endPos]);
 
-   const p = calcNewPositions(this.editor, [startPos, endPos])
+    const calcRect = calcSelectionArea(this.editor, [startPos, endPos]);
+    let nodes = getNodesFromSelectionArea(
+      this.editor,
+      calcRect[0],
+      calcRect[1]
+    );
 
-    console.log(nodes);
-
-    this.drawRect(startPos, endPos, 'red');
-    this.drawRect(p[0], p[1], 'blue');
+    this.linkTo(nodes.map((n) => n.id));
   }
 
-  drawRect(position, size, color) {
-    const area = document.createElement('div');
+  drawRect(position, size, color, name: string) {
+    let area = document.getElementById(name);
+
+    if (!area) {
+      area = document.createElement('div');
+      area.id = name;
+      document.querySelector('.node-editor').appendChild(area);
+    }
+
     area.style.border = `3px solid ${color}`;
     area.style.left = `${position.x}px`;
     area.style.top = `${position.y}px`;
@@ -187,7 +203,6 @@ export default class FrameComment extends Comment {
     area.style.opacity = '0.2';
     area.style.zIndex = '-2';
     area.style.position = 'absolute';
-    document.querySelector('.node-editor').appendChild(area);
   }
 
   toJSON(): IComment {
