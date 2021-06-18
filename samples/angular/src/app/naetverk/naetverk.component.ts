@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AngularRenderPlugin } from '@naetverkjs/angular-renderer';
 import { AreaPlugin } from '@naetverkjs/area';
 import { ArrangePlugin } from '@naetverkjs/arrange';
+import { CollaborationPlugin } from '@naetverkjs/collaboration';
 import { CommentPlugin, CommentType } from '@naetverkjs/comments';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
@@ -58,6 +59,8 @@ export class NaetverkComponent implements AfterViewInit {
       margin: 50,
       snapSize: 16,
     });
+
+    editor.use(CollaborationPlugin, {});
 
     const engine = new Engine('demo@0.2.0');
 

@@ -68,6 +68,9 @@
     },
     "comment-plugin": {
       "tags": ["plugin"]
+    },
+    "collaboration-plugin": {
+      "tags": ["plugin"]
     }
   },
   "workspaceLayout": {
