@@ -96,6 +96,16 @@ To display the comments, add the following scss to your component. You can also 
   background: rgba(15, 80, 255, 0.2);
   border: 2px solid transparent;
 }
+
+.handle {
+  width: 10px;
+  height: 10px;
+  background: #ff0000;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
+}
 ```
 
 ## Working with other plugins
