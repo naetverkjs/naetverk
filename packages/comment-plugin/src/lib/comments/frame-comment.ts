@@ -27,13 +27,16 @@ export default class FrameComment extends Comment {
    */
   handler: HTMLDivElement;
 
+
+
   /**
    * Handles the functionality when the comment resize handler is clicked
    * @param {MouseEvent} e
    */
   handlerDown(e: MouseEvent) {
+    let handlerUpContainer = handlerUp.bind(this)
     window.addEventListener('mousemove', handlerMove);
-    window.addEventListener('mouseup', handlerUp.bind(this));
+    window.addEventListener('mouseup', handlerUpContainer);
 
     const comment = this.el;
 
@@ -67,7 +70,7 @@ export default class FrameComment extends Comment {
      */
     function handlerUp(e: MouseEvent) {
       window.removeEventListener('mousemove', handlerMove);
-      window.removeEventListener('mouseup', handlerUp);
+      window.removeEventListener('mouseup', handlerUpContainer);
       // Problem zone
       this.width = comment.style.width;
       this.height = comment.style.height;
