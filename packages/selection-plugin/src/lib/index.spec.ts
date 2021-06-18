@@ -22,7 +22,7 @@ describe('Init', () => {
 
   describe('Plugin configuration', () => {
     it('should have the selectorClass when provided', () => {
-      const selector = 'chese';
+      const selector = 'cheese';
       editor.use(SelectionPlugin, {
         offset: {
           x: 0,
