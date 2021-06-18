@@ -1,4 +1,3 @@
-import { Socket, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
@@ -6,12 +5,15 @@ import {
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WsResponse,
+  WebSocketServer
 } from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway(3001)
 export class NaetverkGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer() wss: Server;
+
   private logger: Logger = new Logger('NaetverkGateway');
 
   afterInit(server: Server): any {
@@ -20,14 +22,22 @@ export class NaetverkGateway
 
   handleConnection(client: Socket, ...args: any[]): any {
     this.logger.log(`Client connected ${client.id}`);
+    client.emit('welcome');
   }
 
   handleDisconnect(client: Socket): any {
     this.logger.log(`Client disconnected ${client.id}`);
   }
+/*
+  @SubscribeMessage('nodecreate')
+  nodecreate(@MessageBody() payload, @ConnectedSocket() client: Socket) {
+    this.logger.log(`client ${client.id} send: ${payload}`);
+    client.broadcast('nodecreate', payload)
+   // this.wss.emit('nodecreate', payload);
+  }*/
 
-  @SubscribeMessage('msgToServer')
-  handleMessage(client: Socket, payload: any): WsResponse<string> {
-    return { event: 'msgToClient', data: 'Hello world' };
+  @SubscribeMessage('nodecreate')
+  async nodecreate(client, payload){
+    client.broadcast.emit('nodecreate', payload);
   }
 }

@@ -1,1 +1,3 @@
-export interface CollaborationOptions {}
+export interface CollaborationOptions {
+  remote: string;
+}

@@ -1,4 +1,7 @@
 {
   "name": "@naetverkjs/collaboration",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "peerDependencies": {
+    "socket.io": "2.4.1"
+  }
 }
