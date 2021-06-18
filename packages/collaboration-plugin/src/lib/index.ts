@@ -6,5 +6,8 @@ export const CollaborationPlugin = {
 };
 
 export function install(editor, options: CollaborationOptions) {
+
+  // TODO Setup Connection
+
   console.log('Collaboration Plugin Initialized');
 }

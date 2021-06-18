@@ -71,6 +71,9 @@
     },
     "collaboration-plugin": {
       "tags": ["plugin"]
+    },
+    "collaboration": {
+      "tags": ["sample"]
     }
   },
   "workspaceLayout": {

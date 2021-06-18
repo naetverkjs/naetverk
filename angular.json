@@ -97,7 +97,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular:build"
+            "browserTarget": "angular:build",
+            "proxyConfig": "samples/angular/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -667,6 +668,60 @@
             "packageJson": "packages/collaboration-plugin/package.json",
             "main": "packages/collaboration-plugin/src/index.ts",
             "assets": ["packages/collaboration-plugin/*.md"]
+          }
+        }
+      }
+    },
+    "collaboration": {
+      "root": "samples/collaboration",
+      "sourceRoot": "samples/collaboration/src",
+      "projectType": "application",
+      "prefix": "collaboration",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/samples/collaboration",
+            "main": "samples/collaboration/src/main.ts",
+            "tsConfig": "samples/collaboration/tsconfig.app.json",
+            "assets": ["samples/collaboration/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "samples/collaboration/src/environments/environment.ts",
+                  "with": "samples/collaboration/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "collaboration:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "samples/collaboration/tsconfig.app.json",
+              "samples/collaboration/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!samples/collaboration/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "samples/collaboration/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
