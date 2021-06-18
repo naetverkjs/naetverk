@@ -40,7 +40,6 @@ export default class Draggable {
 
   getCoords(e) {
     const props = e.touches ? e.touches[0] : e;
-
     return [props.pageX, props.pageY];
   }
 
@@ -72,13 +71,22 @@ export default class Draggable {
     this.mouseStart = null;
   }
 
+  /**
+   * Disables the dragging when moving the handle
+   */
   resizeOn() {
     this.resize = true;
   }
+
+  /**
+   * Enable the dragging back after moving
+   */
   resizeOff() {
     this.resize = false;
   }
 
-  // mutable method
+  /**
+   * Mutable method
+   */
   destroy() {}
 }

@@ -1,4 +1,5 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import { CommentResizedEvent } from '../events';
 import { CommentType } from '../interfaces/comment-type.enum';
 import { IComment } from '../interfaces/comment.interface';
 import {
@@ -27,58 +28,6 @@ export default class FrameComment extends Comment {
    */
   handler: HTMLDivElement;
 
-
-
-  /**
-   * Handles the functionality when the comment resize handler is clicked
-   * @param {MouseEvent} e
-   */
-  handlerDown(e: MouseEvent) {
-    let handlerUpContainer = handlerUp.bind(this)
-    window.addEventListener('mousemove', handlerMove);
-    window.addEventListener('mouseup', handlerUpContainer);
-
-    const comment = this.el;
-
-    this.draggable.resizeOn();
-
-    let prevX = e.clientX;
-    let prevY = e.clientY;
-    let startWidth = parseInt(
-      document.defaultView.getComputedStyle(comment).width,
-      10
-    );
-    let startHeight = parseInt(
-      document.defaultView.getComputedStyle(comment).height,
-      10
-    );
-
-    /**
-     * Updates when the comment handler moves
-     * @param e
-     */
-    function handlerMove(e) {
-      comment.style.width = startWidth + e.clientX - prevX + 'px';
-      comment.style.height = startHeight + e.clientY - prevY + 'px';
-    }
-
-    /**
-     * Removes the previously created event listeners
-     * @param {MouseEvent} e
-     * @WARNING: Potentially invalid reference access to a class field via 'this.' of a nested function
-     * @WARNING: This Event is not properly removed
-     */
-    function handlerUp(e: MouseEvent) {
-      window.removeEventListener('mousemove', handlerMove);
-      window.removeEventListener('mouseup', handlerUpContainer);
-      // Problem zone
-      this.width = comment.style.width;
-      this.height = comment.style.height;
-      this.draggable.resizeOff();
-      this.checkForContainingNodes(comment);
-    }
-  }
-
   constructor(
     id: number,
     title: string,
@@ -94,6 +43,65 @@ export default class FrameComment extends Comment {
     this.handler = document.createElement('div');
     this.handler.className = 'handle';
     this.handler.addEventListener('mousedown', this.handlerDown.bind(this));
+
+    this.editor.on('commentresized', (e: CommentResizedEvent) => {
+      if (this.id === e.id) {
+        this.width = e.width;
+        this.height = e.height;
+        this.checkForContainingNodes(this.el);
+      }
+    });
+  }
+
+  /**
+   * Handles the functionality when the comment resize handler is clicked
+   * @param {MouseEvent} e
+   */
+  handlerDown(e: MouseEvent) {
+    const handlerUpRef = handlerUp.bind(this);
+    window.addEventListener('mousemove', handlerMove);
+    window.addEventListener('mouseup', handlerUpRef);
+
+    const commentRef = this.el;
+
+    this.draggable.resizeOn();
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+    let startWidth = parseInt(
+      document.defaultView.getComputedStyle(commentRef).width,
+      10
+    );
+    let startHeight = parseInt(
+      document.defaultView.getComputedStyle(commentRef).height,
+      10
+    );
+
+    /**
+     * Updates when the comment handler moves
+     * @param e
+     */
+    function handlerMove(e) {
+      commentRef.style.width = startWidth + e.clientX - prevX + 'px';
+      commentRef.style.height = startHeight + e.clientY - prevY + 'px';
+    }
+
+    /**
+     * Removes the previously created event listeners
+     * @param {MouseEvent} e
+     */
+    function handlerUp(e: MouseEvent) {
+      window.removeEventListener('mousemove', handlerMove);
+      window.removeEventListener('mouseup', handlerUpRef);
+
+      this.editor.trigger('commentresized', {
+        id: this.id,
+        width: commentRef.style.width,
+        height: commentRef.style.height,
+      });
+
+      this.draggable.resizeOff();
+    }
   }
 
   linkedNodesView() {
@@ -102,7 +110,7 @@ export default class FrameComment extends Comment {
       .map((node) => this.editor.view.nodes.get(node));
   }
 
-  linkTo(ids) {
+  linkTo(ids: number[]) {
     super.linkTo(ids);
   }
 
@@ -119,7 +127,6 @@ export default class FrameComment extends Comment {
   isContains(node) {
     const commRect = this.el.getBoundingClientRect();
     const view = this.editor.view.nodes.get(node);
-
     return containsRect(commRect, view.el.getBoundingClientRect());
   }
 

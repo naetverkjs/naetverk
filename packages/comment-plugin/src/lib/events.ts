@@ -1,6 +1,12 @@
 import { Node } from '@naetverkjs/naetverk';
 import Comment from './comments/comment';
 
+export interface CommentResizedEvent {
+  id: number;
+  width: number;
+  height: number;
+}
+
 /**
  * Add the needed event listerner types to the @naetverjks event list
  */
@@ -13,7 +19,7 @@ declare module '@naetverkjs/naetverk/src/lib/events' {
     addcomment: any;
     removecomment: any;
     editcomment: any;
-    commentresized: any;
+    commentresized: CommentResizedEvent;
   }
 }
 

@@ -29,7 +29,6 @@ export default class Comment {
 
   draggable: Draggable;
 
-
   constructor(
     id: number = 1,
     title: string,
@@ -69,7 +68,7 @@ export default class Comment {
     );
   }
 
-  linkTo(ids) {
+  linkTo(ids: number[]) {
     this.links = ids || [];
   }
 

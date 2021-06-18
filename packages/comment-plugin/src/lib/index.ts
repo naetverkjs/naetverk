@@ -118,10 +118,6 @@ function install(
     }
   });
 
-  editor.on('commentresized', ({ comment }) => {
-    console.log(comment);
-  });
-
   editor.on('removecomment', ({ comment, type }) => {
     if (comment) {
       manager.deleteComment(comment);
