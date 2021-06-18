@@ -46,16 +46,23 @@ editor.use(CommentPlugin, {
 
 ```typescript
 // Creates a frame around the selected nodes with the text as title
-editor.trigger('addcomment', { type: 'frame', text, nodes });
+editor.trigger('addcomment', {
+  type: CommentType.FRAME,
+  text: 'Frame Title',
+  nodes: [],
+});
 
 // Creates a comment at a given position
-editor.trigger('addcomment', { type: 'inline', text, position });
+editor.trigger('addcomment', {
+  type: CommentType.INLINE,
+  text: 'Comment Title',
+  position,
+});
 
 // Removes a comment or all by type
 editor.trigger('removecomment', { comment });
 editor.trigger('removecomment', { type });
 ```
-
 
 ### Styling
 

@@ -1,10 +1,11 @@
 import { CommentType } from './comment-type.enum';
 
-export interface CommentJSON {
+export interface IComment {
+  id: number;
   text: string;
   position: [number, number];
-  links: any;
 
+  links?: any;
   type?: CommentType;
   width?: number;
   height?: number;

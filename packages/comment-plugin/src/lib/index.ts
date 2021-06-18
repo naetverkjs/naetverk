@@ -3,7 +3,7 @@ import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
 import { CommentType } from './interfaces/comment-type.enum';
 import { CommentsOptions } from './interfaces/comments-options.interface';
-import CommentManager from './manager';
+import CommentManager from './comment-manager';
 import { listenWindow, nodesBBox } from './utils';
 import './events';
 
@@ -45,6 +45,7 @@ function install(
   editor.bind('addcomment');
   editor.bind('removecomment');
   editor.bind('editcomment');
+  editor.bind('commentresized');
 
   const manager = new CommentManager(editor, snapSize);
 
@@ -92,19 +93,26 @@ function install(
   });
 
   editor.on('addcomment', ({ type, text, nodes, position }) => {
+    const nextId = manager.generateCommentId();
+
     if (type === CommentType.INLINE) {
-      manager.addInlineComment(text, position);
+      manager.addInlineComment({
+        text: text,
+        position: position,
+        id: nextId,
+      });
     } else if (type === CommentType.FRAME) {
       const { left, top, width, height } = nodesBBox(editor, nodes, margin);
       const ids = nodes.map((n) => n.id);
 
-      manager.addFrameComment(
-        text,
-        position || [left, top],
-        ids,
-        width,
-        height
-      );
+      manager.addFrameComment({
+        id: nextId,
+        text: text,
+        position: position || [left, top],
+        links: ids,
+        width: width,
+        height: height,
+      });
     } else {
       throw new Error(`type '${type}' not supported`);
     }

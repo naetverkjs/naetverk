@@ -1,6 +1,6 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
 import Draggable from '../draggable';
-import { CommentJSON } from '../interfaces/comment-json.interface';
+import { IComment } from '../interfaces/comment.interface';
 
 export default class Comment {
   private readonly text: string;
@@ -9,7 +9,9 @@ export default class Comment {
 
   private scale: number;
 
-  links: any[];
+  id: number;
+
+  links: number[];
 
   x: number;
 
@@ -25,11 +27,17 @@ export default class Comment {
 
   el: HTMLDivElement;
 
-  private draggable: Draggable;
+  draggable: Draggable;
 
-  constructor(title: string, editor: NodeEditor, snapSize: number) {
+  constructor(
+    id: number = 1,
+    title: string,
+    editor: NodeEditor,
+    snapSize: number
+  ) {
     this.editor = editor;
     this.text = title;
+    this.id = id;
 
     this.scale = 1;
     this.x = 0;
@@ -45,7 +53,10 @@ export default class Comment {
 
   initView() {
     this.el = document.createElement('div');
+    this.el.setAttribute('id', `comment-${this.id}`);
+
     this.el.tabIndex = 1;
+
     this.el.addEventListener('contextmenu', this.onContextMenu.bind(this));
     this.el.addEventListener('focus', this.onFocus.bind(this));
     this.el.addEventListener('blur', this.onBlur.bind(this));
@@ -57,7 +68,7 @@ export default class Comment {
     );
   }
 
-  linkTo(ids) {
+  linkTo(ids: number[]) {
     this.links = ids || [];
   }
 
@@ -117,8 +128,9 @@ export default class Comment {
     this.el.style.transform = `translate(${this.x}px, ${this.y}px) scale(${this.scale})`;
   }
 
-  toJSON(): CommentJSON {
+  toJSON(): IComment {
     return {
+      id: this.id,
       text: this.text,
       position: [this.x, this.y],
       links: this.links,
