@@ -13,18 +13,53 @@ export function install(editor: NodeEditor, options: CollaborationOptions) {
   const socket = io(options.remote);
   let connected = false;
 
+  /**
+   * Function that adds the correct hash of a command
+   * @param {string} name
+   * @param payload
+   */
+  function updateHash(name: string, payload: any) {
+    const eventHash = Md5.hashStr(JSON.stringify({ name, payload }));
+    hashList.push(eventHash);
+  }
+
+  /**
+   * Checks if the hash exists in the hash list
+   * @param {string} name
+   * @param payload
+   * @returns {boolean}
+   */
+  function checkIfHashIsInList(name: string, payload: any) {
+    return hashList.includes(Md5.hashStr(JSON.stringify({ name, payload })));
+  }
+
   function registerListeners() {
     /*  socket.on('editorEvent', (message: EditorEvent<any>) => {
       editor.trigger(message.name, message.payload);
     });*/
 
-    socket.on('nodecreate', (node: Node) => {
-      const eventHash = Md5.hashStr(
-        JSON.stringify({ name: 'nodecreate', payload: node })
-      );
-      hashList.push(eventHash);
-      console.log(node)
-      editor.addNode( node);
+    socket.on('nodecreate', async (node: Node) => {
+      updateHash('nodecreate', node);
+
+      const component = editor.components.get(node.name);
+      if (component) {
+        // Todo: Id is currently not taken in to account
+        // Todo: what if a node was deleted and then added again?
+
+        const newNode = await component.createNode(node.data);
+        newNode.position = node.position;
+        editor.addNode(newNode);
+      } else {
+        throw new Error('This node type was not registered correct');
+      }
+    });
+
+    socket.on('nodedragged', async (node: Node) => {
+      updateHash('nodecreate', node);
+      const editorNode = editor.nodes.find((n) => n.id === node.id);
+
+      editor.view.nodes.get(editorNode).translate(...node.position);
+      editor.view.updateConnections({ node: editorNode });
     });
 
     /**
@@ -34,9 +69,14 @@ export function install(editor: NodeEditor, options: CollaborationOptions) {
       const eventHash = Md5.hashStr(
         JSON.stringify({ name: 'nodecreate', payload: node })
       );
-      console.log(hashList.includes(eventHash))
       if (!hashList.includes(eventHash)) {
         socket.emit('nodecreate', node);
+      }
+    });
+
+    editor.on('nodedragged', (node: Node) => {
+      if (!checkIfHashIsInList(name, node)) {
+        socket.emit('nodedragged', node);
       }
     });
   }
