@@ -37,13 +37,6 @@ function updatePackageFile(targetPath: string, sourcePath: string) {
   if (peerDependencies) {
     peerDependencies['@naetverkjs/naetverk'] = targetContent['version'];
   }
-  console.log(peerDependencies);
-
-  /*
-  targetContent['peerDependencies'] = {
-    '@naetverkjs/naetverk': '0.8.5',
-  };
-*/
 
   fs.writeFileSync(targetPath, JSON.stringify(targetContent));
 }
