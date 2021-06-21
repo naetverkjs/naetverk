@@ -15,5 +15,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/naetverkjs/naetverk/issues"
+  },
+  "peerDependencies": {
+    "@naetverkjs/naetverk": "0.8.1"
   }
 }

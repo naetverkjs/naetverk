@@ -5,9 +5,6 @@
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
   },
-  "peerDependencies": {
-    "@naetverkjs/naetverk": "0.8.42"
-  },
   "keywords": [
     "dataflow",
     "visual programming",
@@ -18,5 +15,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/naetverkjs/naetverk/issues"
+  },
+  "peerDependencies": {
+    "@naetverkjs/naetverk": "0.8.1"
   }
 }
