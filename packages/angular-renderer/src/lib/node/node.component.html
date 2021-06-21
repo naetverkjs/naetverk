@@ -1,6 +1,6 @@
 <div
   class="node"
-  id="{{'node-' + node.id}}"
+  id="{{ 'node-' + node.id }}"
   [ngClass]="[selected(), node.key] | kebab"
 >
   <div class="title">{{ node.title }}</div>

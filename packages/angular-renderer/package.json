@@ -1,6 +1,6 @@
 {
   "name": "@naetverkjs/angular-renderer",
-  "version": "0.8.42",
+  "version": "0.8.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
