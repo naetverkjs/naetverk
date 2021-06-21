@@ -1,7 +1,7 @@
 <div
   class="node"
   id="{{ 'node-' + node.id }}"
-  [ngClass]="[selected(), node.name] | kebab"
+  [ngClass]="[selected(), node.key] | kebab"
 >
   <div class="title">{{ node.title }}</div>
   <div class="output" *ngFor="let output of outputs">

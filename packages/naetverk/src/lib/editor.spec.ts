@@ -76,7 +76,7 @@ describe('Editor', () => {
       editor.addNode(node1);
       editor.addNode(node2);
 
-      // assert.throws(() => editor.connect(n1.outputs.get('none'), n2.inputs.get('name')), Error, 'no output');
+      // assert.throws(() => editor.connect(n1.outputs.get('none'), n2.inputs.get('key')), Error, 'no output');
 
       editor.connect(node1.outputs.get('num'), node2.inputs.get('num1'));
 

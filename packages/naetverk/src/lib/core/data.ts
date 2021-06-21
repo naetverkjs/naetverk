@@ -26,7 +26,7 @@ export interface OutputsData {
 
 export interface NodeData {
   id: number;
-  name: string;
+  key: string;
   title: string;
   inputs: InputsData;
   outputs: OutputsData;

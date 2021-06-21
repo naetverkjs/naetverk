@@ -5,8 +5,8 @@ import { Output } from './output';
 import { InputsData, NodeData, OutputsData } from './core';
 
 export class Node {
-  constructor(name: string) {
-    this.name = name;
+  constructor(key: string) {
+    this.key = key;
     this.id = Node.incrementId();
   }
 
@@ -14,7 +14,7 @@ export class Node {
 
   id: number;
 
-  name: string;
+  key: string;
 
   title: string;
 
@@ -41,13 +41,13 @@ export class Node {
   }
 
   static fromJSON(json: NodeData) {
-    const node = new Node(json.name);
+    const node = new Node(json.key);
     const [x, y] = json.position;
 
     node.id = json.id;
     node.data = json.data;
     node.position = [x, y];
-    node.name = json.name;
+    node.key = json.key;
     node.title = json.title;
     Node.latestId = Math.max(node.id, Node.latestId);
 
@@ -123,7 +123,7 @@ export class Node {
 
     return {
       id: this.id,
-      name: this.name,
+      key: this.key,
       title: this.title,
       data: this.data,
       inputs: reduceIO<InputsData>(this.inputs),

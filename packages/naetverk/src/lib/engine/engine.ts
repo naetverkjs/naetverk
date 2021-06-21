@@ -120,7 +120,7 @@ export class Engine extends Context<EngineEventsTypes> {
 
   private async processWorker(node: NodeData) {
     const inputData = await this.extractInputData(node);
-    const component = this.components.get(node.name) as Component;
+    const component = this.components.get(node.key) as Component;
     const outputData = {};
 
     try {

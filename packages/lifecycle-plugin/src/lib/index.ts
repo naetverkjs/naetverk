@@ -16,16 +16,16 @@ export const LifecyclePlugin = {
 
 function install(editor: NodeEditor) {
   editor.on('nodecreated', (node) =>
-    getHook<OnCreated>(editor, node.name, 'created')(node)
+    getHook<OnCreated>(editor, node.key, 'created')(node)
   );
   editor.on('noderemoved', (node) =>
-    getHook<OnDestroyed>(editor, node.name, 'destroyed')(node)
+    getHook<OnDestroyed>(editor, node.key, 'destroyed')(node)
   );
   editor.on('connectioncreate', ({ input, output }) => {
     if (
-      getHook<OnConnect>(editor, input.node?.name, 'onconnect')(input) ===
+      getHook<OnConnect>(editor, input.node?.key, 'onconnect')(input) ===
         false ||
-      getHook<OnConnect>(editor, output.node?.name, 'onconnect')(output) ===
+      getHook<OnConnect>(editor, output.node?.key, 'onconnect')(output) ===
         false
     )
       return false;
@@ -33,12 +33,12 @@ function install(editor: NodeEditor) {
   editor.on('connectioncreated', (connection) => {
     getHook<OnConnected>(
       editor,
-      connection.input.node?.name,
+      connection.input.node?.key,
       'connected'
     )(connection);
     getHook<OnConnected>(
       editor,
-      connection.output.node?.name,
+      connection.output.node?.key,
       'connected'
     )(connection);
   });
@@ -46,12 +46,12 @@ function install(editor: NodeEditor) {
     if (
       getHook<OnDisconnect>(
         editor,
-        connection.input.node?.name,
+        connection.input.node?.key,
         'ondisconnect'
       )(connection) === false ||
       getHook<OnDisconnect>(
         editor,
-        connection.output.node?.name,
+        connection.output.node?.key,
         'ondisconnect'
       )(connection) === false
     )
@@ -60,12 +60,12 @@ function install(editor: NodeEditor) {
   editor.on('connectionremoved', (connection) => {
     getHook<OnDisconnected>(
       editor,
-      connection.input.node?.name,
+      connection.input.node?.key,
       'disconnected'
     )(connection);
     getHook<OnDisconnected>(
       editor,
-      connection.output.node?.name,
+      connection.output.node?.key,
       'disconnected'
     )(connection);
   });
