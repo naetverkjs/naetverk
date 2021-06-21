@@ -53,6 +53,7 @@ export class NumControl extends Control implements AngularControl {
   }
 
   onChange(val: number) {
+  //  this.emitter.trigger('controlchanged', {val})
     this.setValue(val);
     this.emitter.trigger('process');
   }

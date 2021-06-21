@@ -1,4 +1,4 @@
-import { Node, NodeEditor } from '@naetverkjs/naetverk';
+import { Component, Node, NodeEditor } from '@naetverkjs/naetverk';
 import io from 'socket.io-client';
 import { Md5 } from 'ts-md5';
 import { CollaborationOptions } from './interfaces/collaboration-options.interface';
@@ -41,7 +41,7 @@ export function install(editor: NodeEditor, options: CollaborationOptions) {
     socket.on('nodecreate', async (node: Node) => {
       updateHash('nodecreate', node);
 
-      const component = editor.components.get(node.name);
+      const component: Partial<Component> = editor.components.get(node.name);
       if (component) {
         // Todo: Id is currently not taken in to account
         // Todo: what if a node was deleted and then added again?
@@ -62,6 +62,11 @@ export function install(editor: NodeEditor, options: CollaborationOptions) {
       editor.view.updateConnections({ node: editorNode });
     });
 
+    socket.on('nodetranslated', async (data) => {
+      updateHash('nodecreate', data);
+      // Check if translated would be better
+    });
+
     /**
      * When a node is created.
      */
@@ -77,6 +82,12 @@ export function install(editor: NodeEditor, options: CollaborationOptions) {
     editor.on('nodedragged', (node: Node) => {
       if (!checkIfHashIsInList(name, node)) {
         socket.emit('nodedragged', node);
+      }
+    });
+
+    editor.on('nodetranslated', (data) => {
+      if (!checkIfHashIsInList(name, data)) {
+        socket.emit('nodetranslated', data);
       }
     });
   }

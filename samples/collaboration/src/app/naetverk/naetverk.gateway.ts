@@ -45,4 +45,9 @@ export class NaetverkGateway
   async nodeDragged(client, payload) {
     client.broadcast.emit('nodedragged', payload);
   }
+
+  @SubscribeMessage('nodetranslated')
+  async nodeTranslated(client, payload) {
+    client.broadcast.emit('nodetranslated', payload);
+  }
 }

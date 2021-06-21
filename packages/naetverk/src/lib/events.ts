@@ -21,6 +21,7 @@ export class EditorEvents extends Events {
       connectioncreated: [],
       connectionremove: [],
       connectionremoved: [],
+      controlchanged: [],
       translatenode: [],
       nodetranslate: [],
       nodetranslated: [],
@@ -62,6 +63,7 @@ export interface EventsTypes extends DefaultEventsTypes {
   connectioncreated: Connection;
   connectionremove: Connection;
   connectionremoved: Connection;
+  controlchanged: { node: Node; data: any };
   translatenode: { node: Node; dx: number; dy: number };
   nodetranslate: { node: Node; x: number; y: number };
   nodetranslated: { node: Node; prev: [number, number] };
