@@ -1,6 +1,6 @@
+import { NodeEditor } from './editor';
 import { Component as ComponentWorker } from './engine/component';
 import { Node } from './node';
-import { NodeEditor } from './editor';
 
 export abstract class Component extends ComponentWorker {
   editor: NodeEditor | null = null;
@@ -18,9 +18,10 @@ export abstract class Component extends ComponentWorker {
     return node;
   }
 
-  async createNode(data = {}) {
-    const node = new Node(this.name);
+  async createNode(data = {}, title?: string) {
+    const node = new Node(this.key);
 
+    node.title = title ? title : this.key;
     node.data = data;
     await this.build(node);
 

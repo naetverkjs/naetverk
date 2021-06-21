@@ -1,6 +1,6 @@
 {
   "name": "@naetverkjs/angular-renderer",
-  "version": "0.8.42",
+  "version": "0.8.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
@@ -10,7 +10,7 @@
     "@angular/core": "^10.0.14",
     "@angular/animations": "^10.0.14",
     "@angular/elements": "^10.1.1",
-    "@naetverkjs/naetverk": "0.8.1"
+    "@naetverkjs/naetverk": "0.8.5"
   },
   "dependencies": {
     "tslib": "^2.0.0"

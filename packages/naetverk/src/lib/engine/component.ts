@@ -2,12 +2,12 @@ import { Engine } from './engine';
 import { NodeData, WorkerInputs, WorkerOutputs } from '../core';
 
 export abstract class Component {
-  name: string;
+  key: string;
   data: unknown = {};
   engine: Engine | null = null;
 
   protected constructor(name: string) {
-    this.name = name;
+    this.key = name;
   }
 
   abstract worker(

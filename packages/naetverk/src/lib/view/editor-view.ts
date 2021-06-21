@@ -41,9 +41,9 @@ export class EditorView extends Emitter<EventsTypes> {
   }
 
   addNode(node: Node) {
-    const component = this.components.get(node.name);
+    const component = this.components.get(node.key);
 
-    if (!component) throw new Error(`Component ${node.name} not found`);
+    if (!component) throw new Error(`Component ${node.key} not found`);
 
     const nodeView = new NodeView(node, component, this);
 

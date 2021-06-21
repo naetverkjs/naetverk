@@ -32,6 +32,12 @@ function updatePackageFile(targetPath: string, sourcePath: string) {
   for (const field of transferFields) {
     targetContent[field] = sourceContent[field];
   }
+
+  const peerDependencies = targetContent['peerDependencies'];
+  if (peerDependencies) {
+    peerDependencies['@naetverkjs/naetverk'] = targetContent['version'];
+  }
+
   fs.writeFileSync(targetPath, JSON.stringify(targetContent));
 }
 

@@ -165,7 +165,7 @@ export class NodeEditor extends Context<EventsTypes> {
       await Promise.all(
         Object.keys(json.nodes).map(async (id) => {
           const node = json.nodes[id];
-          const component = this.getComponent(node.name);
+          const component = this.getComponent(node.key);
 
           nodes[id] = await component.build(Node.fromJSON(node));
           this.addNode(nodes[id]);

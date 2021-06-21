@@ -5,19 +5,29 @@ import { Output } from './output';
 import { InputsData, NodeData, OutputsData } from './core';
 
 export class Node {
-  constructor(name: string) {
-    this.name = name;
+  constructor(key: string) {
+    this.key = key;
     this.id = Node.incrementId();
   }
 
   static latestId = 0;
-  name: string;
+
   id: number;
+
+  key: string;
+
+  title: string;
+
   position: [number, number] = [0.0, 0.0];
+
   inputs = new Map<string, Input>();
+
   outputs = new Map<string, Output>();
+
   controls = new Map<string, Control>();
+
   data: { [key: string]: unknown } = {};
+
   meta: { [key: string]: unknown } = {};
 
   static incrementId() {
@@ -31,13 +41,14 @@ export class Node {
   }
 
   static fromJSON(json: NodeData) {
-    const node = new Node(json.name);
+    const node = new Node(json.key);
     const [x, y] = json.position;
 
     node.id = json.id;
     node.data = json.data;
     node.position = [x, y];
-    node.name = json.name;
+    node.key = json.key;
+    node.title = json.title;
     Node.latestId = Math.max(node.id, Node.latestId);
 
     return node;
@@ -112,11 +123,12 @@ export class Node {
 
     return {
       id: this.id,
+      key: this.key,
+      title: this.title,
       data: this.data,
       inputs: reduceIO<InputsData>(this.inputs),
       outputs: reduceIO<OutputsData>(this.outputs),
       position: this.position,
-      name: this.name,
     };
   }
 }

@@ -18,7 +18,7 @@ class MyReactControl extends Component {
   }
 
   render() {
-    return <div>Hello ${this.props.name}!</div>;
+    return <div>Hello ${this.props.key}!</div>;
   }
 }
 

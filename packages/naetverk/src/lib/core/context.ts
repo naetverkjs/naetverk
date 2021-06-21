@@ -29,10 +29,10 @@ export class Context<EventsTypes> extends Emitter<EventsTypes & DefaultEvents> {
   }
 
   register(component: Component) {
-    if (this.components.has(component.name))
-      throw new Error(`Component ${component.name} already registered`);
+    if (this.components.has(component.key))
+      throw new Error(`Component ${component.key} already registered`);
 
-    this.components.set(component.name, component);
+    this.components.set(component.key, component);
     this.trigger('componentregister', component);
   }
 
