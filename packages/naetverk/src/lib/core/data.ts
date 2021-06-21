@@ -27,6 +27,7 @@ export interface OutputsData {
 export interface NodeData {
   id: number;
   name: string;
+  title: string;
   inputs: InputsData;
   outputs: OutputsData;
   data: { [key: string]: unknown };

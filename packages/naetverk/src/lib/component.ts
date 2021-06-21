@@ -18,8 +18,10 @@ export abstract class Component extends ComponentWorker {
     return node;
   }
 
-  async createNode(data = {}) {
+  async createNode(data = {}, title?: string) {
     const node = new Node(this.name);
+
+    node.title = title ? title : this.name;
 
     node.data = data;
     await this.build(node);

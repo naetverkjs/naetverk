@@ -11,13 +11,23 @@ export class Node {
   }
 
   static latestId = 0;
-  name: string;
+
   id: number;
+
+  name: string;
+
+  title: string;
+
   position: [number, number] = [0.0, 0.0];
+
   inputs = new Map<string, Input>();
+
   outputs = new Map<string, Output>();
+
   controls = new Map<string, Control>();
+
   data: { [key: string]: unknown } = {};
+
   meta: { [key: string]: unknown } = {};
 
   static incrementId() {
@@ -38,6 +48,7 @@ export class Node {
     node.data = json.data;
     node.position = [x, y];
     node.name = json.name;
+    node.title = json.title;
     Node.latestId = Math.max(node.id, Node.latestId);
 
     return node;
@@ -112,11 +123,12 @@ export class Node {
 
     return {
       id: this.id,
+      name: this.name,
+      title: this.title,
       data: this.data,
       inputs: reduceIO<InputsData>(this.inputs),
       outputs: reduceIO<OutputsData>(this.outputs),
       position: this.position,
-      name: this.name,
     };
   }
 }
