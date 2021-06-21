@@ -35,7 +35,6 @@ export class NodeView extends Emitter<EventsTypes> {
       this.onTranslate.bind(this),
       this.onSelect.bind(this),
       () => {
-        this.trigger('nodedraged', node);
         this.trigger('nodedragged', node);
       }
     );

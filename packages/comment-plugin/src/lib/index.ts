@@ -160,7 +160,7 @@ function install(
       .map((comment) => comment.offset(dx, dy));
   });
 
-  editor.on('nodedraged', (node) => {
+  editor.on('nodedragged', (node) => {
     manager.comments
       .filter((comment) => comment instanceof FrameComment)
       .filter((comment) => {

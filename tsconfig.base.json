@@ -29,7 +29,10 @@
       "@naetverkjs/history": ["packages/history-plugin/src/index.ts"],
       "@naetverkjs/react-renderer": ["packages/react-renderer/src/index.js"],
       "@naetverkjs/selection": ["packages/selection-plugin/src/index.ts"],
-      "@naetverkjs/comments": ["packages/comment-plugin/src/index.ts"]
+      "@naetverkjs/comments": ["packages/comment-plugin/src/index.ts"],
+      "@naetverkjs/collaboration": [
+        "packages/collaboration-plugin/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
