@@ -43,6 +43,7 @@
     "postcoverage": "node tools/ci/combine-coverage.js",
     "update:packages": "ts-node tools/publish/update-packages.ts",
     "build:libraries": "ts-node tools/build/build.ts",
+    "publish:libraries": "ts-node tools/publish/publish-to-npm.ts",
     "help": "nx help"
   },
   "private": true,
