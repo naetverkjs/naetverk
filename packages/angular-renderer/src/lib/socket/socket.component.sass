@@ -6,11 +6,12 @@
 .socket
   display: inline-block
   cursor: pointer
-  border: 1px solid white
+  border: 2px solid $socket-border-color
   border-radius: $socket-size/2.0
   width: $socket-size
   height: $socket-size
-  margin: $socket-margin
+  margin: $socket-margin +2 $socket-margin
+
   vertical-align: middle
   background: $socket-color
   z-index: 2
@@ -18,7 +19,7 @@
   &:hover
     border-width: 4px
   &.multiple
-    border-color: yellow
+    border-color: $socket-border-color
   &.output
     margin-right: - $socket-size / 2
   &.input

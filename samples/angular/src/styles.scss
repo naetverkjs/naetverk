@@ -28,7 +28,7 @@ $sockets: (
 .connection {
   overflow: visible !important;
   position: absolute;
-  z-index: -1;
+  z-index: -1!important;
   pointer-events: none;
   > * {
     pointer-events: all;
@@ -45,8 +45,8 @@ $sockets: (
  * Theming of the area plugin
  */
 
-$grid-color: #ccc;
-$grid-size: 32px;
+$grid-color: #212121;
+ $grid-size: 32px;
 $grid-area: $grid-size * 10000;
 
 .designer-background {
@@ -81,29 +81,32 @@ Comments Plugin:
 .inline-comment,
 .frame-comment {
   font-family: 'Roboto', sans-serif;
-  color: black;
-  padding: 12px;
-  font-size: 80%;
+  color: #f3c148;
+  font-weight: bold;
+  font-size: 100%;
   position: absolute;
   cursor: move;
   border-radius: 3px;
+  border-color: #f3c148;
   &:focus {
     outline: none;
     border-color: #f1df97;
   }
 }
 .inline-comment {
+  padding: 9px;
   z-index: 4;
-  background: #e7edff;
-  border: 2px dashed #aec4ff;
+  background: #444444;
+  border: 2px dashed #f3c148;
   &.connected {
-    border: 2px solid #7489c5;
+    border: 2px solid #f3c148;
   }
 }
 .frame-comment {
+  padding: 12px;
   z-index: -1;
-  background: rgba(15, 80, 255, 0.2);
-  border: 2px solid transparent;
+  background: rgb(243, 193, 72, 0.3);
+  border: 2px solid #f3c148;
 }
 
 .handle {
@@ -115,6 +118,3 @@ Comments Plugin:
   bottom: 0;
   cursor: se-resize;
 }
-
-
-
