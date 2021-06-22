@@ -6,11 +6,12 @@ import { CommentPlugin, CommentType } from '@naetverkjs/comments';
 import { ConnectionPlugin } from '@naetverkjs/connections';
 import { HistoryPlugin } from '@naetverkjs/history';
 import { KeyboardPlugin } from '@naetverkjs/keyboard';
-import { SelectionPlugin } from '@naetverkjs/selection';
-
 import { Engine, NodeEditor } from '@naetverkjs/naetverk';
+import { SelectionPlugin } from '@naetverkjs/selection';
 import { AddComponent } from './components/add-component';
+import { MessageComponent } from './components/message-component';
 import { NumComponent } from './components/number-component';
+import { StringComponent } from './components/string-component';
 
 @Component({
   selector: 'nvk-angular-sample',
@@ -22,7 +23,12 @@ export class NaetverkComponent implements AfterViewInit {
 
   editor = null;
 
-  components = [new NumComponent(), new AddComponent()];
+  components = [
+    new NumComponent(),
+    new AddComponent(),
+    new StringComponent(),
+    new MessageComponent(),
+  ];
 
   async ngAfterViewInit() {
     const container = this.el.nativeElement;
@@ -78,15 +84,22 @@ export class NaetverkComponent implements AfterViewInit {
     const add = await this.components[1].createNode();
     const secondAdd = await this.components[1].createNode();
 
+    const str = await this.components[2].createNode({ str: 'New Title' });
+    const msg = await this.components[3].createNode();
+
     n1.position = [80, 200];
     n2.position = [80, 400];
     add.position = [500, 240];
     secondAdd.position = [900, 240];
+    str.position = [900, 540];
+    msg.position = [500, 540];
 
     editor.addNode(n1);
     editor.addNode(n2);
     editor.addNode(add);
     editor.addNode(secondAdd);
+    editor.addNode(str);
+    editor.addNode(msg);
 
     editor.connect(n1.outputs.get('num'), add.inputs.get('num1'));
     editor.connect(n2.outputs.get('num'), add.inputs.get('num2'));
