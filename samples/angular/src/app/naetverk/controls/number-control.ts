@@ -12,13 +12,15 @@ import { Control } from '@naetverkjs/naetverk';
   styles: [
     `
       input {
-        border-radius: 30px;
-        background-color: white;
+        border-radius: 2px;
+        background-color: #2C2C2C;
         padding: 2px 6px;
-        border: 1px solid #999;
-        font-size: 110%;
+        color: white;
+        border: 1px solid #2C2C2C;
+        font-size: 90%;
         width: 140px;
         box-sizing: border-box;
+        outline: none;
       }
     `,
   ],

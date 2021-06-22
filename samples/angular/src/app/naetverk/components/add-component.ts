@@ -1,11 +1,7 @@
-import {
-  AngularComponent,
-  AngularComponentData,
-} from '@naetverkjs/angular-renderer';
+import { AngularComponent, AngularComponentData } from '@naetverkjs/angular-renderer';
 import { Component, Input, Output } from '@naetverkjs/naetverk';
 import { NumControl } from '../controls/number-control';
 import { numSocket } from '../sockets';
-import { MyNodeComponent } from './node/node.component';
 
 export class AddComponent extends Component implements AngularComponent {
   data: AngularComponentData;
@@ -13,7 +9,7 @@ export class AddComponent extends Component implements AngularComponent {
   constructor() {
     super('Add');
     this.data.render = 'angular';
-    this.data.component = MyNodeComponent;
+ //   this.data.component = MyNodeComponent;
   }
 
   async builder(node) {

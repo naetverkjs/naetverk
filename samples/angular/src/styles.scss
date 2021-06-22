@@ -4,13 +4,15 @@ $sockets: (
   'integer': #2703a6,
   'decimal': #141259,
   'string': #f29f05,
-  'boolean': #f2b705,
+  'event': #ee05f2,
+  'number': #ecbd81,
 );
 
 .socket {
   @each $name, $color in $sockets {
     &.#{$name} {
       background: $color !important;
+      border: 2px solid darken($color, 30%) !important;
     }
   }
 }
@@ -19,7 +21,7 @@ $sockets: (
   svg.connection.socket-input-#{$name},
   svg.connection.socket-output-#{$name} {
     path.main-path {
-      stroke: $color;
+      stroke: $color !important;
     }
   }
 }
@@ -28,8 +30,9 @@ $sockets: (
 .connection {
   overflow: visible !important;
   position: absolute;
-  z-index: -1!important;
+  z-index: -1 !important;
   pointer-events: none;
+
   > * {
     pointer-events: all;
   }
@@ -46,7 +49,7 @@ $sockets: (
  */
 
 $grid-color: #212121;
- $grid-size: 32px;
+$grid-size: 32px;
 $grid-area: $grid-size * 10000;
 
 .designer-background {
@@ -78,43 +81,57 @@ $grid-area: $grid-size * 10000;
 /**
 Comments Plugin:
  */
+
+$handle-size: 7px;
+$comment-color: #f3c148;
 .inline-comment,
 .frame-comment {
   font-family: 'Roboto', sans-serif;
-  color: #f3c148;
+  color: $comment-color;
   font-weight: bold;
   font-size: 100%;
   position: absolute;
   cursor: move;
   border-radius: 3px;
-  border-color: #f3c148;
+  border-color: $comment-color;
+
   &:focus {
     outline: none;
     border-color: #f1df97;
   }
 }
+
 .inline-comment {
   padding: 9px;
   z-index: 4;
   background: #444444;
-  border: 2px dashed #f3c148;
+  border: 2px dashed $comment-color;
+
   &.connected {
-    border: 2px solid #f3c148;
+    border: 2px solid $comment-color;
   }
 }
+
 .frame-comment {
   padding: 12px;
   z-index: -1;
   background: rgb(243, 193, 72, 0.3);
-  border: 2px solid #f3c148;
+  border: 2px solid $comment-color;
 }
 
 .handle {
-  width: 10px;
-  height: 10px;
-  background: #ff0000;
+  background: transparent;
   position: absolute;
   right: 0;
   bottom: 0;
   cursor: se-resize;
+  border-top: $handle-size solid transparent;
+  border-left: $handle-size solid transparent;
+  border-bottom: $handle-size solid $comment-color;
+  border-right: $handle-size solid $comment-color;
+
+  &:hover {
+    border-bottom: $handle-size solid darken($comment-color, 30%);
+    border-right: $handle-size solid darken($comment-color, 30%);
+  }
 }
