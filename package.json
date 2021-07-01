@@ -75,7 +75,7 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/preset-env": "7.9.6",
-    "@babel/preset-react": "7.9.4",
+    "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.9.0",
     "@babel/register": "^7.12.10",
     "@nrwl/angular": "10.2.0",
