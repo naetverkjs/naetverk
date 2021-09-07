@@ -39,7 +39,7 @@
     vertical-align: middle
     display: inline-block
   .control
-    padding: $socket-margin $socket-size/2 + $socket-margin
+    padding: $socket-margin $socket-size*0.5 + $socket-margin
 
 
 
@@ -47,7 +47,7 @@
   display: inline-block
   cursor: pointer
   border: 1px solid white
-  border-radius: $socket-size/2.0
+  border-radius: $socket-size*0.5
   width: $socket-size
   height: $socket-size
   margin: $socket-margin
@@ -60,6 +60,6 @@
   &.multiple
     border-color: yellow
   &.output
-    margin-right: - $socket-size / 2
+    margin-right: - $socket-size * 0.5
   &.input
-    margin-left: - $socket-size / 2
+    margin-left: - $socket-size * 0.5
