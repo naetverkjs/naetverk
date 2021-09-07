@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/lifecycle-plugin',
   displayName: 'lifecycle-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

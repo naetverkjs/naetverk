@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/selection-plugin',
   displayName: 'selection-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

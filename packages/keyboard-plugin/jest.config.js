@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/keyboard-plugin',
   displayName: 'keyboard-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

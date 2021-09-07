@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/connection-plugin',
   displayName: 'connection-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

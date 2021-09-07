@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/history-plugin',
   displayName: 'history-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

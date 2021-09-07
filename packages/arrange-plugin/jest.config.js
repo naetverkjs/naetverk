@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/arrange-plugin',
   displayName: 'arrange-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/comment-plugin',
   displayName: 'comment-plugin',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

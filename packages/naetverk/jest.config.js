@@ -9,5 +9,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/naetverk',
   displayName: 'naetverk',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };
