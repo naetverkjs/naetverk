@@ -71,6 +71,6 @@ $node-width: 180px;
     display: inline-block;
   }
   .control {
-    padding: $socket-margin $socket-size/2 + $socket-margin;
+    padding: $socket-margin $socket-size*0.5 + $socket-margin;
   }
 }
