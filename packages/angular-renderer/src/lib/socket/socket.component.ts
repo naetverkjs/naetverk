@@ -7,7 +7,7 @@ import { SocketType } from '../types';
   template: `<div
     *ngIf="socket"
     class="socket"
-    [ngClass]="[type, socket.name]"
+    [ngClass]="[type, socket.name | kebab]"
     [title]="socket.name"
   ></div>`,
   styleUrls: ['./socket.component.sass'],
