@@ -33,7 +33,7 @@ $grid-area: $grid-size * 10000;
 
 .board-background {
   display: table;
-  z-index: -1;
+  z-index: -100;
   position: absolute;
   top: -$grid-area;
   left: -$grid-area;

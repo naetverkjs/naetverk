@@ -79,6 +79,7 @@ To display the comments, add the following scss to your component. You can also 
   cursor: move;
   border-radius: 3px;
   &:focus {
+    z-index: -50;
     outline: none;
     border-color: #f1df97;
   }
