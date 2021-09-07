@@ -1,14 +1,13 @@
 module.exports = {
-  name: 'history-plugin',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   globals: {
-    'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
-    },
+    'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
   },
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/history-plugin',
+  displayName: 'history-plugin',
+  testEnvironment: 'node',
 };
