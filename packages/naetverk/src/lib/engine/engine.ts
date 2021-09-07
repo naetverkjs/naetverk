@@ -72,20 +72,29 @@ export class Engine extends Context<EngineEventsTypes> {
     return new Promise((ret) => {
       if (this.state === State.PROCESSED) {
         this.state = State.ABORT;
+        // @ts-ignore
         this.onAbort = ret;
       } else if (this.state === State.ABORT) {
         this.onAbort();
+        // @ts-ignore
         this.onAbort = ret;
-      } else ret();
+      } else {
+        // @ts-ignore
+        ret();
+      }
     });
   }
 
   private async lock(node: EngineNode) {
-    return new Promise((res) => {
+    return new Promise((resolve) => {
       node.unlockPool = node.unlockPool || [];
-      if (node.busy && !node.outputData) node.unlockPool.push(res);
-      else res();
-
+      if (node.busy && !node.outputData) {
+        // @ts-ignore
+        node.unlockPool.push(resolve);
+      } else {
+        // @ts-ignore
+        resolve();
+      }
       node.busy = true;
     });
   }
