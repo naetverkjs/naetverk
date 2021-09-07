@@ -1,9 +1,5 @@
 import { listenWindow } from './utils';
 
-interface DeltaWheelEvent {
-  wheelDelta: number;
-}
-
 export class Zoom {
   el: HTMLElement;
   intensity: number;
@@ -47,9 +43,8 @@ export class Zoom {
     e.preventDefault();
 
     const rect = this.el.getBoundingClientRect();
-    const wheelDelta = ((e as unknown) as DeltaWheelEvent).wheelDelta;
-    const delta =
-      (wheelDelta ? wheelDelta / 120 : -e.deltaY / 3) * this.intensity;
+    const isNegative = e.deltaY < 0;
+    const delta = isNegative ? this.intensity : -this.intensity;
 
     const ox = (rect.left - e.clientX) * delta;
     const oy = (rect.top - e.clientY) * delta;
