@@ -1,3 +1,4 @@
+import { FrameTypes } from './frame-types.interface';
 import { CommentType } from './comment-type.enum';
 
 export interface IComment {
@@ -9,4 +10,5 @@ export interface IComment {
   type?: CommentType;
   width?: number;
   height?: number;
+  frameType?: FrameTypes;
 }

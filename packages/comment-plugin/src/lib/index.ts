@@ -36,7 +36,7 @@ function install(
       altKey: false,
     },
     snapSize = undefined,
-    categories = [{ name: 'Comment', color: '#bf4040' }],
+    types = [{ id: 1, name: 'Comment', class: 'comment' }],
   }: CommentsOptions
 ) {
   editor.bind('commentselected');
@@ -49,7 +49,7 @@ function install(
   editor.bind('commentresized');
   editor.bind('change_comment_type');
 
-  const manager = new CommentManager(editor, snapSize);
+  const manager = new CommentManager(editor, types, snapSize);
 
   if (!disableBuiltInEdit) {
     editor.on('editcomment', (comment) => {
@@ -94,7 +94,7 @@ function install(
     }
   });
 
-  editor.on('addcomment', ({ type, text, nodes, position }) => {
+  editor.on('addcomment', ({ type, text, nodes, position, frameType }) => {
     const nextId = manager.generateCommentId();
 
     if (type === CommentType.INLINE) {
@@ -113,6 +113,7 @@ function install(
         position: position || [left, top],
         links: ids,
         width: width,
+        frameType: frameType,
         height: height,
       });
     } else {

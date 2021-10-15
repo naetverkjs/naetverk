@@ -57,9 +57,9 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(CommentPlugin, {
       margin: 50,
       snapSize: 16,
-      categories: [
-        { name: 'FirstCategory', color: '#bf4040' },
-        { name: 'Second Category', color: '#62e59d' },
+      types: [
+        { id: 1, name: 'First Category', class: 'first_category' },
+        { id: 2, name: 'Second Category', class: 'second_category' },
       ],
     });
 
@@ -99,6 +99,7 @@ export class NaetverkComponent implements AfterViewInit {
     editor.trigger('addcomment', {
       type: CommentType.FRAME,
       text: 'Frame',
+      frameType: { id: 2 },
       nodes: [add],
     });
 

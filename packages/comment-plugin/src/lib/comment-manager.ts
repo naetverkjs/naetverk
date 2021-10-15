@@ -1,3 +1,4 @@
+import { FrameTypes } from '@naetverkjs/comments';
 import { NodeEditor } from '@naetverkjs/naetverk';
 import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
@@ -7,13 +8,19 @@ import { max } from './utils';
 
 export default class CommentManager {
   private readonly editor: NodeEditor;
+  private readonly frameTypes: FrameTypes[];
   private readonly snapSize: number | undefined;
 
   comments: any[];
 
-  constructor(editor: NodeEditor, snapSize: number | undefined) {
+  constructor(
+    editor: NodeEditor,
+    frameTypes: FrameTypes[],
+    snapSize: number | undefined
+  ) {
     this.editor = editor;
     this.snapSize = snapSize;
+    this.frameTypes = frameTypes;
     this.comments = [];
 
     editor.on('zoomed', () => {
@@ -47,6 +54,12 @@ export default class CommentManager {
       comment.id,
       comment.text,
       this.editor,
+      {
+        available: this.frameTypes,
+        selected: comment.frameType
+          ? comment.frameType.id
+          : this.frameTypes[0].id,
+      },
       this.snapSize
     );
 
@@ -100,6 +113,7 @@ export default class CommentManager {
           links: item.links,
           width: item.width,
           height: item.height,
+          frameType: item.frameType,
         });
       } else {
         this.addInlineComment({

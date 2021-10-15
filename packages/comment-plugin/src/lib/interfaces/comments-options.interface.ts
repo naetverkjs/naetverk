@@ -1,16 +1,5 @@
+import { FrameTypes } from './frame-types.interface';
 import { KeyMap } from './key-map.interface';
-
-interface FrameCategories {
-  /**
-   * The Name of the frame category
-   */
-  name: string;
-
-  /**
-   * The default color of the frame
-   */
-  color: string;
-}
 
 export interface CommentsOptions {
   /**
@@ -46,5 +35,5 @@ export interface CommentsOptions {
   /**
    * The available categories for frames
    */
-  categories: FrameCategories[];
+  types: FrameTypes[];
 }
