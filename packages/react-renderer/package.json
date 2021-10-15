@@ -1,6 +1,6 @@
 {
   "name": "@naetverkjs/react-renderer",
-  "version": "0.8.5",
+  "version": "0.8.52",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
@@ -19,6 +19,6 @@
   "peerDependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "@naetverkjs/naetverk": "0.8.5"
+    "@naetverkjs/naetverk": "0.8.52"
   }
 }

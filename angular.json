@@ -25,9 +25,7 @@
               "samples/angular/src/favicon.ico",
               "samples/angular/src/assets"
             ],
-            "styles": [
-              "samples/angular/src/styles.scss"
-            ],
+            "styles": ["samples/angular/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -59,9 +57,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -87,10 +83,7 @@
               "samples/angular/tsconfig.app.json",
               "samples/angular/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!samples/angular/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!samples/angular/**/*"]
           }
         },
         "test": {
@@ -99,9 +92,7 @@
             "jestConfig": "samples/angular/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/samples/angular"
-          ]
+          "outputs": ["coverage/samples/angular"]
         }
       }
     },
@@ -126,13 +117,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "samples/angular-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!samples/angular-e2e/**/*"
-            ]
+            "tsConfig": ["samples/angular-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!samples/angular-e2e/**/*"]
           }
         }
       }
@@ -163,10 +149,7 @@
               "packages/angular-renderer/tsconfig.lib.json",
               "packages/angular-renderer/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/angular-renderer/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/angular-renderer/**/*"]
           }
         },
         "test": {
@@ -175,9 +158,7 @@
             "jestConfig": "packages/angular-renderer/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/angular-renderer"
-          ]
+          "outputs": ["coverage/packages/angular-renderer"]
         }
       },
       "schematics": {
@@ -199,10 +180,7 @@
               "packages/area-plugin/tsconfig.lib.json",
               "packages/area-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/area-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/area-plugin/**/*"]
           }
         },
         "test": {
@@ -211,9 +189,7 @@
             "jestConfig": "packages/area-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/area-plugin"
-          ]
+          "outputs": ["coverage/packages/area-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -222,13 +198,9 @@
             "tsConfig": "packages/area-plugin/tsconfig.lib.json",
             "packageJson": "packages/area-plugin/package.json",
             "main": "packages/area-plugin/src/index.ts",
-            "assets": [
-              "packages/area-plugin/*.md"
-            ]
+            "assets": ["packages/area-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -245,10 +217,7 @@
               "packages/arrange-plugin/tsconfig.lib.json",
               "packages/arrange-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/arrange-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/arrange-plugin/**/*"]
           }
         },
         "test": {
@@ -257,9 +226,7 @@
             "jestConfig": "packages/arrange-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/arrange-plugin"
-          ]
+          "outputs": ["coverage/packages/arrange-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -268,13 +235,9 @@
             "tsConfig": "packages/arrange-plugin/tsconfig.lib.json",
             "packageJson": "packages/arrange-plugin/package.json",
             "main": "packages/arrange-plugin/src/index.ts",
-            "assets": [
-              "packages/arrange-plugin/*.md"
-            ]
+            "assets": ["packages/arrange-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -291,10 +254,7 @@
               "packages/comment-plugin/tsconfig.lib.json",
               "packages/comment-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/comment-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/comment-plugin/**/*"]
           }
         },
         "test": {
@@ -303,9 +263,7 @@
             "jestConfig": "packages/comment-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/comment-plugin"
-          ]
+          "outputs": ["coverage/packages/comment-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -314,13 +272,9 @@
             "tsConfig": "packages/comment-plugin/tsconfig.lib.json",
             "packageJson": "packages/comment-plugin/package.json",
             "main": "packages/comment-plugin/src/index.ts",
-            "assets": [
-              "packages/comment-plugin/*.md"
-            ]
+            "assets": ["packages/comment-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -349,9 +303,7 @@
             "jestConfig": "packages/connection-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/connection-plugin"
-          ]
+          "outputs": ["coverage/packages/connection-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -360,13 +312,9 @@
             "tsConfig": "packages/connection-plugin/tsconfig.lib.json",
             "packageJson": "packages/connection-plugin/package.json",
             "main": "packages/connection-plugin/src/index.ts",
-            "assets": [
-              "packages/connection-plugin/*.md"
-            ]
+            "assets": ["packages/connection-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -383,10 +331,7 @@
               "packages/history-plugin/tsconfig.lib.json",
               "packages/history-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/history-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/history-plugin/**/*"]
           }
         },
         "test": {
@@ -395,9 +340,7 @@
             "jestConfig": "packages/history-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/history-plugin"
-          ]
+          "outputs": ["coverage/packages/history-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -406,13 +349,9 @@
             "tsConfig": "packages/history-plugin/tsconfig.lib.json",
             "packageJson": "packages/history-plugin/package.json",
             "main": "packages/history-plugin/src/index.ts",
-            "assets": [
-              "packages/history-plugin/*.md"
-            ]
+            "assets": ["packages/history-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -429,10 +368,7 @@
               "packages/keyboard-plugin/tsconfig.lib.json",
               "packages/keyboard-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/keyboard-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/keyboard-plugin/**/*"]
           }
         },
         "test": {
@@ -441,9 +377,7 @@
             "jestConfig": "packages/keyboard-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/keyboard-plugin"
-          ]
+          "outputs": ["coverage/packages/keyboard-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -452,13 +386,9 @@
             "tsConfig": "packages/keyboard-plugin/tsconfig.lib.json",
             "packageJson": "packages/keyboard-plugin/package.json",
             "main": "packages/keyboard-plugin/src/index.ts",
-            "assets": [
-              "packages/keyboard-plugin/*.md"
-            ]
+            "assets": ["packages/keyboard-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -475,10 +405,7 @@
               "packages/lifecycle-plugin/tsconfig.lib.json",
               "packages/lifecycle-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/lifecycle-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/lifecycle-plugin/**/*"]
           }
         },
         "test": {
@@ -487,9 +414,7 @@
             "jestConfig": "packages/lifecycle-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/lifecycle-plugin"
-          ]
+          "outputs": ["coverage/packages/lifecycle-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -498,13 +423,9 @@
             "tsConfig": "packages/lifecycle-plugin/tsconfig.lib.json",
             "packageJson": "packages/lifecycle-plugin/package.json",
             "main": "packages/lifecycle-plugin/src/index.ts",
-            "assets": [
-              "packages/lifecycle-plugin/*.md"
-            ]
+            "assets": ["packages/lifecycle-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -521,10 +442,7 @@
               "packages/naetverk/tsconfig.lib.json",
               "packages/naetverk/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/naetverk/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/naetverk/**/*"]
           }
         },
         "test": {
@@ -533,9 +451,7 @@
             "jestConfig": "packages/naetverk/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/naetverk"
-          ]
+          "outputs": ["coverage/packages/naetverk"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -544,13 +460,9 @@
             "tsConfig": "packages/naetverk/tsconfig.lib.json",
             "packageJson": "packages/naetverk/package.json",
             "main": "packages/naetverk/src/index.ts",
-            "assets": [
-              "packages/naetverk/*.md"
-            ]
+            "assets": ["packages/naetverk/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     },
@@ -572,9 +484,7 @@
               "samples/react/src/favicon.ico",
               "samples/react/src/assets"
             ],
-            "styles": [
-              "samples/react/src/styles.scss"
-            ],
+            "styles": ["samples/react/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -602,9 +512,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/web:dev-server",
@@ -625,10 +533,7 @@
               "samples/react/tsconfig.app.json",
               "samples/react/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!samples/react/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!samples/react/**/*"]
           }
         },
         "test": {
@@ -637,9 +542,7 @@
             "jestConfig": "samples/react/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/samples/react"
-          ]
+          "outputs": ["coverage/samples/react"]
         }
       }
     },
@@ -665,13 +568,8 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "samples/react-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!samples/react-e2e/**/*"
-            ]
+            "tsConfig": ["samples/react-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!samples/react-e2e/**/*"]
           }
         }
       }
@@ -690,10 +588,7 @@
               "packages/react-renderer/tsconfig.lib.json",
               "packages/react-renderer/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/react-renderer/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/react-renderer/**/*"]
           }
         },
         "build": {
@@ -703,10 +598,7 @@
             "tsConfig": "packages/react-renderer/tsconfig.lib.json",
             "project": "packages/react-renderer/package.json",
             "entryFile": "packages/react-renderer/src/index.js",
-            "external": [
-              "react",
-              "react-dom"
-            ],
+            "external": ["react", "react-dom"],
             "babelConfig": "@nrwl/react/plugins/bundle-babel",
             "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
             "assets": [
@@ -718,9 +610,7 @@
             ],
             "buildableProjectDepsInPackageJsonType": "dependencies"
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -728,9 +618,7 @@
             "jestConfig": "packages/react-renderer/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/react-renderer"
-          ]
+          "outputs": ["coverage/packages/react-renderer"]
         }
       }
     },
@@ -747,10 +635,7 @@
               "packages/selection-plugin/tsconfig.lib.json",
               "packages/selection-plugin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/selection-plugin/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/selection-plugin/**/*"]
           }
         },
         "test": {
@@ -759,9 +644,7 @@
             "jestConfig": "packages/selection-plugin/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/selection-plugin"
-          ]
+          "outputs": ["coverage/packages/selection-plugin"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -770,13 +653,9 @@
             "tsConfig": "packages/selection-plugin/tsconfig.lib.json",
             "packageJson": "packages/selection-plugin/package.json",
             "main": "packages/selection-plugin/src/index.ts",
-            "assets": [
-              "packages/selection-plugin/*.md"
-            ]
+            "assets": ["packages/selection-plugin/*.md"]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       }
     }
