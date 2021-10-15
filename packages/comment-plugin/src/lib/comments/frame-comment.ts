@@ -1,3 +1,4 @@
+import { FrameTypes } from '@naetverkjs/comments';
 import { NodeEditor } from '@naetverkjs/naetverk';
 import { CommentResizedEvent } from '../events';
 import { CommentType } from '../interfaces/comment-type.enum';
@@ -28,21 +29,44 @@ export default class FrameComment extends Comment {
    */
   handler: HTMLDivElement;
 
+  /**
+   * The handler
+   * @type {HTMLDivElement}
+   */
+  categorySelection: HTMLDivElement;
+
+  /**
+   * The available frame types
+   * @type {FrameTypes[]}
+   */
+
+  /**
+   * The selected type
+   * @type {FrameTypes[]}
+   */
+  availableTypes: FrameTypes[];
+
+  selectedFrameType: number;
+
   constructor(
     id: number,
     title: string,
     editor: NodeEditor,
+    types: { available: FrameTypes[]; selected: number },
     snapSize: number | undefined
   ) {
     super(id, title, editor, snapSize);
     this.width = 0;
     this.height = 0;
     this.links = [];
+    this.availableTypes = types.available;
     this.el.className = 'frame-comment';
+    this.selectedFrameType = types.selected
+      ? types.selected
+      : types.available[0].id;
 
-    this.handler = document.createElement('div');
-    this.handler.className = 'handle';
-    this.handler.addEventListener('mousedown', this.handlerDown.bind(this));
+    this.createHandler();
+    this.createCategoryDropdown();
 
     this.editor.on('commentresized', (e: CommentResizedEvent) => {
       if (this.id === e.id) {
@@ -104,6 +128,30 @@ export default class FrameComment extends Comment {
     }
   }
 
+  categorySelectionDown(e: MouseEvent) {
+    // Create Event Listener References
+    const categorySelectionDownRef = categorySelectionUp.bind(this);
+    window.addEventListener('mouseup', categorySelectionDownRef);
+
+    const commentRef = this.el;
+    // Disable dragging
+    this.draggable.resizeOn();
+
+    /**
+     * Removes the previously created event listeners
+     * @param {MouseEvent} e
+     */
+    function categorySelectionUp(e: MouseEvent) {
+      window.removeEventListener('mouseup', categorySelectionDownRef);
+      // Trigger the event
+      this.editor.trigger('change_comment_type', {
+        id: this.id,
+        type: commentRef,
+      });
+      this.draggable.resizeOff();
+    }
+  }
+
   linkedNodesView() {
     return this.links
       .map((id) => this.editor.nodes.find((n) => n.id === id))
@@ -136,6 +184,9 @@ export default class FrameComment extends Comment {
     this.el.style.height = this.height + 'px';
     if (this.handler) {
       this.el.appendChild(this.handler);
+    }
+    if (this.categorySelection) {
+      this.el.appendChild(this.categorySelection);
     }
   }
 
@@ -199,5 +250,48 @@ export default class FrameComment extends Comment {
       width: this.width,
       height: this.height,
     };
+  }
+
+  private createHandler() {
+    this.handler = document.createElement('div');
+    this.handler.className = 'handle';
+    this.handler.addEventListener('mousedown', this.handlerDown.bind(this));
+  }
+
+  private createCategoryDropdown() {
+    let div = document.createElement('div');
+    let frag = document.createDocumentFragment();
+    let select = document.createElement('select');
+
+    select.addEventListener('change', (v) => {
+      this.el.classList.remove(
+        this.availableTypes.find((t) => t.id === this.selectedFrameType).class
+      );
+      this.selectedFrameType = parseInt(select.value, 10);
+      this.el.classList.add(
+        this.availableTypes.find((t) => t.id === this.selectedFrameType).class
+      );
+    });
+
+    for (let type of this.availableTypes) {
+      const selected = type.id === this.selectedFrameType;
+      select.options.add(
+        new Option(type.name, type.id.toString(), selected, selected)
+      );
+    }
+
+    frag.appendChild(select);
+    div.appendChild(frag);
+
+    this.categorySelection = div;
+
+    this.categorySelection.className = 'category-selection';
+    this.categorySelection.addEventListener(
+      'mousedown',
+      this.categorySelectionDown.bind(this)
+    );
+    this.el.classList.add(
+      this.availableTypes.find((t) => t.id === this.selectedFrameType).class
+    );
   }
 }

@@ -1,11 +1,11 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import CommentManager from './comment-manager';
 import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
+import './events';
 import { CommentType } from './interfaces/comment-type.enum';
 import { CommentsOptions } from './interfaces/comments-options.interface';
-import CommentManager from './comment-manager';
 import { listenWindow, nodesBBox } from './utils';
-import './events';
 
 export const CommentPlugin = {
   name: 'comments',
@@ -36,6 +36,7 @@ function install(
       altKey: false,
     },
     snapSize = undefined,
+    types = [{ id: 1, name: 'Comment', class: 'comment' }],
   }: CommentsOptions
 ) {
   editor.bind('commentselected');
@@ -46,8 +47,9 @@ function install(
   editor.bind('removecomment');
   editor.bind('editcomment');
   editor.bind('commentresized');
+  editor.bind('change_comment_type');
 
-  const manager = new CommentManager(editor, snapSize);
+  const manager = new CommentManager(editor, types, snapSize);
 
   if (!disableBuiltInEdit) {
     editor.on('editcomment', (comment) => {
@@ -92,7 +94,7 @@ function install(
     }
   });
 
-  editor.on('addcomment', ({ type, text, nodes, position }) => {
+  editor.on('addcomment', ({ type, text, nodes, position, frameType }) => {
     const nextId = manager.generateCommentId();
 
     if (type === CommentType.INLINE) {
@@ -111,6 +113,7 @@ function install(
         position: position || [left, top],
         links: ids,
         width: width,
+        frameType: frameType,
         height: height,
       });
     } else {

@@ -20,6 +20,10 @@ editor.use(CommentPlugin);
 editor.use(CommentPlugin, {
   margin: number, // The Margin of the comments. Default: 30
   snapSize: number | undefined, // If defined, the comment will snap to the grid
+  types: [
+    { id: 1, name: 'First Category', class: 'first_category' }, // Frame Categories and added class when selected
+    { id: 2, name: 'Second Category', class: 'second_category' }, 
+  ],
   // Key Bindings:
   frameCommentKeys: {
     code: 'KeyF',
@@ -107,6 +111,10 @@ To display the comments, add the following scss to your component. You can also 
   bottom: 0;
   cursor: se-resize;
 }
+
+/* If you use comment types you can define overwrite styles for the frames. For
+example when you use     { id: 2, name: 'Second Category', class: 'second_category' }, 
+you can add .second_category{} */
 ```
 
 ## Working with other plugins

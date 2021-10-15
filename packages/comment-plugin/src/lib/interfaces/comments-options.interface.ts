@@ -1,3 +1,4 @@
+import { FrameTypes } from './frame-types.interface';
 import { KeyMap } from './key-map.interface';
 
 export interface CommentsOptions {
@@ -30,4 +31,9 @@ export interface CommentsOptions {
    * If defined, the comments will snap to the grid
    */
   snapSize?: number | undefined;
+
+  /**
+   * The available categories for frames
+   */
+  types: FrameTypes[];
 }
