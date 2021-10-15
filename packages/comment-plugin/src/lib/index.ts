@@ -1,11 +1,11 @@
 import { NodeEditor } from '@naetverkjs/naetverk';
+import CommentManager from './comment-manager';
 import FrameComment from './comments/frame-comment';
 import InlineComment from './comments/inline-comment';
+import './events';
 import { CommentType } from './interfaces/comment-type.enum';
 import { CommentsOptions } from './interfaces/comments-options.interface';
-import CommentManager from './comment-manager';
 import { listenWindow, nodesBBox } from './utils';
-import './events';
 
 export const CommentPlugin = {
   name: 'comments',
@@ -36,6 +36,7 @@ function install(
       altKey: false,
     },
     snapSize = undefined,
+    categories = [{ name: 'Comment', color: '#bf4040' }],
   }: CommentsOptions
 ) {
   editor.bind('commentselected');
@@ -46,6 +47,7 @@ function install(
   editor.bind('removecomment');
   editor.bind('editcomment');
   editor.bind('commentresized');
+  editor.bind('change_comment_type');
 
   const manager = new CommentManager(editor, snapSize);
 

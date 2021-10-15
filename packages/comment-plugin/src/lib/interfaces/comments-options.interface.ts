@@ -1,5 +1,17 @@
 import { KeyMap } from './key-map.interface';
 
+interface FrameCategories {
+  /**
+   * The Name of the frame category
+   */
+  name: string;
+
+  /**
+   * The default color of the frame
+   */
+  color: string;
+}
+
 export interface CommentsOptions {
   /**
    * The margin around a comment
@@ -30,4 +42,9 @@ export interface CommentsOptions {
    * If defined, the comments will snap to the grid
    */
   snapSize?: number | undefined;
+
+  /**
+   * The available categories for frames
+   */
+  categories: FrameCategories[];
 }

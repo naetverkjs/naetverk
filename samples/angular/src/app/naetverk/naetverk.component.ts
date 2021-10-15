@@ -57,6 +57,10 @@ export class NaetverkComponent implements AfterViewInit {
     editor.use(CommentPlugin, {
       margin: 50,
       snapSize: 16,
+      categories: [
+        { name: 'FirstCategory', color: '#bf4040' },
+        { name: 'Second Category', color: '#62e59d' },
+      ],
     });
 
     const engine = new Engine('demo@0.2.0');
