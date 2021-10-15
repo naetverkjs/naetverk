@@ -1,6 +1,6 @@
 {
   "name": "@naetverkjs/arrange",
-  "version": "0.8.52",
+  "version": "0.8.53",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
@@ -17,6 +17,6 @@
     "url": "https://github.com/naetverkjs/naetverk/issues"
   },
   "peerDependencies": {
-    "@naetverkjs/naetverk": "0.8.52"
+    "@naetverkjs/naetverk": "0.8.53"
   }
 }
