@@ -1,41 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "naetverk": {
-      "root": "packages/naetverk",
-      "sourceRoot": "packages/naetverk/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/naetverk/tsconfig.lib.json",
-              "packages/naetverk/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/naetverk/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/naetverk/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/naetverk",
-            "tsConfig": "packages/naetverk/tsconfig.lib.json",
-            "packageJson": "packages/naetverk/package.json",
-            "main": "packages/naetverk/src/index.ts",
-            "assets": ["packages/naetverk/*.md"]
-          }
-        }
-      }
-    },
     "angular": {
       "projectType": "application",
       "schematics": {
@@ -60,7 +25,9 @@
               "samples/angular/src/favicon.ico",
               "samples/angular/src/assets"
             ],
-            "styles": ["samples/angular/src/styles.scss"],
+            "styles": [
+              "samples/angular/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -74,7 +41,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -92,7 +58,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -118,7 +87,10 @@
               "samples/angular/tsconfig.app.json",
               "samples/angular/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!samples/angular/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!samples/angular/**/*"
+            ]
           }
         },
         "test": {
@@ -126,7 +98,10 @@
           "options": {
             "jestConfig": "samples/angular/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/samples/angular"
+          ]
         }
       }
     },
@@ -151,114 +126,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["samples/angular-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!samples/angular-e2e/**/*"]
-          }
-        }
-      }
-    },
-    "react": {
-      "root": "samples/react",
-      "sourceRoot": "samples/react/src",
-      "projectType": "application",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/web:build",
-          "options": {
-            "outputPath": "dist/samples/react",
-            "index": "samples/react/src/index.html",
-            "main": "samples/react/src/main.js",
-            "polyfills": "samples/react/src/polyfills.js",
-            "tsConfig": "samples/react/tsconfig.app.json",
-            "assets": [
-              "samples/react/src/favicon.ico",
-              "samples/react/src/assets"
-            ],
-            "styles": ["samples/react/src/styles.scss"],
-            "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "samples/react/src/environments/environment.js",
-                  "with": "samples/react/src/environments/environment.prod.js"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "react:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "react:build:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
             "tsConfig": [
-              "samples/react/tsconfig.app.json",
-              "samples/react/tsconfig.spec.json"
+              "samples/angular-e2e/tsconfig.e2e.json"
             ],
-            "exclude": ["**/node_modules/**", "!samples/react/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "samples/react/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "react-e2e": {
-      "root": "samples/react-e2e",
-      "sourceRoot": "samples/react-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "samples/react-e2e/cypress.json",
-            "tsConfig": "samples/react-e2e/tsconfig.e2e.json",
-            "devServerTarget": "react:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "react:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": ["samples/react-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!samples/react-e2e/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!samples/angular-e2e/**/*"
+            ]
           }
         }
       }
@@ -273,7 +147,8 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "packages/angular-renderer/tsconfig.lib.json",
-            "project": "packages/angular-renderer/ng-package.json"
+            "project": "packages/angular-renderer/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
           },
           "configurations": {
             "production": {
@@ -288,7 +163,10 @@
               "packages/angular-renderer/tsconfig.lib.json",
               "packages/angular-renderer/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!packages/angular-renderer/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/angular-renderer/**/*"
+            ]
           }
         },
         "test": {
@@ -296,12 +174,153 @@
           "options": {
             "jestConfig": "packages/angular-renderer/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/angular-renderer"
+          ]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        }
+      }
+    },
+    "area-plugin": {
+      "root": "packages/area-plugin",
+      "sourceRoot": "packages/area-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/area-plugin/tsconfig.lib.json",
+              "packages/area-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/area-plugin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/area-plugin/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/area-plugin"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/area-plugin",
+            "tsConfig": "packages/area-plugin/tsconfig.lib.json",
+            "packageJson": "packages/area-plugin/package.json",
+            "main": "packages/area-plugin/src/index.ts",
+            "assets": [
+              "packages/area-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "arrange-plugin": {
+      "root": "packages/arrange-plugin",
+      "sourceRoot": "packages/arrange-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/arrange-plugin/tsconfig.lib.json",
+              "packages/arrange-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/arrange-plugin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/arrange-plugin/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/arrange-plugin"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/arrange-plugin",
+            "tsConfig": "packages/arrange-plugin/tsconfig.lib.json",
+            "packageJson": "packages/arrange-plugin/package.json",
+            "main": "packages/arrange-plugin/src/index.ts",
+            "assets": [
+              "packages/arrange-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "comment-plugin": {
+      "root": "packages/comment-plugin",
+      "sourceRoot": "packages/comment-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/comment-plugin/tsconfig.lib.json",
+              "packages/comment-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/comment-plugin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/comment-plugin/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/comment-plugin"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/comment-plugin",
+            "tsConfig": "packages/comment-plugin/tsconfig.lib.json",
+            "packageJson": "packages/comment-plugin/package.json",
+            "main": "packages/comment-plugin/src/index.ts",
+            "assets": [
+              "packages/comment-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -329,7 +348,10 @@
           "options": {
             "jestConfig": "packages/connection-plugin/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/connection-plugin"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -338,148 +360,13 @@
             "tsConfig": "packages/connection-plugin/tsconfig.lib.json",
             "packageJson": "packages/connection-plugin/package.json",
             "main": "packages/connection-plugin/src/index.ts",
-            "assets": ["packages/connection-plugin/*.md"]
-          }
-        }
-      }
-    },
-    "area-plugin": {
-      "root": "packages/area-plugin",
-      "sourceRoot": "packages/area-plugin/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/area-plugin/tsconfig.lib.json",
-              "packages/area-plugin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/area-plugin/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/area-plugin/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/area-plugin",
-            "tsConfig": "packages/area-plugin/tsconfig.lib.json",
-            "packageJson": "packages/area-plugin/package.json",
-            "main": "packages/area-plugin/src/index.ts",
-            "assets": ["packages/area-plugin/*.md"]
-          }
-        }
-      }
-    },
-    "lifecycle-plugin": {
-      "root": "packages/lifecycle-plugin",
-      "sourceRoot": "packages/lifecycle-plugin/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/lifecycle-plugin/tsconfig.lib.json",
-              "packages/lifecycle-plugin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/lifecycle-plugin/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/lifecycle-plugin/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/lifecycle-plugin",
-            "tsConfig": "packages/lifecycle-plugin/tsconfig.lib.json",
-            "packageJson": "packages/lifecycle-plugin/package.json",
-            "main": "packages/lifecycle-plugin/src/index.ts",
-            "assets": ["packages/lifecycle-plugin/*.md"]
-          }
-        }
-      }
-    },
-    "keyboard-plugin": {
-      "root": "packages/keyboard-plugin",
-      "sourceRoot": "packages/keyboard-plugin/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/keyboard-plugin/tsconfig.lib.json",
-              "packages/keyboard-plugin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/keyboard-plugin/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/keyboard-plugin/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/keyboard-plugin",
-            "tsConfig": "packages/keyboard-plugin/tsconfig.lib.json",
-            "packageJson": "packages/keyboard-plugin/package.json",
-            "main": "packages/keyboard-plugin/src/index.ts",
-            "assets": ["packages/keyboard-plugin/*.md"]
-          }
-        }
-      }
-    },
-    "arrange-plugin": {
-      "root": "packages/arrange-plugin",
-      "sourceRoot": "packages/arrange-plugin/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/arrange-plugin/tsconfig.lib.json",
-              "packages/arrange-plugin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/arrange-plugin/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/arrange-plugin/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/arrange-plugin",
-            "tsConfig": "packages/arrange-plugin/tsconfig.lib.json",
-            "packageJson": "packages/arrange-plugin/package.json",
-            "main": "packages/arrange-plugin/src/index.ts",
-            "assets": ["packages/arrange-plugin/*.md"]
-          }
+            "assets": [
+              "packages/connection-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -496,7 +383,10 @@
               "packages/history-plugin/tsconfig.lib.json",
               "packages/history-plugin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!packages/history-plugin/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/history-plugin/**/*"
+            ]
           }
         },
         "test": {
@@ -504,7 +394,10 @@
           "options": {
             "jestConfig": "packages/history-plugin/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/history-plugin"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -513,7 +406,272 @@
             "tsConfig": "packages/history-plugin/tsconfig.lib.json",
             "packageJson": "packages/history-plugin/package.json",
             "main": "packages/history-plugin/src/index.ts",
-            "assets": ["packages/history-plugin/*.md"]
+            "assets": [
+              "packages/history-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "keyboard-plugin": {
+      "root": "packages/keyboard-plugin",
+      "sourceRoot": "packages/keyboard-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/keyboard-plugin/tsconfig.lib.json",
+              "packages/keyboard-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/keyboard-plugin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/keyboard-plugin/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/keyboard-plugin"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/keyboard-plugin",
+            "tsConfig": "packages/keyboard-plugin/tsconfig.lib.json",
+            "packageJson": "packages/keyboard-plugin/package.json",
+            "main": "packages/keyboard-plugin/src/index.ts",
+            "assets": [
+              "packages/keyboard-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "lifecycle-plugin": {
+      "root": "packages/lifecycle-plugin",
+      "sourceRoot": "packages/lifecycle-plugin/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/lifecycle-plugin/tsconfig.lib.json",
+              "packages/lifecycle-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/lifecycle-plugin/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/lifecycle-plugin/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/lifecycle-plugin"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/lifecycle-plugin",
+            "tsConfig": "packages/lifecycle-plugin/tsconfig.lib.json",
+            "packageJson": "packages/lifecycle-plugin/package.json",
+            "main": "packages/lifecycle-plugin/src/index.ts",
+            "assets": [
+              "packages/lifecycle-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "naetverk": {
+      "root": "packages/naetverk",
+      "sourceRoot": "packages/naetverk/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/naetverk/tsconfig.lib.json",
+              "packages/naetverk/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/naetverk/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/naetverk/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/packages/naetverk"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/naetverk",
+            "tsConfig": "packages/naetverk/tsconfig.lib.json",
+            "packageJson": "packages/naetverk/package.json",
+            "main": "packages/naetverk/src/index.ts",
+            "assets": [
+              "packages/naetverk/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      }
+    },
+    "react": {
+      "root": "samples/react",
+      "sourceRoot": "samples/react/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/samples/react",
+            "index": "samples/react/src/index.html",
+            "main": "samples/react/src/main.js",
+            "polyfills": "samples/react/src/polyfills.js",
+            "tsConfig": "samples/react/tsconfig.app.json",
+            "assets": [
+              "samples/react/src/favicon.ico",
+              "samples/react/src/assets"
+            ],
+            "styles": [
+              "samples/react/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "samples/react/src/environments/environment.js",
+                  "with": "samples/react/src/environments/environment.prod.js"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "samples/react/tsconfig.app.json",
+              "samples/react/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!samples/react/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "samples/react/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/samples/react"
+          ]
+        }
+      }
+    },
+    "react-e2e": {
+      "root": "samples/react-e2e",
+      "sourceRoot": "samples/react-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "samples/react-e2e/cypress.json",
+            "tsConfig": "samples/react-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "samples/react-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!samples/react-e2e/**/*"
+            ]
           }
         }
       }
@@ -532,7 +690,10 @@
               "packages/react-renderer/tsconfig.lib.json",
               "packages/react-renderer/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!packages/react-renderer/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/react-renderer/**/*"
+            ]
           }
         },
         "build": {
@@ -542,7 +703,10 @@
             "tsConfig": "packages/react-renderer/tsconfig.lib.json",
             "project": "packages/react-renderer/package.json",
             "entryFile": "packages/react-renderer/src/index.js",
-            "external": ["react", "react-dom"],
+            "external": [
+              "react",
+              "react-dom"
+            ],
             "babelConfig": "@nrwl/react/plugins/bundle-babel",
             "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
             "assets": [
@@ -551,15 +715,22 @@
                 "input": ".",
                 "output": "."
               }
-            ]
-          }
+            ],
+            "buildableProjectDepsInPackageJsonType": "dependencies"
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "packages/react-renderer/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/react-renderer"
+          ]
         }
       }
     },
@@ -576,7 +747,10 @@
               "packages/selection-plugin/tsconfig.lib.json",
               "packages/selection-plugin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!packages/selection-plugin/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/selection-plugin/**/*"
+            ]
           }
         },
         "test": {
@@ -584,7 +758,10 @@
           "options": {
             "jestConfig": "packages/selection-plugin/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/packages/selection-plugin"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -593,43 +770,13 @@
             "tsConfig": "packages/selection-plugin/tsconfig.lib.json",
             "packageJson": "packages/selection-plugin/package.json",
             "main": "packages/selection-plugin/src/index.ts",
-            "assets": ["packages/selection-plugin/*.md"]
-          }
-        }
-      }
-    },
-    "comment-plugin": {
-      "root": "packages/comment-plugin",
-      "sourceRoot": "packages/comment-plugin/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/comment-plugin/tsconfig.lib.json",
-              "packages/comment-plugin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/comment-plugin/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/comment-plugin/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/comment-plugin",
-            "tsConfig": "packages/comment-plugin/tsconfig.lib.json",
-            "packageJson": "packages/comment-plugin/package.json",
-            "main": "packages/comment-plugin/src/index.ts",
-            "assets": ["packages/comment-plugin/*.md"]
-          }
+            "assets": [
+              "packages/selection-plugin/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     }

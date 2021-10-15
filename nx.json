@@ -22,15 +22,39 @@
     }
   },
   "projects": {
-    "naetverk": {
-      "tags": ["library"]
-    },
     "angular": {
       "tags": ["sample"]
     },
     "angular-e2e": {
       "tags": ["sample"],
       "implicitDependencies": ["angular"]
+    },
+    "angular-renderer": {
+      "tags": ["plugin"]
+    },
+    "area-plugin": {
+      "tags": ["plugin"]
+    },
+    "arrange-plugin": {
+      "tags": ["plugin"]
+    },
+    "comment-plugin": {
+      "tags": ["plugin"]
+    },
+    "connection-plugin": {
+      "tags": ["plugin"]
+    },
+    "history-plugin": {
+      "tags": ["plugin"]
+    },
+    "keyboard-plugin": {
+      "tags": ["plugin"]
+    },
+    "lifecycle-plugin": {
+      "tags": ["plugin"]
+    },
+    "naetverk": {
+      "tags": ["library"]
     },
     "react": {
       "tags": ["sample"]
@@ -39,39 +63,23 @@
       "tags": ["sample"],
       "implicitDependencies": ["react"]
     },
-    "angular-renderer": {
-      "tags": ["plugin"]
-    },
-    "connection-plugin": {
-      "tags": ["plugin"]
-    },
-    "area-plugin": {
-      "tags": ["plugin"]
-    },
-    "lifecycle-plugin": {
-      "tags": ["plugin"]
-    },
-    "keyboard-plugin": {
-      "tags": ["plugin"]
-    },
-    "arrange-plugin": {
-      "tags": ["plugin"]
-    },
-    "history-plugin": {
-      "tags": ["plugin"]
-    },
     "react-renderer": {
       "tags": ["plugin"]
     },
     "selection-plugin": {
-      "tags": ["plugin"]
-    },
-    "comment-plugin": {
       "tags": ["plugin"]
     }
   },
   "workspaceLayout": {
     "appsDir": "samples",
     "libsDir": "packages"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

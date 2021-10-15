@@ -1,9 +1,20 @@
+const { getJestProjects } = require('@nrwl/jest');
+
 module.exports = {
-  testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-  transform: {
-    '^.+\\.(ts|js|html)$': 'ts-jest',
-  },
-  resolver: '@nrwl/jest/plugins/resolver',
-  moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageReporters: ['json', 'text'],
+  projects: [
+    ...getJestProjects(),
+    '<rootDir>/samples/angular',
+    '<rootDir>/packages/angular-renderer',
+    '<rootDir>/packages/area-plugin',
+    '<rootDir>/packages/arrange-plugin',
+    '<rootDir>/packages/comment-plugin',
+    '<rootDir>/packages/connection-plugin',
+    '<rootDir>/packages/history-plugin',
+    '<rootDir>/packages/keyboard-plugin',
+    '<rootDir>/packages/lifecycle-plugin',
+    '<rootDir>/packages/naetverk',
+    '<rootDir>/samples/react',
+    '<rootDir>/packages/react-renderer',
+    '<rootDir>/packages/selection-plugin',
+  ],
 };
