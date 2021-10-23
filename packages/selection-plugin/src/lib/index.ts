@@ -120,7 +120,7 @@ function install(
    * @param {MouseEvent} e
    */
   function handleMouseUp(e: MouseEvent) {
-    if (checkForSelectionEvent(e)) {
+    if (mouseSelecting) {
       e.preventDefault();
       e.stopPropagation();
       const selectedNodes = !selectionOptions.enabled
@@ -158,6 +158,10 @@ function install(
    */
   function handleMouseMove(e: MouseEvent) {
     if (checkForSelectionEvent(e)) {
+      if (!mouseSelecting) {
+        return;
+      }
+
       e.preventDefault();
       e.stopPropagation();
 
