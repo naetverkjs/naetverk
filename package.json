@@ -1,6 +1,6 @@
 {
   "name": "naetverkjs",
-  "version": "0.8.53",
+  "version": "0.8.54",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
@@ -86,7 +86,7 @@
     "@nrwl/nx-cloud": "^12.3.10",
     "@nrwl/react": "12.9.0",
     "@nrwl/tao": "12.9.0",
-    "@nrwl/web": "12.9.0",
+    "@nrwl/web": "13.0.2",
     "@nrwl/workspace": "12.9.0",
     "@testing-library/react": "11.2.5",
     "@types/cli-progress": "^3.9.2",
