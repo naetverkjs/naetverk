@@ -1,5 +1,5 @@
 {
-  "version": "0.8.53",
+  "version": "0.8.54",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naetverkjs/naetverk.git"
@@ -8,5 +8,5 @@
   "author": "Konrad Koch",
   "license": "MIT",
   "bugs": { "url": "https://github.com/naetverkjs/naetverk/issues" },
-  "peerDependencies": { "@naetverkjs/naetverk": "0.8.53" }
+  "peerDependencies": { "@naetverkjs/naetverk": "0.8.54" }
 }
