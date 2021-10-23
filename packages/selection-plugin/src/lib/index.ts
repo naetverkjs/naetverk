@@ -34,6 +34,16 @@ function install(
 ) {
   editor.bind('multiselection');
 
+  /**
+   * Enabled the dragging of multiple selected nodes
+   */
+  editor.on('nodeselect', (node) => {
+    editor.trigger('nodeselected', node);
+    if (editor.selected.contains(node)) {
+      return false;
+    }
+  });
+
   let accumulate = false;
   let mouseSelecting = false;
 
