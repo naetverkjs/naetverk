@@ -79,7 +79,7 @@
     "@babel/register": "^7.15.3",
     "@nrwl/angular": "12.9.0",
     "@nrwl/cli": "12.9.0",
-    "@nrwl/cypress": "12.9.0",
+    "@nrwl/cypress": "13.9.5",
     "@nrwl/eslint-plugin-nx": "12.9.0",
     "@nrwl/jest": "12.9.0",
     "@nrwl/node": "12.9.0",
