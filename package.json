@@ -86,7 +86,7 @@
     "@nrwl/nx-cloud": "^12.3.10",
     "@nrwl/react": "12.9.0",
     "@nrwl/tao": "12.9.0",
-    "@nrwl/web": "12.9.0",
+    "@nrwl/web": "14.0.5",
     "@nrwl/workspace": "12.9.0",
     "@testing-library/react": "11.2.5",
     "@types/cli-progress": "^3.9.2",
