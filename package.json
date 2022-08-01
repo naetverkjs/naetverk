@@ -82,7 +82,7 @@
     "@nrwl/cypress": "12.9.0",
     "@nrwl/eslint-plugin-nx": "12.9.0",
     "@nrwl/jest": "12.9.0",
-    "@nrwl/node": "12.9.0",
+    "@nrwl/node": "14.5.1",
     "@nrwl/nx-cloud": "^12.3.10",
     "@nrwl/react": "12.9.0",
     "@nrwl/tao": "12.9.0",
